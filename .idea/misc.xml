@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/pdf.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_main.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/fragment__book_marks_list.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/fragment__recent_list.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/fragment_pdf_list.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/list_item.xml" value="0.264" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
