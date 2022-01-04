@@ -30,6 +30,7 @@ import androidx.viewbinding.BuildConfig
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter
 import com.example.pdf_reader_viewer.databinding.FragmentPdfListBinding
+import com.google.android.material.snackbar.Snackbar
 import java.io.File
 import java.util.jar.Manifest
 
@@ -99,7 +100,8 @@ class Fragment_pdf_list : Fragment() {
               // Toast.makeText(context,string,Toast.LENGTH_SHORT).show()
            }
 */
-            var pdflist=get_PdfList(requireContext())
+           // var pdflist=get_PdfList(requireContext())
+        getPdfList_2()
            /* var recyclerView:RecyclerView=view.findViewById(R.id.pdfListRecylerView)
             var myAdapter=MyAdapter(requireContext(),pdflist!!)
             recyclerView.layoutManager=LinearLayoutManager(requireContext())
@@ -122,7 +124,7 @@ class Fragment_pdf_list : Fragment() {
         }//END OF IF BLOCK WHERE WE USE CONDITION FOR ANDROID R.
 
            /**GETTING PDF FOR ANDROID Q AND ABOVE*/
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q) {
+        if(/*Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q*/0==0) {
              /**getting External_Uri to get query files..*/
             val uri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL);
                    /**media-database-columns-to-retrieve*/
@@ -166,34 +168,88 @@ class Fragment_pdf_list : Fragment() {
 
           }//END OF IF BLOCK
         /**GETTING PDFs FOR BELOW ANDROID Q*/
-        else{
+        /*else {
 
+               var uri=MediaStore.Files.getContentUri(MediaStore.VOLUME_INTERNAL)
+               Log.d("fece",uri.toString())
 
-          // ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),100)
-           var arry= getExternalFilesDirs(context,null)
-
+            // ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),100)
+            var arry = getExternalFilesDirs(context, null)
+            Log.d("dgoluruyfgd", context.filesDir.absolutePath)
             arry.forEach {
-                Log.d("fdhfdj",it.absolutePath)
+                Log.d("fdhfdj", it.absolutePath)
             }
 
 //            Environment.getExternalStoragePublicDirectory(null)
-            val file1 = Environment.getExternalStorageDirectory()
-            file1.listFiles().forEach {
-                Log.d("fkhdj",it.name)
-                if(it.name.equals(Environment.DIRECTORY_DOWNLOADS))
-                {
-                    it.listFiles().forEach {
-                        if(it.name.endsWith(".pdf"))
-                        Log.d("jjdkdjfd",it.name)
+*//*
+                val file1 = Environment.getExternalStorageDirectory()
+                file1.listFiles().forEach {
+                    Log.d("fkhdj", it.name)
+                    if (it.name.equals(Environment.DIRECTORY_DOWNLOADS)) {
+                        it.listFiles().forEach {
+                            if (it.name.endsWith(".pdf"))
+                                Log.d("jjdkdjfd", it.name)
+                        }
                     }
-                }
-            }
-          Log.d("kjksdjksd",file1?.absolutePath!!)
+                }*//*
+
+
+            *//*  Log.d("kjksdjksd",file1?.absolutePath!!)
               file1.listFiles().forEach {
                   Log.d("ALLFILES",it.name)
               }
-            Log.d("kjksdjksd","${/*file?.listFiles()?.*/file1?.listFiles()?.size}pp")
-        }
+            Log.d("kjksdjksd","${*//**//*file?.listFiles()?.*//**//*file1?.listFiles()?.size}pp")
+        }*//*
+        }*/
+    }
 
+    @SuppressLint("Range")
+    fun getPdfList_2(){
+        val uri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL)
+       Log.d("jfkdjfd",MediaStore.Files.getContentUri(MediaStore.VOLUME_INTERNAL).toString())
+        /**media-database-columns-to-retrieve*/
+        var stringProjectioon = arrayOf(
+            MediaStore.Files.FileColumns.DISPLAY_NAME,
+            MediaStore.Files.FileColumns.TITLE,
+                   // MediaStore.Files.FileColumns.MEDIA_TYPE
+
+            /* MediaStore.Files.FileColumns.MIME_TYPE,
+             MediaStore.Files.FileColumns.DATE_MODIFIED,
+             MediaStore.Files.FileColumns.SIZE,
+             MediaStore.Files.FileColumns.DOCUMENT_ID*/
+        )
+        /**sql-where-clause-with-placeholder-variables  Here we select MimeType*/
+        val selection = MediaStore.Files.FileColumns.MIME_TYPE + " = ?"
+        /**getting MIME type for pdf*/
+        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension("pdf")
+        /**values-of-placeholder-variables  giving mimetype to selection_args */
+        val selectionArgs = arrayOf(mimeType)
+        /**content Resolver to get cursor for filess..*/
+        var contentResolver = context?.contentResolver
+     //  var cursor = contentResolver?.query(uri, stringProjectioon, selection, selectionArgs, null)
+        var cursor = contentResolver?.query(uri, stringProjectioon, null, null, null)
+
+        Log.d("gjfkgf", cursor.toString())
+        /**getting files from cursor by using Files Column index*/
+        while (cursor?.moveToNext()!!) {
+
+           // Log.d("dfdfd",cursor.toString())
+            var displeynamee = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME))
+            var title = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.TITLE))
+         //   var RELATIVEPATH = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE))
+
+            //  var id = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DOCUMENT_ID))
+           // var date_modified = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DATE_MODIFIED))
+           // var size = cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.SIZE))
+            Log.d("PPPDFDF", displeynamee + " "+title+"____"/*+RELATIVEPATH*/)
+            Toast.makeText(context,/*RELATIVEPATH+*/"  "+title,Toast.LENGTH_LONG).show()
+
+            /** As Data column id deprecated so we appended id with VOLUME_EXTERNAL*/
+          //  var data_uri = Uri.withAppendedPath(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL), id)
+         //   pdflist?.add(Items_pdfs(displeynamee, size, data_uri, date_modified))
+            // Toast.makeText(context,string,Toast.LENGTH_SHORT).show()
+
+
+        }
     }
 }
