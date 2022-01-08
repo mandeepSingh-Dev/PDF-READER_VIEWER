@@ -23,7 +23,7 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        var displayName=pdfList?.get(position)?.displayName
+        var displayName=pdfList?.get(position)?.title
         holder.pdfName.setText(displayName)
         holder.pdfsize.setText(pdfList?.get(position)?.size+"    "+pdfList?.size)
 
