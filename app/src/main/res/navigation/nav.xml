@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/fragment_MergePdfs">
+    <fragment
+        android:id="@+id/fragment_MergePdfs"
+        android:name="com.example.pdf_reader_viewer.fragments.MergePdfs_Fragment"
+        android:label="fragment__merge_pdfs"
+        tools:layout="@layout/merge_pdfs_fragment" />
+    <fragment
+        android:id="@+id/splitPdf_Fragment"
+        android:name="com.example.pdf_reader_viewer.fragments.SplitPdf_Fragment"
+        android:label="SplitPdf_Fragment" />
+    <fragment
+        android:id="@+id/encryptPdf_Fragment"
+        android:name="com.example.pdf_reader_viewer.fragments.EncryptPdf_Fragment"
+        android:label="encrypt_pdf_fragment"
+        tools:layout="@layout/encrypt_pdf_fragment" />
+</navigation>
