@@ -1,18 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".MainActivity_ViewPagerHolder"
     android:orientation="vertical">
+
+
+
+   <ProgressBar
+       android:id="@+id/progress_bar"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:visibility="gone"
+       android:layout_centerInParent="true"
+    />
 
    <com.google.android.material.tabs.TabLayout
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-      android:id="@+id/tablayout"
+       android:id="@+id/tablayout"
        tools:ignore="MissingConstraints"
        android:background="#AE2B2B"
+       app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
        app:tabIconTint="@color/teal_200"
        app:tabIndicatorColor="@color/white"
        app:tabSelectedTextColor="@color/white"
@@ -22,7 +33,11 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:background="@color/white"
+       android:layout_below="@id/tablayout"
        android:layout_weight="1">
    </androidx.viewpager2.widget.ViewPager2>
 
-</LinearLayout>
+
+
+
+</RelativeLayout>

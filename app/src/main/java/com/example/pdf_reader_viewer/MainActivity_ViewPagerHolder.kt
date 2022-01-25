@@ -1,9 +1,7 @@
  package com.example.pdf_reader_viewer
 
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.audiofx.EnvironmentalReverb
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -14,16 +12,14 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.example.pdf_reader_viewer.ViewPagerAdapter.MyFragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import java.util.jar.Manifest
 
- class MainActivity : AppCompatActivity()
+ class MainActivity_ViewPagerHolder : AppCompatActivity()
  {
 
      private var viewpager2:ViewPager2?=null
@@ -31,14 +27,10 @@ import java.util.jar.Manifest
      private var isWritePermissionGranted:Boolean?=false
      private lateinit var permissionLauncher:ActivityResultLauncher<Array<String>>
 
+     /**requesting permissions request*/
      var launcher=registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions(),
          ActivityResultCallback {
 
-              // isReadPermissionGranted=it.get(android.Manifest.permission.READ_EXTERNAL_STORAGE)
-            // Log.d("cdcdverwv",isReadPermissionGranted.toString())
-
-            /* var yoyo=it[android.Manifest.permission.READ_EXTERNAL_STORAGE] ?:isReadPermissionGranted
-             Log.d("vdvhdjv",yoyo.toString())*/
          })
      override fun onCreate(savedInstanceState: Bundle?) {
          super.onCreate(savedInstanceState)
@@ -51,7 +43,6 @@ import java.util.jar.Manifest
          /**Granting MANAGE_EXTERNAL_STORAGE all files access permission*/
          requesting_MANAGE_ALL_DOCUMENT_Permission()
 
-         Log.d("5y5g",viewpager2?.currentItem.toString())
        //  launcher.launch()
        //  var list=ArrayList<String>()
      }
@@ -61,9 +52,10 @@ import java.util.jar.Manifest
          val myFragmentStateAdapter = MyFragmentStateAdapter(this)
          viewpager2?.adapter = myFragmentStateAdapter
 
+         var texts= arrayOf("All Pdfs","Recents","Bookmarks","Tools")
          val tabLayout = findViewById<TabLayout>(R.id.tablayout)
          TabLayoutMediator(tabLayout, viewpager2!!) { tab, position ->
-             tab.text = "OBJECT"
+             tab.text=texts[position]
          }.attach()
 
          TabLayoutMediator(tabLayout, viewpager2!!, object : TabLayoutMediator.TabConfigurationStrategy {
@@ -120,6 +112,8 @@ import java.util.jar.Manifest
              viewpager2?.setCurrentItem(0,true)
          }
          else{
+             Log.d("3g3gf3wg",viewpager2?.currentItem.toString())
+
              super.onBackPressed()
          }
 

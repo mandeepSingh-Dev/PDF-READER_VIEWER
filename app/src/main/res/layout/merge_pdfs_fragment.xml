@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.MergePdfs_Fragment">
+    <Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00E5FF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:title="Merge Pdfs"
+        android:hapticFeedbackEnabled="true"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+    </Toolbar>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mergePdfListRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+    <!-- fab button layout-->
+        <LinearLayout
+            android:id="@+id/linearFABSlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end|right"
+            android:orientation="vertical"
+            android:layout_marginRight="6dp"
+            android:layout_marginBottom="70dp"
+            android:gravity="center_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+           <!--fab4 linearlayout-->
+            <LinearLayout
+                android:id="@+id/fab4Linearlayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="16dp"
+                android:layout_gravity="end"
+
+                >
+            <TextView
+                android:id="@+id/fab4TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:background="@drawable/stroke_fabtext"
+                android:text="Files on device"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/ic_twotone_folder_24"
+                app:fabSize="mini"
+                app:rippleColor="#DF3804"/>
+            </LinearLayout>
+            <!--fab4 linearlayout-->
+            <LinearLayout
+                android:id="@+id/fab3Linearlayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="end"
+                android:layout_margin="16dp"
+                >
+            <TextView
+                android:id="@+id/fab3TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:background="@drawable/stroke_fabtext"
+                android:text="Image to PDF"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/ic_baseline_camera_alt_24"
+                app:fabSize="mini"
+                app:rippleColor="#DF3804"/>
+            </LinearLayout>
+            <!--fab4 linearlayout-->
+            <LinearLayout
+                android:id="@+id/fab2Linearlayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="16dp"
+                android:layout_gravity="end"
+                >
+            <TextView
+                android:id="@+id/fab2TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:background="@drawable/stroke_fabtext"
+                android:text="Text to PDF"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/ic_baseline_text_fields_24"
+                app:fabSize="mini"
+                app:rippleColor="#DF3804"/>
+              </LinearLayout>
+             <!-- main fab button-->
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/topFab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_marginLeft="18dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="18dp"
+                android:layout_marginBottom="18dp"
+                app:fabSize="normal"
+                android:src="@drawable/ic_baseline_add_24"
+                app:borderWidth="4dp"
+                app:elevation="12dp"
+                app:rippleColor="#DF3804"/>
+
+        </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="Merge"
+        android:drawableLeft="@drawable/ic_baseline_merge_24"
+        android:drawableTint="#FFFF00"
+        android:backgroundTint="#FF3D00"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:paddingLeft="100dp"
+        android:paddingRight="100dp"
+        android:layout_marginBottom="20dp"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
