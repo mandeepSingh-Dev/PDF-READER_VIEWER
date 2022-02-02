@@ -56,6 +56,7 @@ class EncryptPdf_Fragment : Fragment() {
 
                 if(isEncrypted)
                 {
+                    Log.d("e;fje",isEncrypted.toString())
                     deleteContent(uri)
                 }
             }
