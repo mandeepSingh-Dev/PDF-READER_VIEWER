@@ -18,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.pdf_reader_viewer.ViewPagerAdapter.MyFragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import java.util.jar.Manifest
 
  class MainActivity_ViewPagerHolder : AppCompatActivity()
  {
@@ -35,6 +36,8 @@ import com.google.android.material.tabs.TabLayoutMediator
      override fun onCreate(savedInstanceState: Bundle?) {
          super.onCreate(savedInstanceState)
          setContentView(R.layout.activity_main)
+
+         supportActionBar?.hide()
 
          viewpager2 = findViewById<ViewPager2>(R.id.viewpager2)
          setupViewPager2()
@@ -71,7 +74,9 @@ import com.google.android.material.tabs.TabLayoutMediator
          /** Below two lines are checking the permissions are granted or not*/
          var readPermission=ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
          var writePersmission=ContextCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-          var sdkVersion=Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q
+         var manage_documentsPermission=ContextCompat.checkSelfPermission(this,android.Manifest.permission.MANAGE_DOCUMENTS) == PackageManager.PERMISSION_GRANTED
+
+         var sdkVersion=Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q
          /**here we created a mutablelist to add permissions in list if permissions are not granted*/
          var permissionList= mutableListOf<String>()
 
@@ -81,11 +86,21 @@ import com.google.android.material.tabs.TabLayoutMediator
          if(!readPermission)
          {
                  permissionList.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+             Log.d("dkhnd","read")
          }
          if(!writePersmission)
          {
              permissionList.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+             Log.d("dkhnd","writePersmission")
+
          }
+         if(!manage_documentsPermission)
+         {
+             permissionList.add(android.Manifest.permission.MANAGE_DOCUMENTS)
+             Log.d("dkhnd","manage_documentsPermission")
+
+         }
+
          /**now here we request permissions from resultLauncher... only if permissions are not granted*/
          if(permissionList.isNotEmpty())
          {

@@ -1,6 +1,8 @@
 package com.example.pdf_reader_viewer.UtilClasses
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.View
@@ -13,10 +15,6 @@ import com.tom_roush.pdfbox.pdmodel.font.PDFont
 import com.tom_roush.pdfbox.pdmodel.font.PDType1Font
 import com.tom_roush.pdfbox.pdmodel.graphics.image.JPEGFactory
 import com.tom_roush.pdfbox.pdmodel.graphics.image.LosslessFactory
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStream
 import com.tom_roush.pdfbox.text.PDFTextStripper
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
@@ -24,9 +22,17 @@ import android.graphics.ImageFormat
 import android.graphics.pdf.PdfDocument
 import android.media.Image
 import android.media.ImageWriter
+import android.net.Network
+import android.net.Uri
 import android.os.Build
+import android.os.ParcelFileDescriptor
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.annotation.RequiresApi
+import androidx.core.net.toFile
+import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 
 import com.tom_roush.pdfbox.rendering.PDFRenderer
 import org.bouncycastle.jce.provider.BouncyCastleProvider
@@ -34,12 +40,17 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider
 import com.tom_roush.pdfbox.pdmodel.encryption.StandardProtectionPolicy
 
 import com.tom_roush.pdfbox.pdmodel.encryption.AccessPermission
+import java.io.*
 import java.security.Security
 
 
-class PdfOperations
+class PdfOperations(activity:Activity)
 {
     var pageImage:Bitmap?=null
+    var parcelFileDescriptor: ParcelFileDescriptor?=null
+    var startPage:String?=null
+    var endPage:String?=null
+
 
     fun createPdf(v: View?,activity: Activity) {
         val document = PDDocument()
@@ -139,31 +150,78 @@ class PdfOperations
 
     }
 
-    fun splittingPdf(activity: Activity) {
+    fun splittingPdf(activity: Activity, uri:Uri,numberList:List<String>,pdfNAME:String) {
+    //    var bool=false
         //Loading an existing PDF document
      //   var  file = File(activity?.assets.open("Hello.pdf"));
-        var document = PDDocument.load((activity?.assets.open("Hello.pdf")))
+    //    var document = PDDocument.load((activity?.assets.open("Hello.pdf")))
+        Toast.makeText(activity?.applicationContext,"Please wait!",Toast.LENGTH_LONG).show()
+        parcelFileDescriptor = activity?.contentResolver?.openFileDescriptor(uri, "r")!!
+        val fileDescriptor: FileDescriptor = parcelFileDescriptor?.fileDescriptor!!
+        var inputStraem=FileInputStream(fileDescriptor)
+        var document = PDDocument.load(inputStraem)
 
         //Instantiating Splitter class
         var splitter =  Splitter();
+      //  var listString = formattingof_Pagenumber(atPage)
+
+          if(numberList.size>1){
+              startPage=numberList.get(0)
+              endPage=numberList.get(1)
+              Log.d("ifg7egjdf",startPage+endPage+"sdhsj")
+          }
+          else if(numberList.size==1){
+               startPage=numberList.get(0)
+              Log.d("ifg7egjdf",startPage!!)
+          }
+        else{
+          //  return bool
+        }
+
 
         //splitting the pages of a PDF document
-       // splitter.setSplitAtPage(2)
+        try {
+            if (startPage != null) {
+                Log.d("fy7fgsjfstartPage",startPage!!)
+                splitter.setStartPage(startPage!!.toInt())
+            }
+            if (endPage != null) {
+                Log.d("fy7fgsjfendpage",endPage!!)
+                splitter.setEndPage(endPage!!.toInt())
+            }
+        }catch (e:Exception){}
+        if(startPage!=null && endPage==null){ splitter.setSplitAtPage(startPage!!.toInt().minus(1)) //here we give .minus(1) because when se split at given pagenumber then splitter split pagenumber single page then further pages gets split.
+                                               Log.d("fy7fgsjfsplitAtPage",startPage!!)}
+        //splitter.setSplitAtPage(20)
         var Pages = splitter.split(document);
 
-        //Creating an iterator
-        var iterator = Pages.listIterator();
+        Log.d("eifjkfds",Pages.size.toString())
 
+
+
+        //Creating an iterator
+
+        var iterator = Pages.listIterator();
+        //creating file path i.e sdcard/...
+       var file=createFilePath()
+
+        var pd=PDDocument()
+        var pdd=PDDocument()
+        var fileStr=file.toString()
         //Saving each page as an individual document
         var i = 1;
         while (iterator.hasNext()) {
-            var pd = iterator.next();
-            pd.save("sdcard/sample" + i++ + ".pdf");
+
+             pd = iterator.next();
+            PDFMergerUtility().appendDocument(pdd,pd)  //here we append every splited page to one pdd PDDdocument
+           // pd.save("sdcard/"+pdfNAME + i++ + ".pdf");
+
         }
+        pdd.save(fileStr+"/"+pdfNAME+ i++ +".pdf")
+
         System.out.println("Multiple PDF’s created");
         Log.d("388fh3ev","Multiple PDF’s created")
         document.close();
-
     }
 
 
@@ -181,6 +239,46 @@ class PdfOperations
         //Merging the two documents
         PDFmerger.mergeDocuments(true);
         System.out.println("Documents merged");
+    }
+    fun mergePdfs(activity: Activity,pdflist:ArrayList<Items_pdfs>,mergedPdfName:String) {
+        //Instantiating PDFMergerUtility class
+        try {
+        var PDFmerger =  PDFMergerUtility();
+
+        //Setting the destination file
+        var file=File("sdcard/mergedPdfNameee")
+        if(!file.exists()){
+            file.mkdir()
+        }
+        var outputStream=FileOutputStream(file.absolutePath+"/mergedPdfNee.pdf")
+        PDFmerger.destinationStream=outputStream/*"sdcard/mergedPdfName.pdf"*/;
+            Toast.makeText(activity?.applicationContext,pdflist.size.toString(),Toast.LENGTH_SHORT).show()
+
+        //getting and adding the source files
+        pdflist.forEach {
+            //getting inputStream from uri using ParcelFileDFescripter because simple uri not able use with PDFMerger.addSource
+            parcelFileDescriptor = activity?.contentResolver?.openFileDescriptor(it.appendeduri!!, "r")!!
+            val fileDescriptor: FileDescriptor = parcelFileDescriptor?.fileDescriptor!!
+            var inputStraem=FileInputStream(fileDescriptor)
+
+            Log.d("4t4g4e",inputStraem.toString())
+
+
+            PDFmerger.addSource(inputStraem)
+            Log.d("3g3efgwe","sdsdsfs")
+        }
+       /* PDFmerger.addSource(activity?.assets.open("Hello.pdf"));
+        PDFmerger.addSource(activity?.assets.open("Hello.pdf"));*/
+
+    //Merging the two documents
+    PDFmerger.mergeDocuments(false);
+    System.out.println("Documents merged");
+    parcelFileDescriptor?.close()
+          //  pdflist.removeAll(pdflist)
+}catch (e:Exception){
+    Toast.makeText(activity?.applicationContext,e.cause.toString()+e.message+e.stackTrace,Toast.LENGTH_LONG).show()
+}
+
     }
 
 
@@ -209,7 +307,9 @@ class PdfOperations
         return pageImage!!
     }
 
-    fun createEncryptedPdf(v: View?,activity: Activity) {
+    fun createEncryptedPdf(actvity:Activity,uri:Uri,owner_user_password:String):Boolean {
+
+        var inputStream=convertContentUri_toInputStream(actvity,uri)
         val path: String ="sdcard/crypt.pdf"
         val keyLength = 128 // 128 bit is the highest currently supported
 
@@ -217,8 +317,9 @@ class PdfOperations
         val ap = AccessPermission()
         ap.setCanPrint(false)
 
+
         // Sets the owner password and user password
-        val spp = StandardProtectionPolicy("12345", "hi", ap)
+        val spp = StandardProtectionPolicy(owner_user_password, owner_user_password, ap)
 
         // Setups up the encryption parameters
         spp.encryptionKeyLength = keyLength
@@ -231,9 +332,14 @@ class PdfOperations
         val page = PDPage()
         document.addPage(page)
      //to encrypt existing pdf
-      /*  var pdddovcument=PDDocument.load(activity?.assets?.open("Hello.pdf"))
-        pdddovcument.protect()*/
-        try {
+        var pdddovcument=PDDocument.load(inputStream)
+        pdddovcument.protect(spp)
+        pdddovcument.save(createFilePath().toString()+"/"+owner_user_password+".pdf")
+        pdddovcument.close()
+
+       var isEncrypted= pdddovcument.isEncrypted
+
+     /*   try {
             val contentStream = PDPageContentStream(document, page)
 
             // Write Hello World in blue text
@@ -252,9 +358,67 @@ class PdfOperations
            // tv.setText("Successfully wrote PDF to $path")
         } catch (e: IOException) {
             Log.e("PdfBox-Android-Sample", "Exception thrown while creating PDF for encryption", e)
+        }*/
+        return isEncrypted
+    }
+
+    fun convertContentUri_toInputStream(activity:Activity,appendedUri:Uri):InputStream{
+        parcelFileDescriptor = activity?.contentResolver?.openFileDescriptor(appendedUri, "r")!!
+        val fileDescriptor: FileDescriptor = parcelFileDescriptor?.fileDescriptor!!
+        var inputStraem=FileInputStream(fileDescriptor)
+
+        return inputStraem
+    }
+
+    fun formattingof_Pagenumber(atPage: String): List<String> {
+
+            var list:MutableList<String> = mutableListOf()
+        //return populated list only if atPage is not empty
+        if(!atPage.isEmpty()) {
+            var numberList: MutableList<String> = mutableListOf()
+            // var pageee=atPage.trim()
+            // Log.d("eifnefe",pageee)
+            //val pagenumberstr = atPage.replace("\\s", "")
+            var pagenumberstr = atPage.replace(" ", "")
+            var regex = Regex("[a-zA-Z.+ ]*")
+            pagenumberstr = atPage.replace(regex, "")
+
+
+            Log.d("gfe8ghe", pagenumberstr)
+            if (atPage.contains("-")) {
+                val finalpagenumberlist = pagenumberstr.split("-")
+                finalpagenumberlist.forEach {
+                    Log.d("893u3ng", it)
+                }
+                return finalpagenumberlist
+            } else {
+                numberList.add(pagenumberstr)
+                numberList.forEach {
+                    Log.d("ijff8e", it + "\n" + numberList?.size.toString())
+                }
+                return numberList
+            }
+            list.addAll(numberList)
+        }
+        //return populated list only if atPage is not empty
+        else{
+            return list
         }
     }
 
-
+    fun createFilePath():File
+    {
+        var file=File("sdcard/My PDF App")
+        if(!file.exists())
+        {
+            file.mkdir()
+        }
+        return file
     }
+
+
+
+
+
+}
 

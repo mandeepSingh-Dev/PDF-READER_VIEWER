@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav"
-    app:startDestination="@id/encryptPdf_Fragment">
+    app:startDestination="@id/fragment_MergePdfs">
     <fragment
         android:id="@+id/fragment_MergePdfs"
         android:name="com.example.pdf_reader_viewer.fragments.MergePdfs_Fragment"
@@ -12,6 +12,12 @@
         <action
             android:id="@+id/action_fragment_MergePdfs_to_splitPdf_Fragment"
             app:destination="@id/splitPdf_Fragment" />
+        <action
+            android:id="@+id/action_fragment_MergePdfs_self"
+            app:destination="@id/fragment_MergePdfs"
+            app:launchSingleTop="false"
+            app:popUpTo="@id/fragment_MergePdfs"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/splitPdf_Fragment"
@@ -20,10 +26,21 @@
         <action
             android:id="@+id/action_splitPdf_Fragment_to_encryptPdf_Fragment"
             app:destination="@id/encryptPdf_Fragment" />
+        <action
+            android:id="@+id/action_splitPdf_Fragment_to_fragment_MergePdfs"
+            app:destination="@id/fragment_MergePdfs"
+            app:popUpTo="@id/nav"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/encryptPdf_Fragment"
         android:name="com.example.pdf_reader_viewer.fragments.EncryptPdf_Fragment"
         android:label="encrypt_pdf_fragment"
-        tools:layout="@layout/encrypt_pdf_fragment" />
+        tools:layout="@layout/encrypt_pdf_fragment" >
+        <action
+            android:id="@+id/action_encryptPdf_Fragment_to_fragment_MergePdfs"
+            app:destination="@id/fragment_MergePdfs"
+            app:popUpTo="@id/nav"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

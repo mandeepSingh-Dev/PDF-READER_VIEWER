@@ -6,20 +6,204 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.SplitPdf_Fragment"
     >
-    <Toolbar
-        android:id="@+id/jf"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="#FBC02D"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/outerContraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+
+            >
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/splitToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:title="Split Pdf"
         android:hapticFeedbackEnabled="true"
         app:layout_constraintRight_toRightOf="parent"
-        >
-        <!--<ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/mailbox"-->
-    </Toolbar>
+        app:layout_constraintBottom_toTopOf="@id/holderContstraintlayout"
 
+        >
+        <TextView
+            android:id="@+id/splitTextViewToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Split PDFs"
+            android:textSize="28sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:paddingTop="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            />
+        <ImageView
+            android:id="@+id/addpDFImageView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_baseline_add_circle_outline_24"
+            android:layout_gravity="end"
+            android:layout_marginRight="50dp"
+            app:tint="@color/black" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/holderContstraintlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintTop_toBottomOf="@id/splitToolbar"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    android:background="@drawable/shape1"
+
+    >
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="The PDF will be Split into multiple PDFs"
+app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="50dp"
+        android:fontFamily="sans-serif"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/PDFNameSplit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="PDF Name"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        android:layout_marginTop="40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="#000000"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:id="@+id/pdfTotalPage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Total Pages"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/PDFNameSplit"
+        app:layout_constraintLeft_toLeftOf="@id/PDFNameSplit"
+        android:layout_marginTop="9dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edittextlayout1"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:shapeAppearance="@style/ShapeAppearance.MaterialComponents.SmallComponent"
+        android:labelFor="@id/split_Button"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:gravity="center"
+        android:textColorHint="#C8B5B5"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/white"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
+        app:boxStrokeWidth="2dp"
+        app:expandedHintEnabled="true"
+        app:hintAnimationEnabled="true"
+        app:hintTextColor="#C8B5B5"
+        app:errorTextColor="#FF4C4C"
+        app:errorEnabled="true"
+        app:boxStrokeErrorColor="#FF4C4C"
+        app:layout_constraintLeft_toLeftOf="@id/PDFNameSplit"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pdfTotalPage"
+        app:layout_constraintBottom_toTopOf="@id/edittextlayout2"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/splitPageEdittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Example: 1,1-5,6-7,8"
+            android:textColor="#E65100"
+            android:textColorHint="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edittextlayout2"
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColorHint="#C8B5B5"
+        app:boxBackgroundMode="outline"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxStrokeColor="#FFFFFF"
+        app:expandedHintEnabled="true"
+        app:hintAnimationEnabled="true"
+        android:hint="Enter name "
+
+        app:hintTextColor="#C8B5B5"
+        app:errorTextColor="#FF4C4C"
+        app:errorEnabled="true"
+        app:boxStrokeErrorColor="#FF4C4C"
+        app:layout_constraintLeft_toLeftOf="@id/PDFNameSplit"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edittextlayout1"
+        app:layout_constraintBottom_toBottomOf="parent"
+       android:layout_marginTop="30dp"
+        android:labelFor="@id/split_Button"
+        app:shapeAppearance="@style/ShapeAppearance.MaterialComponents.SmallComponent"
+style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/userPdfNameEditext"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:textColorHint="@color/white"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/split_Button"
+            android:layout_width="290dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:text="Split PDF"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:backgroundTint="#FBC02D"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            app:strokeColor="#FFFFFF"
+            app:cornerRadius="10dp"
+            app:rippleColor="#FF9155"
+            app:strokeWidth="2dp"
+            android:layout_marginBottom="100dp"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

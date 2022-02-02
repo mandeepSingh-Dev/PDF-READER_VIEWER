@@ -15,9 +15,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.pdf_reader_viewer.R
 import android.webkit.MimeTypeMap
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,14 +29,13 @@ import com.tom_roush.pdfbox.pdmodel.graphics.image.LosslessFactory
 import android.graphics.BitmapFactory
 
 import android.graphics.Bitmap
-import android.widget.LinearLayout
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.Navigation
+import android.widget.*
+import com.example.pdf_reader_viewer.PdfView_Activity
 import com.example.pdf_reader_viewer.PdfsTools_Activity
-import com.example.pdf_reader_viewer.databinding.BottomsheetDialogueBinding
+import com.example.pdf_reader_viewer.UtilClasses.FragmentNames
+import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.example.pdf_reader_viewer.databinding.PdfListFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 import com.tom_roush.pdfbox.pdmodel.graphics.image.JPEGFactory
 
@@ -54,6 +50,7 @@ import com.tom_roush.pdfbox.pdmodel.PDPage
 import com.tom_roush.pdfbox.pdmodel.PDDocument
 import com.tom_roush.pdfbox.util.PDFBoxResourceLoader
 import java.io.*
+import java.lang.RuntimeException
 
 
 class pdf_list_Fragment : Fragment() {
@@ -79,8 +76,9 @@ class pdf_list_Fragment : Fragment() {
     lateinit  var deleteLinearLayout:LinearLayout
     lateinit  var renameeLinearLayout:LinearLayout
     lateinit  var detailsLinearLayout:LinearLayout
+    var myAdapter:MyAdapter?=null
 
-    var OPEN_MERGE_FRAGMENT="OPEN_MERGE_FRAGMENT"
+//    var OPEN_MERGE_FRAGMENT="OPEN_MERGE_FRAGMENT"
 
 
 
@@ -88,6 +86,7 @@ class pdf_list_Fragment : Fragment() {
         super.onCreate(savedInstanceState)
         pdflist = ArrayList()
         PDFBoxResourceLoader.init(activity?.applicationContext);
+//        throw RuntimeException()
 
     }
 
@@ -114,21 +113,6 @@ class pdf_list_Fragment : Fragment() {
 
         // function for initializing bottomsheetViews
         initializeBottomsheetView()
-        mergeLinearLayout?.setOnClickListener {
-            var intent=Intent(context,PdfsTools_Activity::class.java)
-            intent.putExtra(OPEN_MERGE_FRAGMENT,OPEN_MERGE_FRAGMENT)
-            startActivity(intent)
-            Log.d("3igwn3bg","mskmsk")
-
-/*
-            var navController=Navigation.findNavController(view)
-            navController?.navigate(R.id.fragment_MergePdfs)*/
-           /* var mergeFragment=MergePdfs_Fragment()
-            var fragmentmanager=activity?.supportFragmentManager
-            var transaction=fragmentmanager?.beginTransaction()?.replace(R.id.fragmentContainerView,mergeFragment)
-            transaction?.commit()*/
-
-        }
 
         /* //create pdf
         createPdf(view)
@@ -143,7 +127,6 @@ class pdf_list_Fragment : Fragment() {
         displayRenderedImage(view,requireActivity(),bitmap)
         //encrypting pdf file
         PdfOperations().createEncryptedPdf(view,requireActivity()!!)*/
-
 
         recyclerView = view.findViewById(R.id.pdfListRecylerView)
         progressBar = activity?.findViewById<ProgressBar>(R.id.progress_bar)
@@ -161,20 +144,16 @@ class pdf_list_Fragment : Fragment() {
                     } else {
                         Log.d("3u8hfjsncsjcisj8", "cnsncjnj2")
                     }
-                    var myAdapter = MyAdapter(requireContext(), pdflist!!)
+                     myAdapter = MyAdapter(requireContext(), pdflist!!)
                     recyclerView?.layoutManager = LinearLayoutManager(requireContext())
                     recyclerView?.adapter = myAdapter
                     var textView: TextView = view.findViewById(R.id.textviewALLL)
                     textView.text = "All (" + pdflist?.size.toString() + ")"
 
+                    searchPdfs(pdflist)
+                    //this method for  setCustomClickListner method that is defined in MyAdapter class
+                    myAdapterClickListner(myAdapter!!,pdflist)
 
-                    myAdapter.setCustomOnClickListenerr(object:MyAdapter.CustomOnClickListener{
-                        override fun customOnClick(position: Int) {
-                            Log.d("3iegnv3me,wv",position.toString())
-                            pdfName1_bottomsheet?.setText(position.toString())
-                            bottomSheetDialog?.show()
-                        }
-                    })
                 }
             })
     }// END OF onViewCreated block
@@ -479,4 +458,98 @@ class pdf_list_Fragment : Fragment() {
         renameeLinearLayout=bottomSheetDialog?.findViewById<LinearLayout>(R.id.renameeLinearLayout)!!
         detailsLinearLayout=bottomSheetDialog?.findViewById<LinearLayout>(R.id.detailsLinearLayout)!!
     }
+    fun clickOnbottomSheetViews(pdflist:ArrayList<Items_pdfs>,position:Int){
+        //this will send user to PdfTools_Activity----> Merge Fragment with pdfuri and other data acc to position
+        mergeLinearLayout?.setOnClickListener {
+
+            var intent=Intent(context,PdfsTools_Activity::class.java)
+
+            intent.putExtra(FragmentNames.OPEN_MERGE_FRAGMENT,FragmentNames.OPEN_MERGE_FRAGMENT)
+                  .putExtra(PDFProp.PDF_TITLE,pdflist?.get(position)?.title)
+                  .putExtra(PDFProp.PDF_APPENDED_URI,pdflist?.get(position)?.appendeduri)
+                  .putExtra(PDFProp.PDF_SIZE,pdflist?.get(position)?.size)
+            startActivity(intent)
+
+            Log.d("3igwn3bg","mskmsk")
+            bottomSheetDialog?.hide()
+        }
+        //this will send user to PdfTools_Activity----> Split Fragment with pdfuri and other data acc to position
+        splitLinearLayout?.setOnClickListener {
+
+            var intent=Intent(context,PdfsTools_Activity::class.java)
+
+            intent.putExtra(FragmentNames.OPEN_SPLIT_FRAGMENT,FragmentNames.OPEN_SPLIT_FRAGMENT)
+                .putExtra(PDFProp.PDF_TITLE,pdflist?.get(position)?.title)
+                .putExtra(PDFProp.PDF_APPENDED_URI,pdflist?.get(position)?.appendeduri)
+                .putExtra(PDFProp.PDF_SIZE,pdflist?.get(position)?.size)
+
+            startActivity(intent)
+            Log.d("3igwn3bg","mskmsk")
+            bottomSheetDialog?.hide()
+        }
+        //this will send user to PdfViewActivity with pdfuri AND pdftitle acc to position
+         openLinearLayout?.setOnClickListener {
+
+            var intent=Intent(context,PdfView_Activity::class.java)
+
+            intent.putExtra(PDFProp.PDF_APPENDED_URI,pdflist?.get(position)?.appendeduri.toString())
+                  .putExtra(PDFProp.PDF_TITLE,pdflist?.get(position)?.title)
+
+            startActivity(intent)
+            Log.d("3igwn3bg","mskmsk")
+             bottomSheetDialog?.hide()
+         }
+    }
+
+    fun searchPdfs(pdfList:ArrayList<Items_pdfs>)
+    {
+        var arrayListt=ArrayList<Items_pdfs>()
+
+        binding?.pdflistSearchView?.setOnQueryTextListener(object:SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                arrayListt.removeAll(arrayListt)
+
+                pdfList.forEach {
+                    if(it.title.lowercase().contains(newText?.lowercase()!!)) {
+                        arrayListt.add(it)
+
+                    }
+                }
+                if(arrayListt.isEmpty())
+                {
+                        binding?.emptyText?.visibility = View.VISIBLE
+                        binding?.emptyView?.visibility = View.VISIBLE
+                }else {
+                    myAdapter = MyAdapter(requireContext(), arrayListt)
+                    recyclerView?.layoutManager = LinearLayoutManager(requireContext())
+                    recyclerView?.adapter = myAdapter
+                   //this method for  setCustomClickListner method that is defined in MyAdapter class
+                    myAdapterClickListner(myAdapter!!,arrayListt)
+
+                }
+                return  true
+            }
+
+        })
+    }
+    fun myAdapterClickListner(myAdapter:MyAdapter,pdflist:ArrayList<Items_pdfs>)
+    {
+        myAdapter?.setCustomOnClickListenerr(object:MyAdapter.CustomOnClickListener{
+            override fun customOnClick(position: Int) {
+                Log.d("3iegnv3me,wv",position.toString())
+                pdfName1_bottomsheet?.setText(position.toString())
+                bottomSheetDialog?.show()
+                clickOnbottomSheetViews(pdflist,position)
+
+            }
+        })
+
+    }
+
 }

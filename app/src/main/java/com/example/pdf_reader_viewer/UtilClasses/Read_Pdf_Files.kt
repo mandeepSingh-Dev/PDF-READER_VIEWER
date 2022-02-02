@@ -1,13 +1,11 @@
 package com.example.pdf_reader_viewer.UtilClasses
 
-import android.content.ClipData
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.util.Log
-import android.view.View
 import android.webkit.MimeTypeMap
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import kotlinx.coroutines.Dispatchers
@@ -102,10 +100,17 @@ class Read_Pdf_Files(context:Context)
                 var dateModified = cursor?.getString(dateModColoumn)
                 var size = cursor?.getString(sizeColoumn)
                 var relativepath = cursor?.getString(relativePathColoumn)
+                Log.d("fooehuifhned",title+id+bucket+dateModified+size+relativepath)
 
-                if (bucket != null) {
-                    bucketsList.add(bucket!!)
-                }
+                //Handling Nullability for varables
+                if (bucket != null) { bucketsList.add(bucket!!) }
+                if(title==null){title="N.A"}
+                if(dateModified==null){dateModified="N.A"}
+                if(size==null){size="N.A"}
+                if(relativepath==null){relativepath="N.A"}
+                if(bucket==null){bucket="N.A"}
+
+
 
                 // Log.d("PPPDFDF", displeynamee + " " + title + "____"/*+RELATIVEPATH*/ + id +"_____"+bucket)
                 // activity?.runOnUiThread {
@@ -164,9 +169,13 @@ class Read_Pdf_Files(context:Context)
                 var dateModified = cursor?.getString(dateModColoumn)
                 var size = cursor?.getString(sizeColoumn)
 
-                if (bucket != null) {
-                    bucketsList.add(bucket!!)
-                }
+                //Handling Nullability for varables
+                if (bucket != null) { bucketsList.add(bucket!!) }
+                if (bucket != null) { bucketsList.add(bucket!!) }
+                if(title==null){title="N.A"}
+                if(dateModified==null){dateModified="N.A"}
+                if(size==null){size="N.A"}
+                if(bucket==null){bucket="N.A"}
                 Log.d("PPPDFDF",  " " + title + "____"/*+RELATIVEPATH*/ + id +"_____"+bucket)
                 // activity?.runOnUiThread {
                 //   Toast.makeText(context,/*RELATIVEPATH+*/"  " + title + volumename, Toast.LENGTH_LONG).show()
@@ -193,6 +202,7 @@ class Read_Pdf_Files(context:Context)
         //  LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(Intent("SENDINGFOLDERLIST").putStringArrayListExtra("FOLDERLIST",folderlistExm))
 
     }
+
 
 
 

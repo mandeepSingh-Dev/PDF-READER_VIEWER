@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import com.example.pdf_reader_viewer.PdfView_Activity
 import com.example.pdf_reader_viewer.PdfsTools_Activity
 import com.example.pdf_reader_viewer.R
+import com.example.pdf_reader_viewer.UtilClasses.FragmentNames
+import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.example.pdf_reader_viewer.databinding.PdfToolsFragmentBinding
 
 class PdfTools_Fragment : Fragment() {
@@ -33,8 +35,17 @@ class PdfTools_Fragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding?.mergeImage?.setOnClickListener {
             var intent= Intent(activity,PdfsTools_Activity::class.java)
+            intent.putExtra(FragmentNames.OPEN_MERGE_FRAGMENT, FragmentNames.OPEN_MERGE_FRAGMENT)
             startActivity(intent)
-
         }
-    }
+        binding?.splitImage?.setOnClickListener {
+            var intent= Intent(activity,PdfsTools_Activity::class.java)
+            intent.putExtra(FragmentNames.OPEN_SPLIT_FRAGMENT, FragmentNames.OPEN_SPLIT_FRAGMENT)
+            startActivity(intent)
+        }
+        binding?.encryptImage?.setOnClickListener {
+            var intent= Intent(activity,PdfsTools_Activity::class.java)
+            intent.putExtra(FragmentNames.OPEN_ENCRYPT_FRAGMENT, FragmentNames.OPEN_ENCRYPT_FRAGMENT)
+            startActivity(intent)
+        }    }
 }

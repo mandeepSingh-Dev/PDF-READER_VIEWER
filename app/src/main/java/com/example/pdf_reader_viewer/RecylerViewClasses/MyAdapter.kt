@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.pdf_reader_viewer.PdfView_Activity
 import com.example.pdf_reader_viewer.PdfsTools_Activity
 import com.example.pdf_reader_viewer.R
+import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.example.pdf_reader_viewer.fragments.MergePdfs_Fragment
 import com.example.pdf_reader_viewer.fragments.PdfTools_Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -45,7 +46,11 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
         holder.pdfsize.setText(pdfList?.get(position)?.size+"    "+pdfList?.size)
 
         holder.itemView.setOnClickListener {
-            context?.startActivity(Intent(context, PdfView_Activity::class.java).putExtra("PDF_URI",pdfList?.get(position)?.appendeduri.toString()))
+            context?.startActivity(
+                Intent(context, PdfView_Activity::class.java)
+                    .putExtra("PDF_URI",pdfList?.get(position)?.appendeduri.toString())
+                    .putExtra(PDFProp.PDF_TITLE,pdfList?.get(position)?.title)
+            )
         }
         holder.menubutton.setOnClickListener {
           /*  pdfNamebottomsheet?.text=pdfList?.get(position)?.title
