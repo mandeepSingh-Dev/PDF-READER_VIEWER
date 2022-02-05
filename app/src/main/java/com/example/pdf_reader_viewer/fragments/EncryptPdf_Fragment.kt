@@ -1,5 +1,6 @@
 package com.example.pdf_reader_viewer.fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -10,11 +11,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.UtilClasses.PdfOperations
 import com.example.pdf_reader_viewer.databinding.EncryptPdfFragmentBinding
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
+import java.lang.Exception
 
 
 class EncryptPdf_Fragment : Fragment() {
@@ -43,6 +48,7 @@ class EncryptPdf_Fragment : Fragment() {
     }
 
 
+    @SuppressLint("ResourceType")
     var launcher=registerForActivityResult(object:ActivityResultContracts.OpenDocument(){
 
     }, ActivityResultCallback {
@@ -51,30 +57,37 @@ class EncryptPdf_Fragment : Fragment() {
         var isEncrypted=false
         binding?.encryptButton?.setOnClickListener {
             var text=binding?.edittextlayout11?.editText?.text.toString()
-            if(!text.isEmpty()) {
-                isEncrypted=PdfOperations(requireActivity()).createEncryptedPdf(requireActivity(), uri, text)
+            try {
+                if (!text.isEmpty()) {
 
-                if(isEncrypted)
-                {
-                    Log.d("e;fje",isEncrypted.toString())
-                    deleteContent(uri)
+                    isEncrypted = PdfOperations(requireActivity()).createEncryptedPdf(requireActivity(), uri, text,it)
+
+                    if (isEncrypted) {
+                        var snackbar=Snackbar.make(it,"PDF Encrypted",3500).show()
+                        deleteContent(uri)
+                    }
+                } else {
+                    binding?.edittextlayout11?.error = "Invalid"
                 }
-            }
-            else{
-                binding?.edittextlayout11?.error = "Invalid"
+            }catch (e:Exception){
+                if(e.message!=null) {
+                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
     })
 
-    fun deleteContent(uri: Uri)
+    fun deleteContent(uri: Uri):Boolean
     {
+
         val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
         // Check for the freshest data.
         activity?.contentResolver?.takePersistableUriPermission(uri, takeFlags)
         var bool=DocumentsContract.deleteDocument(activity?.applicationContext?.contentResolver!!, uri)
         Log.d("867r38fh",bool.toString())
 
+        return bool
     }
 
 }

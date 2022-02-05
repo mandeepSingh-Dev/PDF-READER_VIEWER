@@ -11,6 +11,7 @@ import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.UtilClasses.FragmentNames
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.example.pdf_reader_viewer.fragments.EncryptPdf_Fragment
+import com.example.pdf_reader_viewer.fragments.ImageTo_Pdf_Fragment
 import com.example.pdf_reader_viewer.fragments.MergePdfs_Fragment
 import com.example.pdf_reader_viewer.fragments.SplitPdf_Fragment
 import java.nio.BufferUnderflowException
@@ -61,6 +62,12 @@ class PdfsTools_Activity : AppCompatActivity() {
             encryptFragment.arguments=bundle
             supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView,encryptFragment)/*.addToBackStack(null).setReorderingAllowed(true)*/.commit()
         }
+        else if(intent.getStringExtra(FragmentNames.OPEN_IMGTOPDF_FRAGMENT).equals(FragmentNames.OPEN_IMGTOPDF_FRAGMENT))
+        {
+            var imagtopdf_fragment=ImageTo_Pdf_Fragment()
+            supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView,imagtopdf_fragment).commit()
+        }
+
 
 
     }
@@ -76,4 +83,6 @@ class PdfsTools_Activity : AppCompatActivity() {
 
         return bundle
     }
+
+
 }

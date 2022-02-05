@@ -4,53 +4,45 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.*
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.pdf_reader_viewer.R
 import android.webkit.MimeTypeMap
+import android.widget.*
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pdf_reader_viewer.UtilClasses.MyViewModel
-
-import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
-import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter
-import kotlinx.coroutines.*
-import com.tom_roush.pdfbox.pdmodel.graphics.image.LosslessFactory
-
-import android.graphics.BitmapFactory
-
-import android.graphics.Bitmap
-import android.widget.*
 import com.example.pdf_reader_viewer.PdfView_Activity
 import com.example.pdf_reader_viewer.PdfsTools_Activity
-import com.example.pdf_reader_viewer.UtilClasses.FragmentNames
-import com.example.pdf_reader_viewer.UtilClasses.PDFProp
+import com.example.pdf_reader_viewer.R
+import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
+import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter
+import com.example.pdf_reader_viewer.UtilClasses.*
 import com.example.pdf_reader_viewer.databinding.PdfListFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
-
-import com.tom_roush.pdfbox.pdmodel.graphics.image.JPEGFactory
-
-import com.tom_roush.pdfbox.pdmodel.PDPageContentStream
-
-import com.tom_roush.pdfbox.pdmodel.font.PDType1Font
-
-import com.tom_roush.pdfbox.pdmodel.font.PDFont
-
-import com.tom_roush.pdfbox.pdmodel.PDPage
-
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tom_roush.pdfbox.pdmodel.PDDocument
+import com.tom_roush.pdfbox.pdmodel.PDPage
+import com.tom_roush.pdfbox.pdmodel.PDPageContentStream
+import com.tom_roush.pdfbox.pdmodel.font.PDFont
+import com.tom_roush.pdfbox.pdmodel.font.PDType1Font
+import com.tom_roush.pdfbox.pdmodel.graphics.image.JPEGFactory
+import com.tom_roush.pdfbox.pdmodel.graphics.image.LosslessFactory
 import com.tom_roush.pdfbox.util.PDFBoxResourceLoader
+import kotlinx.coroutines.*
 import java.io.*
-import java.lang.RuntimeException
+import java.lang.Exception
 
 
 class pdf_list_Fragment : Fragment() {
@@ -114,6 +106,9 @@ class pdf_list_Fragment : Fragment() {
         // function for initializing bottomsheetViews
         initializeBottomsheetView()
 
+      //  launcher.launch(null)
+       // launcher1.launch(arrayOf("image/*"))
+
         /* //create pdf
         createPdf(view)
         //function to strip text from pdf
@@ -150,6 +145,9 @@ class pdf_list_Fragment : Fragment() {
                     var textView: TextView = view.findViewById(R.id.textviewALLL)
                     textView.text = "All (" + pdflist?.size.toString() + ")"
 
+             activity?.runOnUiThread {
+                   myAdapter?.notifyDataSetChanged()
+             }
                     searchPdfs(pdflist)
                     //this method for  setCustomClickListner method that is defined in MyAdapter class
                     myAdapterClickListner(myAdapter!!,pdflist)
@@ -458,7 +456,8 @@ class pdf_list_Fragment : Fragment() {
         renameeLinearLayout=bottomSheetDialog?.findViewById<LinearLayout>(R.id.renameeLinearLayout)!!
         detailsLinearLayout=bottomSheetDialog?.findViewById<LinearLayout>(R.id.detailsLinearLayout)!!
     }
-    fun clickOnbottomSheetViews(pdflist:ArrayList<Items_pdfs>,position:Int){
+
+    fun clickOnbottomSheetViews(pdflist:ArrayList<Items_pdfs>,position:Int,myAdapter: MyAdapter){
         //this will send user to PdfTools_Activity----> Merge Fragment with pdfuri and other data acc to position
         mergeLinearLayout?.setOnClickListener {
 
@@ -499,6 +498,33 @@ class pdf_list_Fragment : Fragment() {
             Log.d("3igwn3bg","mskmsk")
              bottomSheetDialog?.hide()
          }
+        //this will show details on dialogue
+        detailsLinearLayout?.setOnClickListener {
+            showDialoguewithDetails(pdflist,position)
+        }
+        deleteLinearLayout?.setOnClickListener {
+            try {
+                Log.d("in3g3", position.toString())
+                var intt = context?.contentResolver?.delete(pdflist?.get(position)?.appendeduri!!, null, null)
+                bottomSheetDialog?.hide()
+                pdflist?.remove(pdflist?.get(position))
+                myAdapter.notifyItemRemoved(position)
+                myAdapter.notifyItemRangeChanged(position, pdflist?.size!!)
+            }catch (e:Exception){Toast.makeText(requireContext(),e.message,Toast.LENGTH_SHORT).show()}
+        }
+
+        binding?.floatingButton?.setOnClickListener {
+            var intent=Intent(context,PdfsTools_Activity::class.java)
+
+            intent.putExtra(FragmentNames.OPEN_IMGTOPDF_FRAGMENT,FragmentNames.OPEN_IMGTOPDF_FRAGMENT)
+              /*  .putExtra(PDFProp.PDF_TITLE,pdflist?.get(position)?.title)
+                .putExtra(PDFProp.PDF_APPENDED_URI,pdflist?.get(position)?.appendeduri)
+                .putExtra(PDFProp.PDF_SIZE,pdflist?.get(position)?.size)*/
+
+            startActivity(intent)
+            Log.d("3igwn3bg","mskmsk")
+        }
+
     }
 
     fun searchPdfs(pdfList:ArrayList<Items_pdfs>)
@@ -545,11 +571,48 @@ class pdf_list_Fragment : Fragment() {
                 Log.d("3iegnv3me,wv",position.toString())
                 pdfName1_bottomsheet?.setText(position.toString())
                 bottomSheetDialog?.show()
-                clickOnbottomSheetViews(pdflist,position)
+                clickOnbottomSheetViews(pdflist,position,myAdapter)
 
             }
         })
 
     }
+    fun showDialoguewithDetails(pdflist:ArrayList<Items_pdfs>,position:Int){
+
+        var material=MaterialAlertDialogBuilder(requireContext(),R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
+        var viewgroup=activity?.findViewById<ViewGroup>(R.id.content)
+        var view = LayoutInflater.from(requireContext()).inflate(R.layout.custom_dialgue,viewgroup)
+        material.setView(view)
+        val namedialogue=view.findViewById<TextView>(R.id.nameTextviewDialogue)
+        val datedialogue=view.findViewById<TextView>(R.id.datetextviewDailgoue)
+        val sizedialogue=view.findViewById<TextView>(R.id.sizeTextviewDialogue)
+        // val pathdialogue=view.findViewById<TextView>(R.id.pathtextviewDailgoue)
+
+        namedialogue.text=pdflist?.get(position)?.title
+        datedialogue.text=ConversionandUtilsClass().convertToDate(pdflist?.get(position)?.date_modified?.toLong()!!).get(1)  //get date with time also
+        sizedialogue.text=ConversionandUtilsClass().bytesToMB(pdflist?.get(position)?.size)+" mb"
+        /*if(pdflist.get(position).relativePath!=null) {
+            pathdialogue.text = pdflist?.get(position)?.relativePath
+        }*/
+
+
+
+        var dialoguee=material.create()
+        dialoguee.show()
+    }
+
+  /*  var launcher=registerForActivityResult(ActivityResultContracts.TakePicturePreview(),
+        ActivityResultCallback {
+         PdfOperations(requireActivity())?.createPdf(view,requireActivity(),it)
+        })
+    var launcher1=registerForActivityResult(ActivityResultContracts.OpenDocument(),
+        ActivityResultCallback {
+            var inputStream=activity?.contentResolver?.openInputStream(it)
+          var bitmap=  BitmapFactory.decodeStream(inputStream)
+            PdfOperations(requireActivity())?.createPdf(view,requireActivity(),bitmap)
+
+        })*/
+
+
 
 }

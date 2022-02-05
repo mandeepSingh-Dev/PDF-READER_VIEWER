@@ -10,7 +10,10 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="insideInset"
+        android:verticalScrollbarPosition="right">
 
         <LinearLayout
             android:id="@+id/linearwithSearchView"

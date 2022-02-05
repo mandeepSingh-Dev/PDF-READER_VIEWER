@@ -2,20 +2,22 @@ package com.example.pdf_reader_viewer.RecylerViewClasses
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pdf_reader_viewer.PdfView_Activity
 import com.example.pdf_reader_viewer.PdfsTools_Activity
 import com.example.pdf_reader_viewer.R
+import com.example.pdf_reader_viewer.UtilClasses.ConversionandUtilsClass
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
-import com.example.pdf_reader_viewer.fragments.MergePdfs_Fragment
-import com.example.pdf_reader_viewer.fragments.PdfTools_Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import java.text.DecimalFormat
+import java.util.*
 
 class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.Adapter<MyAdapter.MyViewHolder>()
 {
@@ -29,9 +31,11 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
 
-        var view=LayoutInflater.from(context).inflate(R.layout.list_item,parent,false)
-        var myviewHolder=MyViewHolder(view)
-          /**setting BottomSheetDialogue*/
+        val view=LayoutInflater.from(context).inflate(R.layout.list_item,parent,false)
+        val myviewHolder=MyViewHolder(view)
+
+        /**setting BottomSheetDialogue*/
+
         bottomsheetView=LayoutInflater.from(context).inflate(R.layout.bottomsheet_dialogue,parent,false)
         bottomsheetDialogue= BottomSheetDialog(context!!,R.style.Theme_Design_BottomSheetDialog)
         bottomsheetDialogue?.setContentView(bottomsheetView!!)
@@ -41,15 +45,24 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        var displayName=pdfList?.get(position)?.title
+        var itemsPdfs=pdfList?.get(position)
+        var displayName=itemsPdfs?.title
         holder.pdfName.setText(displayName)
-        holder.pdfsize.setText(pdfList?.get(position)?.size+"    "+pdfList?.size)
+
+        var sizemb=ConversionandUtilsClass().bytesToMB(itemsPdfs?.size!!)
+        holder.pdfsize.setText(sizemb+" mb")
+        holder.dateTextView.setText(itemsPdfs.date_modified)
+
+        var longseconds=itemsPdfs.date_modified?.toLong()
+       // ConversionClass().convertToDate(longseconds!!)
+        val datelist=ConversionandUtilsClass().convertToDate(longseconds!!)
+        holder.dateTextView.text=datelist.get(0) //here 0 position gives date without time
 
         holder.itemView.setOnClickListener {
             context?.startActivity(
                 Intent(context, PdfView_Activity::class.java)
-                    .putExtra("PDF_URI",pdfList?.get(position)?.appendeduri.toString())
-                    .putExtra(PDFProp.PDF_TITLE,pdfList?.get(position)?.title)
+                    .putExtra("PDF_URI",itemsPdfs?.appendeduri.toString())
+                    .putExtra(PDFProp.PDF_TITLE,itemsPdfs?.title)
             )
         }
         holder.menubutton.setOnClickListener {
@@ -74,9 +87,9 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
     class MyViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
 
         var pdfsize:TextView=itemView.findViewById(R.id.sizePDF)
-             var pdfName:TextView=itemView.findViewById(R.id.pdfName1)
+        var pdfName:TextView=itemView.findViewById(R.id.pdfName1)
         var menubutton=itemView.findViewById<ImageButton>(R.id.threedots_ImageButton)
-
+        var dateTextView=itemView.findViewById<TextView>(R.id.dateModifiedText)
 
 
     }
@@ -89,6 +102,21 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
     fun setCustomOnClickListenerr(customOnClickListener: CustomOnClickListener){
         this.customOnClickListener=customOnClickListener
     }
+
+    fun bytesToMB(bytes:String):String{
+         var bytess=bytes.toFloat()
+        var MEGABYTE = 1024*1024
+        var totalmb = bytess/MEGABYTE
+
+        //formatting totalmb eg. 1.40 mb
+        var df=DecimalFormat()
+            df.maximumFractionDigits=2
+        var formatedMB=df.format(totalmb)
+
+        Log.d("43834hb10",formatedMB)
+        return formatedMB
+    }
+
 
 }
 

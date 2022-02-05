@@ -83,7 +83,7 @@ class Read_Pdf_Files(context:Context)
             val idColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)!!
             val displayColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME)!!
             val bucketColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)!!
-            val dateModColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.DATE_MODIFIED)!!
+            val dateModColoumn = cursor?.getColumnIndex(MediaStore.MediaColumns.DATE_MODIFIED)!!
             val sizeColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.SIZE)!!
             val relativePathColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.RELATIVE_PATH)!!
 
@@ -101,6 +101,10 @@ class Read_Pdf_Files(context:Context)
                 var size = cursor?.getString(sizeColoumn)
                 var relativepath = cursor?.getString(relativePathColoumn)
                 Log.d("fooehuifhned",title+id+bucket+dateModified+size+relativepath)
+
+
+                //practise
+                Log.d("3ggh3gh3vb",dateModified.toString()+"gfgege")
 
                 //Handling Nullability for varables
                 if (bucket != null) { bucketsList.add(bucket!!) }
@@ -168,6 +172,8 @@ class Read_Pdf_Files(context:Context)
                 var bucket = cursor?.getString(bucketColoumn)
                 var dateModified = cursor?.getString(dateModColoumn)
                 var size = cursor?.getString(sizeColoumn)
+
+
 
                 //Handling Nullability for varables
                 if (bucket != null) { bucketsList.add(bucket!!) }

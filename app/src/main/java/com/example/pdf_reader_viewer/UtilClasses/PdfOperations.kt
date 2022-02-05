@@ -1,47 +1,45 @@
 package com.example.pdf_reader_viewer.UtilClasses
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.pdf.PdfDocument
+import android.net.Uri
+import android.os.ParcelFileDescriptor
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import com.example.pdf_reader_viewer.R
+import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
+import com.github.barteksc.pdfviewer.PDFView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
+import com.tom_roush.pdfbox.cos.COSDocument
+import com.tom_roush.pdfbox.cos.COSName
 import com.tom_roush.pdfbox.multipdf.PDFMergerUtility
 import com.tom_roush.pdfbox.multipdf.Splitter
 import com.tom_roush.pdfbox.pdmodel.PDDocument
 import com.tom_roush.pdfbox.pdmodel.PDPage
 import com.tom_roush.pdfbox.pdmodel.PDPageContentStream
+import com.tom_roush.pdfbox.pdmodel.common.PDStream
+import com.tom_roush.pdfbox.pdmodel.encryption.AccessPermission
+import com.tom_roush.pdfbox.pdmodel.encryption.StandardProtectionPolicy
 import com.tom_roush.pdfbox.pdmodel.font.PDFont
 import com.tom_roush.pdfbox.pdmodel.font.PDType1Font
+
 import com.tom_roush.pdfbox.pdmodel.graphics.image.JPEGFactory
 import com.tom_roush.pdfbox.pdmodel.graphics.image.LosslessFactory
-import com.tom_roush.pdfbox.text.PDFTextStripper
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
-import android.graphics.ImageFormat
-import android.graphics.pdf.PdfDocument
-import android.media.Image
-import android.media.ImageWriter
-import android.net.Network
-import android.net.Uri
-import android.os.Build
-import android.os.ParcelFileDescriptor
-import android.widget.ImageView
-import android.widget.Toast
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.annotation.RequiresApi
-import androidx.core.net.toFile
-import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
-
+import com.tom_roush.pdfbox.pdmodel.graphics.image.PDImageXObject
 import com.tom_roush.pdfbox.rendering.PDFRenderer
+import com.tom_roush.pdfbox.text.PDFTextStripper
 import org.bouncycastle.jce.provider.BouncyCastleProvider
-
-import com.tom_roush.pdfbox.pdmodel.encryption.StandardProtectionPolicy
-
-import com.tom_roush.pdfbox.pdmodel.encryption.AccessPermission
 import java.io.*
 import java.security.Security
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class PdfOperations(activity:Activity)
@@ -52,14 +50,18 @@ class PdfOperations(activity:Activity)
     var endPage:String?=null
 
 
-    fun createPdf(v: View?,activity: Activity) {
-        val document = PDDocument()
-        val page = PDPage()
-        document.addPage(page)
+    fun createPdf(v: View?,activity: Activity,bitmap:Bitmap) {
 
-        // Create a new font object selecting one of the PDF base fonts
-        val font: PDFont = PDType1Font.HELVETICA
-        // Or a custom font
+
+        val document = PDDocument()
+        for(i in 0..3) {
+            val page = PDPage()
+            document.addPage(page)
+
+
+            // Create a new font object selecting one of the PDF base fonts
+            val font: PDFont = PDType1Font.HELVETICA
+            // Or a custom font
 //        try
 //        {
 //            // Replace MyFontFile with the path to the asset font you'd like to use.
@@ -70,59 +72,177 @@ class PdfOperations(activity:Activity)
 //        {
 //            Log.e("PdfBox-Android-Sample", "Could not load font", e);
 //        }
-        val contentStream: PDPageContentStream
-        try {
-            // Define a content stream for adding to the PDF
-            contentStream = PDPageContentStream(document, page)
+            val contentStream: PDPageContentStream
+            try {
+                // Define a content stream for adding to the PDF
+                contentStream = PDPageContentStream(document, page)
 
-            // Write Hello World in blue text
-            contentStream.beginText()
-            contentStream.setNonStrokingColor(15, 38, 192)
-            contentStream.setFont(font, 12f)
-            contentStream.newLineAtOffset(100f, 700f)
-            contentStream.showText("Hello World")
-            contentStream.endText()
+                // Write Hello World in blue text
+                contentStream.beginText()
+                contentStream.setNonStrokingColor(15, 38, 192)
+                contentStream.setFont(font, 12f)
+                contentStream.newLineAtOffset(100f, 700f)
+                contentStream.showText("Hello World")
+                contentStream.endText()
 
-            // Load in the images
-            val inn: InputStream = activity?.assets?.open("falcon.jpg")!!
-            val alpha: InputStream = activity?.assets?.open("trans.png")!!
+                // Load in the images
+                val inn: InputStream = activity?.assets?.open("falcon.jpg")!!
+                val alpha: InputStream = activity?.assets?.open("trans.png")!!
 
-            // Draw a green rectangle
-            contentStream.addRect(5f, 500f, 100f, 100f)
-            contentStream.setNonStrokingColor(0, 255, 125)
-            contentStream.fill()
+                // Draw a green rectangle
+                /*  contentStream.addRect(5f, 500f, 100f, 100f)
+            contentStream.setNonStrokingColor(0, 255, 125)*/
+                contentStream.fill()
 
-            // Draw the falcon base image
-            val ximage = JPEGFactory.createFromStream(document, inn)
-            contentStream.drawImage(ximage, 20f, 20f)
+                // Draw the falcon base image
+                val ximage = JPEGFactory.createFromStream(document, inn)
+                contentStream.drawImage(ximage, 20f, 20f)
 
-            // Draw the red overlay image
-            val alphaImage = BitmapFactory.decodeStream(alpha)
-            val alphaXimage = LosslessFactory.createFromImage(document, alphaImage)
-            contentStream.drawImage(alphaXimage, 20f, 20f)
+                // Draw the red overlay image
+                val alphaImage = BitmapFactory.decodeStream(alpha)
+                //TODO we can tell user that which quality he wants
+                alphaImage.compress(Bitmap.CompressFormat.JPEG,100,null)
+                val alphaXimage:PDImageXObject
+                if(i==1) {
+                     alphaXimage = LosslessFactory.createFromImage(document, alphaImage)
+                }else {
+                     alphaXimage = LosslessFactory.createFromImage(document, bitmap)
+                }
+                    /*  alphaXimage.width=ViewGroup.LayoutParams.MATCH_PARENT
+            alphaXimage.height=ViewGroup.LayoutParams.MATCH_PARENT
+*/
+                contentStream.drawImage(alphaXimage, 20f, 20f, 500f, 700f)
 
-            // Make sure that the content stream is closed:
-            contentStream.close()
 
-            // Save the final pdf document to a file
-            var file= File("sdcard/manddeettttp")
-            if(!file.exists())
-            {
-                file.mkdir()
+                // Make sure that the content stream is closed:
+                contentStream.close()
+
+                // Save the final pdf document to a file
+                var file = File("sdcard/manddeettttp")
+                if (!file.exists()) {
+                    file.mkdir()
+                }
+                var stream = FileOutputStream(file.absolutePath + "/jkjkj.pdf")
+
+                //  val path: String = /*root.getAbsolutePath().toString() + "/Created.pdf"*/ activity?.applicationContext?.filesDir?.absolutePath.toString()+"/created.pdf"
+                val path: String = file.absolutePath.toString()
+                // Log.d("37fgewf",file.absolutePath.toString())
+
+                /* var jfsd=PDStream(document,COSName.FLATE_DECODE)
+            jfsd.addCompression()
+*/
+                document.save(stream)
+
+                // tv.setText("Successfully wrote PDF to $path")
+            } catch (e: IOException) {
+                Log.e("PdfBox-Android-Sample", "Exception thrown while creating PDF", e)
             }
-            var stream= FileOutputStream(file.absolutePath+"/jkjkj.pdf")
-
-            //  val path: String = /*root.getAbsolutePath().toString() + "/Created.pdf"*/ activity?.applicationContext?.filesDir?.absolutePath.toString()+"/created.pdf"
-            val path: String=file.absolutePath.toString()
-            // Log.d("37fgewf",file.absolutePath.toString())
-
-            document.save(stream)
-            document.close()
-            // tv.setText("Successfully wrote PDF to $path")
-        } catch (e: IOException) {
-            Log.e("PdfBox-Android-Sample", "Exception thrown while creating PDF", e)
         }
+        document.close()
     }
+    //this method is for multiple images/bitmaps
+    fun createPdf(v: View?,activity: Activity,imgList:ArrayList<Bitmap>,quality:Int,from:Int,to:Int) {
+
+        Log.d("u37ryghf3",from.toString()+"  ---"+to.toString())
+
+        val document = PDDocument()
+
+      /*  activity?.runOnUiThread {
+          AlertDialog.Builder(activity?.applicationContext,  R.style.Theme_AppCompat_Dialog_Alert).setView(v).create().show()
+            v?.visibility=View.VISIBLE }*/
+
+       imgList.forEach {
+            val page = PDPage()
+            document.addPage(page)
+
+
+            // Create a new font object selecting one of the PDF base fonts
+            val font: PDFont = PDType1Font.HELVETICA
+            // Or a custom font
+//        try
+//        {
+//            // Replace MyFontFile with the path to the asset font you'd like to use.
+//            // Or use LiberationSans "com/tom_roush/pdfbox/resources/ttf/LiberationSans-Regular.ttf"
+//            font = PDType0Font.load(document, assetManager.open("MyFontFile.TTF"));
+//        }
+//        catch (IOException e)
+//        {
+//            Log.e("PdfBox-Android-Sample", "Could not load font", e);
+//        }
+            val contentStream: PDPageContentStream
+            try {
+                // Define a content stream for adding to the PDF
+                contentStream = PDPageContentStream(document, page)
+
+                // Write Hello World in blue text
+                contentStream.beginText()
+                contentStream.setNonStrokingColor(15, 38, 192)
+                contentStream.setFont(font, 12f)
+                contentStream.newLineAtOffset(100f, 700f)
+                contentStream.showText("Hello World")
+                contentStream.endText()
+
+                // Load in the images
+                val inn: InputStream = activity?.assets?.open("falcon.jpg")!!
+                val alpha: InputStream = activity?.assets?.open("trans.png")!!
+
+                // Draw a green rectangle
+                /*  contentStream.addRect(5f, 500f, 100f, 100f)
+            contentStream.setNonStrokingColor(0, 255, 125)*/
+                contentStream.fill()
+
+                // Draw the falcon base image
+                val ximage = JPEGFactory.createFromStream(document, inn)
+                contentStream.drawImage(ximage, 20f, 20f)
+
+                // Draw the red overlay image
+                val alphaImage = BitmapFactory.decodeStream(alpha)
+                //TODO we can tell user that which quality he wants
+               // alphaImage.compress(Bitmap.CompressFormat.JPEG,30,null)
+                //compressbitmap
+                var compressesBitmap=compressBitmap(it,quality)
+                val alphaXimage:PDImageXObject
+
+                    //alphaXimage = LosslessFactory.createFromImage(document, alphaImage)
+                    alphaXimage = LosslessFactory.createFromImage(document, compressesBitmap)
+
+                /*  alphaXimage.width=ViewGroup.LayoutParams.MATCH_PARENT
+        alphaXimage.height=ViewGroup.LayoutParams.MATCH_PARENT
+*/
+                contentStream.drawImage(alphaXimage, 20f, 20f, 500f, 700f)
+
+
+                // Make sure that the content stream is closed:
+                contentStream.close()
+
+                // Save the final pdf document to a file
+                var file = File("sdcard/manddeettttp")
+                if (!file.exists()) {
+                    file.mkdir()
+                }
+                var stream = FileOutputStream(file.absolutePath + "/jkjkj.pdf")
+
+                //  val path: String = /*root.getAbsolutePath().toString() + "/Created.pdf"*/ activity?.applicationContext?.filesDir?.absolutePath.toString()+"/created.pdf"
+                val path: String = file.absolutePath.toString()
+                // Log.d("37fgewf",file.absolutePath.toString())
+
+                /* var jfsd=PDStream(document,COSName.FLATE_DECODE)
+            jfsd.addCompression()
+*/
+                document.save(stream)
+
+                // tv.setText("Successfully wrote PDF to $path")
+            } catch (e: IOException) {
+                Log.e("PdfBox-Android-Sample", "Exception thrown while creating PDF", e)
+            }
+        }
+/*
+        activity?.runOnUiThread { v?.visibility=View.GONE}
+*/
+        document.close()
+
+    }
+
 
     fun stripText(v: View?,activity: Activity) {
         var parsedText: String? = null
@@ -217,6 +337,7 @@ class PdfOperations(activity:Activity)
            // pd.save("sdcard/"+pdfNAME + i++ + ".pdf");
 
         }
+
         pdd.save(fileStr+"/"+pdfNAME+ i++ +".pdf")
 
         System.out.println("Multiple PDF’s created");
@@ -307,16 +428,16 @@ class PdfOperations(activity:Activity)
         return pageImage!!
     }
 
-    fun createEncryptedPdf(actvity:Activity,uri:Uri,owner_user_password:String):Boolean {
+    fun createEncryptedPdf(actvity:Activity,uri:Uri,owner_user_password:String,view:View):Boolean {
 
-        var inputStream=convertContentUri_toInputStream(actvity,uri)
+
+        var inputStream=ConversionandUtilsClass().convertContentUri_toInputStream(actvity,uri)
         val path: String ="sdcard/crypt.pdf"
         val keyLength = 128 // 128 bit is the highest currently supported
 
         // Limit permissions of those without the password
         val ap = AccessPermission()
         ap.setCanPrint(false)
-
 
         // Sets the owner password and user password
         val spp = StandardProtectionPolicy(owner_user_password, owner_user_password, ap)
@@ -333,9 +454,13 @@ class PdfOperations(activity:Activity)
         document.addPage(page)
      //to encrypt existing pdf
         var pdddovcument=PDDocument.load(inputStream)
-        pdddovcument.protect(spp)
-        pdddovcument.save(createFilePath().toString()+"/"+owner_user_password+".pdf")
-        pdddovcument.close()
+        if(!pdddovcument.isEncrypted) {
+            pdddovcument.protect(spp)
+            pdddovcument.save(createFilePath().toString() + "/" + owner_user_password + ".pdf")
+            pdddovcument.close()
+        }else{
+            Snackbar.make(view,"Already Encrypted",2000).show()
+        }
 
        var isEncrypted= pdddovcument.isEncrypted
 
@@ -361,6 +486,8 @@ class PdfOperations(activity:Activity)
         }*/
         return isEncrypted
     }
+
+
 
     fun convertContentUri_toInputStream(activity:Activity,appendedUri:Uri):InputStream{
         parcelFileDescriptor = activity?.contentResolver?.openFileDescriptor(appendedUri, "r")!!
@@ -414,6 +541,17 @@ class PdfOperations(activity:Activity)
             file.mkdir()
         }
         return file
+    }
+
+    //COMPRESSING BITMAP
+    fun compressBitmap( bitmap:Bitmap,quality:Int): Bitmap
+    {
+        Log.d("3rf",quality.toString())
+        var out=ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG,quality,out)
+        var bitmap=BitmapFactory.decodeStream(ByteArrayInputStream(out.toByteArray()))
+
+        return bitmap
     }
 
 

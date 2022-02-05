@@ -47,5 +47,13 @@ class PdfTools_Fragment : Fragment() {
             var intent= Intent(activity,PdfsTools_Activity::class.java)
             intent.putExtra(FragmentNames.OPEN_ENCRYPT_FRAGMENT, FragmentNames.OPEN_ENCRYPT_FRAGMENT)
             startActivity(intent)
-        }    }
+        }
+        binding?.imagetoPdfImage?.setOnClickListener {
+            var intent= Intent(activity,PdfsTools_Activity::class.java)
+            intent.putExtra(FragmentNames.OPEN_IMGTOPDF_FRAGMENT, FragmentNames.OPEN_IMGTOPDF_FRAGMENT)
+            startActivity(intent)
+        }
+
+
+    }
 }

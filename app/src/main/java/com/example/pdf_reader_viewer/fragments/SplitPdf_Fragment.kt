@@ -1,15 +1,7 @@
 package com.example.pdf_reader_viewer.fragments
 
-import android.app.Activity
-import android.content.Intent
-import android.media.ExifInterface
-import android.media.MediaDataSource
-import android.media.MediaMetadata
-import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.text.method.MetaKeyKeyListener
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,9 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.NotificationCompat
-import com.example.pdf_reader_viewer.R
-import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
+import com.example.pdf_reader_viewer.UtilClasses.ConversionandUtilsClass
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.example.pdf_reader_viewer.UtilClasses.PdfOperations
 import com.example.pdf_reader_viewer.databinding.SplitpdfFragmentBinding
@@ -29,10 +19,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.File
-import java.io.FileDescriptor
-import java.io.FileInputStream
-import java.io.InputStream
 import java.lang.Exception
 
 // TODO: Rename parameter arguments, choose names that match
@@ -90,10 +76,7 @@ class SplitPdf_Fragment : Fragment() {
       fun splitPDF(appendedUri:Uri )
      {  var totalPages=0
          CoroutineScope(Dispatchers.Default).launch {
-             var inputStream = PdfOperations(requireActivity())?.convertContentUri_toInputStream(
-                 requireActivity(),
-                 appendedUri
-             )
+             var inputStream = ConversionandUtilsClass().convertContentUri_toInputStream(requireActivity(), appendedUri)
              Log.d("fhdjfdn", inputStream.toString())
              //practise only
              //   var inptstrm = activity?.contentResolver?.openInputStream(appendedUri)
