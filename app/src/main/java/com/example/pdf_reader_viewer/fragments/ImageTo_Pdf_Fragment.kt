@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter_ImagesToPDF
+import com.example.pdf_reader_viewer.UtilClasses.ConversionandUtilsClass
 import com.example.pdf_reader_viewer.UtilClasses.PdfOperations
 import com.example.pdf_reader_viewer.databinding.ImageToPdfFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -29,8 +30,8 @@ import kotlin.collections.ArrayList
 
 class ImageTo_Pdf_Fragment : Fragment() {
 
-    var from:Int?=null
-    var to:Int?=null
+  //  var from:Int?=null
+   // var to:Int?=null
     var binding: ImageToPdfFragmentBinding? = null
     var viewbottomsheet: View? = null
     var bottomdialogue: BottomSheetDialog? = null
@@ -43,20 +44,25 @@ class ImageTo_Pdf_Fragment : Fragment() {
     var alertDialogprogress:androidx.appcompat.app.AlertDialog?=null
     var importingnumberTextview:TextView?=null
     var swapedbitmaplISTT:ArrayList<Bitmap>?=null
-    var posList:ArrayList<Int>?=ArrayList()
-    val itemTouchHelper by lazy {
+
+  //  var fromposList:ArrayList<Int>? = ArrayList()
+   // var toposlist:ArrayList<Int>? = ArrayList()
+   /* val itemTouchHelper by lazy {
        var simpleItemTouchHelper = object:ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.START or ItemTouchHelper.END,0){
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean
             {
                 val adapter = recyclerView.adapter as MyAdapter_ImagesToPDF
                  from = viewHolder.adapterPosition
                  to = target.adapterPosition
+                fromposList?.add(from!!)
+                toposlist?.add(to!!)
                 Log.d("3gf3gvwefw",from.toString()+" "+to.toString())
                 // 2. Update the backing model. Custom implementation in
                 //    MainRecyclerViewAdapter. You need to implement
                 //    reordering of the backing model inside the method.
 
                 adapter.movetoItem(from!!,to!!)
+                //Collections.swap(bitmapLIST,from!!,to!!)
                 adapter.notifyItemMoved(from!!,to!!)
                 return  true
             }
@@ -65,8 +71,8 @@ class ImageTo_Pdf_Fragment : Fragment() {
 
            override fun onMoved(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, fromPos: Int, target: RecyclerView.ViewHolder, toPos: Int, x: Int, y: Int) {
                super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y)
-               Log.d("3489gh3wbfg",fromPos.toString())
-               posList?.add(fromPos)
+               Log.d("3489gh3wbfg",x.toString())
+            //   fromposList?.add(fromPos)
 
            }
 
@@ -77,7 +83,7 @@ class ImageTo_Pdf_Fragment : Fragment() {
 
         }
         ItemTouchHelper(simpleItemTouchHelper)
-    }
+    }*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bitmapLIST = ArrayList()
@@ -96,12 +102,22 @@ class ImageTo_Pdf_Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-binding?.selectedImagesTextview?.setOnClickListener {
-    Log.d("3t3tg3t3",posList?.get(0).toString())
-                         }
+/*binding?.selectedImagesTextview?.setOnClickListener {
+  //  Log.d("3t3tg3t3",posList?.get(0).toString())
+    bitmapLIST?.forEach { Log.d("44ffyuyy7",it.toString())}
+    var count=0
+    fromposList?.forEach {
+        Collections.swap(bitmapLIST!!,it,toposlist?.get(count)!!)
+        count++
+    }
+    bitmapLIST?.forEach { Log.d("44ffyuyy7",it.toString())}
+
+}*/
+
+
 
         recyclerView = view.findViewById(R.id.imagesRecylerView)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+       // itemTouchHelper.attachToRecyclerView(recyclerView)
 
         bottomdialogue = BottomSheetDialog(requireContext(), R.style.Theme_Design_BottomSheetDialog)
         bottomdialogue?.setContentView(viewbottomsheet!!)
@@ -171,10 +187,7 @@ binding?.selectedImagesTextview?.setOnClickListener {
 
     fun createAndClickDialog(bitmapList: ArrayList<Bitmap>): androidx.appcompat.app.AlertDialog {
 
-        var alertdialogBuilder = MaterialAlertDialogBuilder(
-            requireContext(),
-            R.style.ThemeOverlay_MaterialComponents_Dialog_Alert
-        )
+        var alertdialogBuilder = MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
 
         val viewGroup = activity?.findViewById<ViewGroup>(R.id.content)
         val view = LayoutInflater.from(requireContext()).inflate(R.layout.custom_quality_dialogue, viewGroup)
@@ -182,11 +195,11 @@ binding?.selectedImagesTextview?.setOnClickListener {
         alertdialogBuilder.setView(view)
             .setPositiveButton("create", object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {
-                bitmapLIST?.forEach { Log.d("44fff44ff",it.toString()) }
+               // bitmapLIST?.forEach { Log.d("44fff44ff",it.toString()) }
 
 
                 if (!bitmapList?.isEmpty()!!) {
-                    Log.d("3r3fg3",from.toString()+" "+to.toString())
+                  //  Log.d("3r3fg3",from.toString()+" "+to.toString())
                    // Collections.swap(bitmapLIST,from!!,to!!)
 
                     //getting radiogroup abnd buitton to get quality text
@@ -202,15 +215,15 @@ binding?.selectedImagesTextview?.setOnClickListener {
                         withContext(Dispatchers.Main) {alertDialogprogress?.show()}
                         bitmapLIST?.forEach { Log.d("44fff44ff666",it.toString()) }
 
-                        if(!posList?.isEmpty()!!)
-                        {
-                            Log.d("33egfe3gf3",posList?.get(0).toString()+"-----"+to.toString())
-                            Collections.swap(bitmapLIST,posList?.get(0)!!,to!!)
-                        PdfOperations(requireActivity())?.createPdf(view, requireActivity(), bitmapLIST!!, imgQuality, posList?.get(0)!!, to!!)
-                            posList?.removeAll(posList!!)
-                        }else{
+                        /*if(!posList?.isEmpty()!!)
+                        {*/
+                        PdfOperations(requireActivity())?.createPdf(view, requireActivity(), bitmapList, imgQuality)
+
+                        //fromposList?.removeAll(fromposList!!)
+                       // }
+                    /*else{
                             PdfOperations(requireActivity())?.createPdf(view, requireActivity(), bitmapLIST!!, imgQuality, from!!, to!!)
-                            }
+                            }*/
                         withContext(Dispatchers.Main) {alertDialogprogress?.hide()
                         }
 
@@ -221,7 +234,7 @@ binding?.selectedImagesTextview?.setOnClickListener {
                       }
             }
         })
-            .setCancelable(false)
+            .setCancelable(true)
         var alertDialogue = alertdialogBuilder.create()
 
 
