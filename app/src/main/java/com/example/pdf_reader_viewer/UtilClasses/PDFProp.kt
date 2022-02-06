@@ -1,5 +1,7 @@
 package com.example.pdf_reader_viewer.UtilClasses
 
+import java.io.File
+
 //util class for Intent share keys that are uses for sending pdf properties
 class PDFProp
 {
@@ -10,5 +12,10 @@ class PDFProp
         var PDF_DATEMODIFIED = "PDF_DATAMODIFIED"
         var PDF_RELATIVEPATH = "PDF_RELATIVEPATH"
         var PDF_BUCKETNAME = "PDF_BUCKETNAME"
+
+        var CREATEDPDF_FOLDER="Created PDFs"
+        var SPLITPDF_FOLDER="Split PDFs"
+        var ENCRYPTEDPDF_FOLDER="Encrypted PDFs"
+        var MERGEPDF_FOLDER="Merge PDFs"
     }
 }
