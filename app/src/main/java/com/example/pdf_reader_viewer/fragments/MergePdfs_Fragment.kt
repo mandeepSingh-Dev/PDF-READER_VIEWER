@@ -1,25 +1,21 @@
 package com.example.pdf_reader_viewer.fragments
 import android.annotation.SuppressLint
-import android.content.ContentResolver
-import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.media.MediaMetadata
-import android.media.MediaMetadataRetriever
+import android.graphics.Bitmap
+import android.graphics.pdf.PdfDocument
+import android.graphics.pdf.PdfRenderer
 import android.net.Uri
 import android.os.Bundle
+import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
-import android.provider.OpenableColumns
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.core.net.toFile
-import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter_ForMerge
@@ -27,11 +23,8 @@ import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.example.pdf_reader_viewer.UtilClasses.PdfOperations
 import com.example.pdf_reader_viewer.UtilClasses.ViewAnimation
 import com.example.pdf_reader_viewer.databinding.MergePdfsFragmentBinding
-import org.bouncycastle.asn1.DERTaggedObject
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.util.*
+import com.tom_roush.pdfbox.pdmodel.PDDocument
+import java.io.FileDescriptor
 import kotlin.collections.ArrayList
 
 class MergePdfs_Fragment : Fragment() {
@@ -180,8 +173,46 @@ class MergePdfs_Fragment : Fragment() {
     }
 
     fun mergeSelectedPdfs(pdflist:ArrayList<Items_pdfs>){
-       // PdfOperations().mergePdfs(requireActivity(),pdflist,"mymergesFinal")
+        Log.d("48hgh4g4",pdflist.size.toString())
+        PdfOperations(requireActivity()).mergePdfs(pdflist,"mymergesFinal")
+        PdfOperations(requireActivity()).myCustomNativeMergePdf(pdflist)
+       // myCustomNativeMergePdf(pdflist)
 
+    }
+    fun myCustomNativeMergePdf(pdflist: ArrayList<Items_pdfs>){
+        var pdDocument= PDDocument()
+        var parcelFileDescriptor:ParcelFileDescriptor
+     //   var stream2 = createPDFFolder(pdDocument, PDFProp.CREATEDPDF_FOLDER, "mergedPDF", 0L)
+
+        var bitmap= Bitmap.createBitmap(400,400, Bitmap.Config.ARGB_8888)
+        var document= PdfDocument()
+        pdflist.forEach {
+
+             parcelFileDescriptor = activity?.contentResolver?.openFileDescriptor(it.appendeduri!!, "r")!!
+            val fileDescriptor: FileDescriptor = parcelFileDescriptor?.fileDescriptor!!
+            var renderer= PdfRenderer(parcelFileDescriptor!!)
+            Log.d("48y5gh",renderer.pageCount.toString())
+
+            var pdfLength=renderer.pageCount
+            for(i in 0..pdfLength-1){
+                var pagem= renderer.openPage(0)
+                pagem.render(bitmap,null,null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
+
+                binding?.lllllll?.setImageBitmap(bitmap)
+
+
+                /* val pageInfo = PageInfo.Builder(350, 600, 1).create()
+                 var page = document.startPage(pageInfo)*/
+            }
+
+
+
+
+            /*   var appendUri=activity.contentResolver.openInputStream(it.appendeduri!!)
+               var pdf=PDDocument.load(appendUri)*/
+            //  PdfRenderer()
+
+        }
 
     }
 
