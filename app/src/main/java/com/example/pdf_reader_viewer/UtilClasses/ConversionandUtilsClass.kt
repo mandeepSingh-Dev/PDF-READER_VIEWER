@@ -84,12 +84,12 @@ class ConversionandUtilsClass
         var arr=list.toArray()
         var temp:T
       //  if(i<0 || i<=list.size || j<0)
-        if(i>=0 && j>=0)
+        if(i>=0 && j>=0 && i<=arr.size)
         {
-            temp= arr.get(i) as T
+            temp= arr[i] as T
             arr[i]=arr[j]
             arr[j]=temp
         }
-         return list
+     return  arr.toList() as ArrayList<T>
     }
 }
