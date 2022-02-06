@@ -25,9 +25,6 @@ class Read_Pdf_Files(context:Context)
 
 
         /**THIS URI IS WORKING FOR ALL ANDROID VERSIONS*/
-
-
-        /**THIS URI IS WORKING FOR ALL ANDROID VERSIONS*/
        var externalUri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL)
 
         /**sql-where-clause-with-placeholder-variables  Here we select MimeType*/

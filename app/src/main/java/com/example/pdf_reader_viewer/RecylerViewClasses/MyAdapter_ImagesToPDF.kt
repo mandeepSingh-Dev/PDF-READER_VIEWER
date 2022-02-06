@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.graphics.createBitmap
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pdf_reader_viewer.R
@@ -30,6 +31,7 @@ class MyAdapter_ImagesToPDF(context: Context, arrayList:ArrayList<Bitmap>):Recyc
         var bitmap=marrayList.get(position)
 
         holder.imageView.setImageBitmap(bitmap)
+        holder.textview.setText(position.toString())
 
     }
 
@@ -39,11 +41,15 @@ class MyAdapter_ImagesToPDF(context: Context, arrayList:ArrayList<Bitmap>):Recyc
     class MyViewHolderr(itemView: View):RecyclerView.ViewHolder(itemView) {
 
         var imageView=itemView.findViewById<ImageView>(R.id.selectedImagesBitmap)
+        var textview=itemView.findViewById<TextView>(R.id.positionnn)
 
     }
 
     fun movetoItem(from:Int,to:Int):ArrayList<Bitmap>{
         Collections.swap(marrayList,from,to)
+        return marrayList
+    }
+    fun getList():ArrayList<Bitmap>{
         return marrayList
     }
 }

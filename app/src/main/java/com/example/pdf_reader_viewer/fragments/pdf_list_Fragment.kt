@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -102,6 +104,31 @@ class pdf_list_Fragment : Fragment() {
     @SuppressLint("Range", "RestrictedApi")
     override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+       // PdfOperations(requireActivity()).createNativedoc(requireActivity())
+       binding?.floatingButton?.setOnClickListener {
+
+           PdfOperations(requireActivity()).createNativedoc(requireActivity())
+         //  lkdlks.launch(null)
+       /*    var intent=Intent()
+           intent.action=Intent.ACTION_CREATE_DOCUMENT
+           intent.type="application/pdf"
+           lkdlks.launch("pppdfdf.pdf")*/
+       }
+/*        var arrlist=ArrayList<Int>()
+        arrlist.add(0)
+        arrlist.add(1)
+        arrlist.add(2)
+        arrlist.add(3)
+        arrlist.add(4)
+        arrlist.add(5)
+        arrlist.add(6)
+
+        arrlist.forEach { Log.d("3t3f3ew",it.toString()) }
+        var list=ConversionandUtilsClass().swap(arrlist,5,0)
+        list.forEach { Log.d("3t3f3ew",it.toString()) }*/
+
+
 
         // function for initializing bottomsheetViews
         initializeBottomsheetView()
@@ -600,6 +627,8 @@ class pdf_list_Fragment : Fragment() {
         var dialoguee=material.create()
         dialoguee.show()
     }
+
+
 
   /*  var launcher=registerForActivityResult(ActivityResultContracts.TakePicturePreview(),
         ActivityResultCallback {
