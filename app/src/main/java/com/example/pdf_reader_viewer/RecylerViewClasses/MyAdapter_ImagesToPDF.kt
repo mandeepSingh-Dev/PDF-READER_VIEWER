@@ -1,15 +1,12 @@
 package com.example.pdf_reader_viewer.RecylerViewClasses
 
-import android.content.ClipData
 import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.graphics.createBitmap
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pdf_reader_viewer.R
 import java.util.*
@@ -22,7 +19,7 @@ class MyAdapter_ImagesToPDF(context: Context, arrayList:ArrayList<Bitmap>):Recyc
     var myviewholder:MyViewHolderr?=null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderr {
-        var view=LayoutInflater.from(mcontext).inflate(R.layout.images_list,parent,false)
+        var view=LayoutInflater.from(mcontext).inflate(R.layout.images_list_item,parent,false)
          myviewholder=MyViewHolderr(view)
         return myviewholder!!
     }

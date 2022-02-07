@@ -21,6 +21,7 @@ import com.example.pdf_reader_viewer.UtilClasses.PdfOperations
 import com.example.pdf_reader_viewer.databinding.EncryptPdfFragmentBinding
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import com.tom_roush.pdfbox.pdmodel.PDDocument
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.DisposableHandle
@@ -59,7 +60,12 @@ class EncryptPdf_Fragment : Fragment() {
     }, ActivityResultCallback {
         if(it!=null) {
 
-            getMetadata(it)
+           // getMetadata(it)
+            binding?.PDFNameEncrypt?.text=getMetadata(it)
+            var document=PDDocument.load(activity?.contentResolver?.openInputStream(it))
+            var totalpages=document.numberOfPages
+            binding?.pdfTotalPage?.text="Total pages : " + totalpages.toString()
+
             Log.d("383hgf", it.toString())
             var uri = it
             var isEncrypted = false
@@ -102,16 +108,18 @@ class EncryptPdf_Fragment : Fragment() {
     }
 
     @SuppressLint("Range")
-    fun getMetadata(uri:Uri)
+    fun getMetadata(uri:Uri):String
     {
+        var name:String? = null
         var cursor=activity?.contentResolver?.query(uri,null,null,null,null)
 
         cursor?.let {
             if(it.moveToFirst())
             {
-                Log.d("39fg3j",it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME)))
+               name= it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
             }
         }
+        return name!!
     }
 
 }

@@ -1,54 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.Recent_list_Fragment">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-   <TextView
-       android:id="@+id/textviewALL"
-       android:layout_width="wrap_content"
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/recentRecyclerView"
+       android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:text="All"
-       app:layout_constraintLeft_toLeftOf="parent"
        app:layout_constraintTop_toTopOf="parent"
-       android:layout_marginLeft="30dp"
-       android:layout_marginTop="20dp"
-       android:textStyle="bold"
-       android:textSize="30sp"
-       android:textColor="#322C2C"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/pdfListRecylerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/teal_200"
-        app:layout_constraintTop_toBottomOf="@id/textviewALL"
-        app:layout_constraintLeft_toLeftOf="@id/textviewALL"
-        />
-    </LinearLayout>
-        <com.google.android.material.bottomappbar.BottomAppBar
-            android:id="@+id/bottomAppbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:fabAlignmentMode="center"
-            app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="20dp"
-            app:hideOnScroll="true"
-            app:fabCradleVerticalOffset="20dp"
-            android:layout_gravity="bottom"
-            android:backgroundTint="@color/purple_500"
-            android:theme="@style/Widget.MaterialComponents.BottomAppBar"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_anchor="@id/bottomAppbar"
-            android:src="@drawable/ic_pdf_icon"/>
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintBottom_toBottomOf="parent"
 
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+       />
+</androidx.constraintlayout.widget.ConstraintLayout>
