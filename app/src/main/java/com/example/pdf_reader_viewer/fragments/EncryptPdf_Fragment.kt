@@ -2,10 +2,12 @@ package com.example.pdf_reader_viewer.fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.DocumentsContract
 import android.provider.MediaStore
+import android.provider.OpenableColumns
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,6 +21,10 @@ import com.example.pdf_reader_viewer.UtilClasses.PdfOperations
 import com.example.pdf_reader_viewer.databinding.EncryptPdfFragmentBinding
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.DisposableHandle
+import kotlinx.coroutines.async
 import java.lang.Exception
 
 
@@ -48,30 +54,35 @@ class EncryptPdf_Fragment : Fragment() {
     }
 
 
-    @SuppressLint("ResourceType")
     var launcher=registerForActivityResult(object:ActivityResultContracts.OpenDocument(){
 
     }, ActivityResultCallback {
-        Log.d("383hgf",it.toString())
-        var uri=it
-        var isEncrypted=false
-        binding?.encryptButton?.setOnClickListener {
-            var text=binding?.edittextlayout11?.editText?.text.toString()
-            try {
-                if (!text.isEmpty()) {
+        if(it!=null) {
 
-                    isEncrypted = PdfOperations(requireActivity()).createEncryptedPdf(requireActivity(), uri, text,it)
+            getMetadata(it)
+            Log.d("383hgf", it.toString())
+            var uri = it
+            var isEncrypted = false
+            binding?.encryptButton?.setOnClickListener {
+                var text = binding?.edittextlayout11?.editText?.text.toString()
+                try {
+                    if (!text.isEmpty()) {
+                 /**here we check whether pdf is encrypted if yes then delete selected pdf and create new one with password]*/
+                      var job= CoroutineScope(Dispatchers.IO).async {
+                           isEncrypted = PdfOperations(requireActivity()).createEncryptedPdf(requireActivity(), uri, text, it)
+                     if (isEncrypted) {
+                         Snackbar.make(it, "PDF Encrypted", 3500).show()
+                         deleteContent(uri)
+                     }
+                      }
 
-                    if (isEncrypted) {
-                        var snackbar=Snackbar.make(it,"PDF Encrypted",3500).show()
-                        deleteContent(uri)
+                    } else {
+                        binding?.edittextlayout11?.error = "Invalid"
                     }
-                } else {
-                    binding?.edittextlayout11?.error = "Invalid"
-                }
-            }catch (e:Exception){
-                if(e.message!=null) {
-                    Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    if (e.message != null) {
+                        Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -88,6 +99,19 @@ class EncryptPdf_Fragment : Fragment() {
         Log.d("867r38fh",bool.toString())
 
         return bool
+    }
+
+    @SuppressLint("Range")
+    fun getMetadata(uri:Uri)
+    {
+        var cursor=activity?.contentResolver?.query(uri,null,null,null,null)
+
+        cursor?.let {
+            if(it.moveToFirst())
+            {
+                Log.d("39fg3j",it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME)))
+            }
+        }
     }
 
 }

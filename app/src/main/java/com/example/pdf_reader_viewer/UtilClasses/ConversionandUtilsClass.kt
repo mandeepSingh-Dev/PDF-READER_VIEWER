@@ -79,6 +79,42 @@ class ConversionandUtilsClass
         Toast.makeText(activity?.applicationContext,"PDF deleted",Toast.LENGTH_SHORT).show()
         return bool
     }
+    fun formattingof_Pagenumber(atPage: String): List<String> {
+
+        var list: MutableList<String> = mutableListOf()
+        //return populated list only if atPage is not empty
+        if (!atPage.isEmpty()) {
+            var numberList: MutableList<String> = mutableListOf()
+            // var pageee=atPage.trim()
+            // Log.d("eifnefe",pageee)
+            //val pagenumberstr = atPage.replace("\\s", "")
+            var pagenumberstr = atPage.replace(" ", "")
+            var regex = Regex("[a-zA-Z.+ ]*")
+            pagenumberstr = atPage.replace(regex, "")
+
+
+            Log.d("gfe8ghe", pagenumberstr)
+            if (atPage.contains("-")) {
+                val finalpagenumberlist = pagenumberstr.split("-")
+                finalpagenumberlist.forEach {
+                    Log.d("893u3ng", it)
+                }
+                return finalpagenumberlist
+            } else {
+                numberList.add(pagenumberstr)
+                numberList.forEach {
+                    Log.d("ijff8e", it + "\n" + numberList?.size.toString())
+                }
+                return numberList
+            }
+            list.addAll(numberList)
+        }
+        //return populated list only if atPage is not empty
+        else {
+            return list
+        }
+    }
+
 
     fun <T>swap(list:ArrayList<T>,i:Int,j:Int):ArrayList<T>{
         var arr=list.toArray()

@@ -42,6 +42,8 @@ class ImageTo_Pdf_Fragment : Fragment() {
     var recyclerView: RecyclerView? = null
     var adapter: MyAdapter_ImagesToPDF? = null
     var alertDialogprogress:androidx.appcompat.app.AlertDialog?=null
+    var importingDailogTextview:TextView?=null
+    var importingnumberDailogText:TextView?=null
     var importingnumberTextview:TextView?=null
     var swapedbitmaplISTT:ArrayList<Bitmap>?=null
 
@@ -131,6 +133,8 @@ class ImageTo_Pdf_Fragment : Fragment() {
         var view22 = LayoutInflater.from(requireContext()).inflate(R.layout.customprogressdialogue, activity?.findViewById<ViewGroup>(R.id.content), false)
         alertDialogprogress=createAlertdialogue(view22)
 
+
+
         alertDialog = createAndClickDialog(bitmapLIST!!)
         binding?.createPDFbutton?.setOnClickListener {
             alertDialog?.show()
@@ -212,18 +216,16 @@ class ImageTo_Pdf_Fragment : Fragment() {
                     var imgQuality=splitImgQaulity(radioButton?.text.toString())
                     //creating pdf acc to quality
                     CoroutineScope(Dispatchers.IO).launch {
-                        withContext(Dispatchers.Main) {alertDialogprogress?.show()}
-                        bitmapLIST?.forEach { Log.d("44fff44ff666",it.toString()) }
+                        withContext(Dispatchers.Main) {
+                            importingDailogTextview = alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
+                            importingnumberDailogText = alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
+                         //these dailog textview had importing and imprting number texts
+                            importingDailogTextview?.text="please wait..."
+                            importingnumberDailogText?.visibility=View.GONE
+                            alertDialogprogress?.show()}
 
-                        /*if(!posList?.isEmpty()!!)
-                        {*/
                         PdfOperations(requireActivity())?.createPdf(view, requireActivity(), bitmapList, imgQuality)
 
-                        //fromposList?.removeAll(fromposList!!)
-                       // }
-                    /*else{
-                            PdfOperations(requireActivity())?.createPdf(view, requireActivity(), bitmapLIST!!, imgQuality, from!!, to!!)
-                            }*/
                         withContext(Dispatchers.Main) {alertDialogprogress?.hide()
                         }
 

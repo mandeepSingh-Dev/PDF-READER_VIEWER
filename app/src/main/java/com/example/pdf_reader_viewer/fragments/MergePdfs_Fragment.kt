@@ -179,42 +179,7 @@ class MergePdfs_Fragment : Fragment() {
        // myCustomNativeMergePdf(pdflist)
 
     }
-    fun myCustomNativeMergePdf(pdflist: ArrayList<Items_pdfs>){
-        var pdDocument= PDDocument()
-        var parcelFileDescriptor:ParcelFileDescriptor
-     //   var stream2 = createPDFFolder(pdDocument, PDFProp.CREATEDPDF_FOLDER, "mergedPDF", 0L)
 
-        var bitmap= Bitmap.createBitmap(400,400, Bitmap.Config.ARGB_8888)
-        var document= PdfDocument()
-        pdflist.forEach {
-
-             parcelFileDescriptor = activity?.contentResolver?.openFileDescriptor(it.appendeduri!!, "r")!!
-            val fileDescriptor: FileDescriptor = parcelFileDescriptor?.fileDescriptor!!
-            var renderer= PdfRenderer(parcelFileDescriptor!!)
-            Log.d("48y5gh",renderer.pageCount.toString())
-
-            var pdfLength=renderer.pageCount
-            for(i in 0..pdfLength-1){
-                var pagem= renderer.openPage(0)
-                pagem.render(bitmap,null,null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
-
-                binding?.lllllll?.setImageBitmap(bitmap)
-
-
-                /* val pageInfo = PageInfo.Builder(350, 600, 1).create()
-                 var page = document.startPage(pageInfo)*/
-            }
-
-
-
-
-            /*   var appendUri=activity.contentResolver.openInputStream(it.appendeduri!!)
-               var pdf=PDDocument.load(appendUri)*/
-            //  PdfRenderer()
-
-        }
-
-    }
 
     @SuppressLint("Range")
     fun getMetadata_fromUri(uri:Uri):ArrayList<String>{

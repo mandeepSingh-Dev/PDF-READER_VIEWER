@@ -143,7 +143,7 @@ class PdfOperations(activity:Activity) {
 
         val document = PDDocument()
         val appendeddocument=PDDocument()
-        var stream = createPDFFolder(document, PDFProp.CREATEDPDF_FOLDER, "chalgyoipdf", 0L)
+        var stream = createPDFFolder( PDFProp.CREATEDPDF_FOLDER, "chalgyoipdf", System.currentTimeMillis())
           var fos=stream as FileOutputStream
 
         /*  activity?.runOnUiThread {
@@ -253,7 +253,7 @@ class PdfOperations(activity:Activity) {
 
         var pdDocument= PDDocument()
         var parcelFileDescriptor:ParcelFileDescriptor
-        var stream2 = createPDFFolder(pdDocument, PDFProp.CREATEDPDF_FOLDER, "mergedPDF", 0L)
+        var stream2 = createPDFFolder( PDFProp.MERGEPDF_FOLDER, "mergedPDF", System.currentTimeMillis())
 
 
         pdflist.forEach {
@@ -333,81 +333,86 @@ class PdfOperations(activity:Activity) {
 
     }
 
-    fun splittingPdf(activity: Activity, uri: Uri, numberList: List<String>, pdfNAME: String) {
-        //    var bool=false
-        //Loading an existing PDF document
-        //   var  file = File(activity?.assets.open("Hello.pdf"));
-        //    var document = PDDocument.load((activity?.assets.open("Hello.pdf")))
-        Toast.makeText(activity?.applicationContext, "Please wait!", Toast.LENGTH_LONG).show()
-        parcelFileDescriptor = activity?.contentResolver?.openFileDescriptor(uri, "r")!!
+    fun splittingPdf( uri: Uri, numberList: List<String>, pdfNAME: String) {
+
+        var outstream2 = createPDFFolder( PDFProp.SPLITPDF_FOLDER, pdfNAME, System.currentTimeMillis())
+
+      /*  parcelFileDescriptor = activity?.contentResolver?.openFileDescriptor(uri, "r")!!
         val fileDescriptor: FileDescriptor = parcelFileDescriptor?.fileDescriptor!!
-        var inputStraem = FileInputStream(fileDescriptor)
+        var inputStraem = FileInputStream(fileDescriptor)*/
+
+        var inputStraem=activity.contentResolver.openInputStream(uri)
         var document = PDDocument.load(inputStraem)
 
         //Instantiating Splitter class
         var splitter = Splitter();
         //  var listString = formattingof_Pagenumber(atPage)
-
-        if (numberList.size > 1) {
-            startPage = numberList.get(0)
-            endPage = numberList.get(1)
-            Log.d("ifg7egjdf", startPage + endPage + "sdhsj")
-        } else if (numberList.size == 1) {
-            startPage = numberList.get(0)
-            Log.d("ifg7egjdf", startPage!!)
-        } else {
-            //  return bool
-        }
-
-
-        //splitting the pages of a PDF document
-        try {
-            if (startPage != null) {
-                Log.d("fy7fgsjfstartPage", startPage!!)
-                splitter.setStartPage(startPage!!.toInt())
-            }
-            if (endPage != null) {
-                Log.d("fy7fgsjfendpage", endPage!!)
-                splitter.setEndPage(endPage!!.toInt())
-            }
-        } catch (e: Exception) {
-        }
-        if (startPage != null && endPage == null) {
-            splitter.setSplitAtPage(
-                startPage!!.toInt().minus(1)
-            ) //here we give .minus(1) because when se split at given pagenumber then splitter split pagenumber single page then further pages gets split.
-            Log.d("fy7fgsjfsplitAtPage", startPage!!)
-        }
-        //splitter.setSplitAtPage(20)
-        var Pages = splitter.split(document);
-
-        Log.d("eifjkfds", Pages.size.toString())
+try {
+    if (numberList.size > 1) {
+        startPage = numberList.get(0)
+        endPage = numberList.get(1)
+        Log.d("ifg7egjdf", startPage + endPage + "sdhsj")
+    } else if (numberList.size == 1) {
+        startPage = numberList.get(0)
+        Log.d("ifg7egjdf", startPage!!)
+    } else {
+        //  return bool
+    }
 
 
-        //Creating an iterator
+    //splitting the pages of a PDF document
 
-        var iterator = Pages.listIterator();
-        //creating file path i.e sdcard/...
-        var file = createFilePath()
+    if (startPage != null) {
+        Log.d("fy7fgsjfstartPage", startPage!!)
+        splitter.setStartPage(startPage!!.toInt())
+    }
+    if (endPage != null) {
+        Log.d("fy7fgsjfendpage", endPage!!)
+        splitter.setEndPage(endPage!!.toInt())
+    }
 
-        var pd = PDDocument()
-        var pdd = PDDocument()
-        var fileStr = file.toString()
-        //Saving each page as an individual document
-        var i = 1;
-        while (iterator.hasNext()) {
+    if (startPage != null && endPage == null) {
+        splitter.setSplitAtPage(
+            startPage!!.toInt().minus(1)
+        ) //here we give .minus(1) because when se split at given pagenumber then splitter split pagenumber single page then further pages gets split.
+        Log.d("fy7fgsjfsplitAtPage", startPage!!)
+    }
+    //splitter.setSplitAtPage(20)
+    var Pages = splitter.split(document);
 
-            pd = iterator.next();
-            PDFMergerUtility().appendDocument(pdd, pd)  //here we append every splited page to one pdd PDDdocument
-            // pd.save("sdcard/"+pdfNAME + i++ + ".pdf");
+    Log.d("eifjkfds", Pages.size.toString())
 
-        }
+    //Creating an iterator
 
-        pdd.save(fileStr + "/" + pdfNAME + i++ + ".pdf")
+    var iterator = Pages.listIterator();
+    //creating file path i.e sdcard/...
+    var file = createFilePath()
 
-        System.out.println("Multiple PDF’s created");
-        Log.d("388fh3ev", "Multiple PDF’s created")
-        document.close();
+    var pd = PDDocument()
+    var pdd = PDDocument()
+    var fileStr = file.toString()
+    //Saving each page as an individual document
+    var i = 1;
+    while (iterator.hasNext()) {
+
+        pd = iterator.next();
+        PDFMergerUtility().appendDocument(
+            pdd,
+            pd
+        )  //here we append every splited page to one pdd PDDdocument
+        // pd.save("sdcard/"+pdfNAME + i++ + ".pdf");
+
+    }
+
+    //  pdd.save(fileStr + "/" + pdfNAME + i++ + ".pdf")
+    pdd.save(outstream2)
+
+    System.out.println("Multiple PDF’s created");
+    Log.d("388fh3ev", "Multiple PDF’s created")
+    document.close();
+}catch (e:Exception){
+    Toast.makeText(activity.applicationContext,e.message,Toast.LENGTH_LONG).show()
+}
     }
 
 
@@ -497,15 +502,11 @@ class PdfOperations(activity:Activity) {
         return pageImage!!
     }
 
-    fun createEncryptedPdf(
-        actvity: Activity,
-        uri: Uri,
-        owner_user_password: String,
-        view: View
-    ): Boolean {
+    fun createEncryptedPdf(actvity: Activity, uri: Uri, owner_user_password: String, view: View): Boolean {
 
-
-        var inputStream = ConversionandUtilsClass().convertContentUri_toInputStream(actvity, uri)
+           var outstream = createPDFFolder(PDFProp.ENCRYPTEDPDF_FOLDER,"encryptedPdf",System.currentTimeMillis())
+       // var inputStream = ConversionandUtilsClass().convertContentUri_toInputStream(actvity, uri)
+        var inputstreamm = activity.contentResolver.openInputStream(uri)
         val path: String = "sdcard/crypt.pdf"
         val keyLength = 128 // 128 bit is the highest currently supported
 
@@ -527,10 +528,12 @@ class PdfOperations(activity:Activity) {
         val page = PDPage()
         document.addPage(page)
         //to encrypt existing pdf
-        var pdddovcument = PDDocument.load(inputStream)
+        var pdddovcument = PDDocument.load(inputstreamm)
         if (!pdddovcument.isEncrypted) {
             pdddovcument.protect(spp)
-            pdddovcument.save(createFilePath().toString() + "/" + owner_user_password + ".pdf")
+           // pdddovcument.save(createFilePath().toString() + "/" + owner_user_password + ".pdf")
+            pdddovcument.save(outstream)
+
             pdddovcument.close()
         } else {
             Snackbar.make(view, "Already Encrypted", 2000).show()
@@ -679,7 +682,7 @@ class PdfOperations(activity:Activity) {
 
     }
 
-    fun createPDFFolder(document: PDDocument, folderName: String, pdfNAME: String, dateModified: Long): OutputStream {
+    fun createPDFFolder( folderName: String, pdfNAME: String, dateModified: Long): OutputStream {
 
 
         val externalUri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL)
