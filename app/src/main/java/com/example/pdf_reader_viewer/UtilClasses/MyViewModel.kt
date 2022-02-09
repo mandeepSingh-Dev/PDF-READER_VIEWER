@@ -20,6 +20,7 @@ class MyViewModel(application: Application):AndroidViewModel(application)
         viewModelScope.launch {
             pdflist= MutableLiveData<ArrayList<Items_pdfs>>()
             var pdflisttt= Read_Pdf_Files(application1).getPdfList_2()
+           Read_Pdf_Files(application1).getPdfList_Folder("Download")
             pdflist?.value=pdflisttt
            // Log.d("388ry8uwhfd",pdflist?.size.toString())
 

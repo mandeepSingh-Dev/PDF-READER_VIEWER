@@ -1,6 +1,5 @@
 package com.example.pdf_reader_viewer.fragments
 
-import android.content.DialogInterface
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -13,18 +12,19 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter_ImagesToPDF
-import com.example.pdf_reader_viewer.UtilClasses.ConversionandUtilsClass
 import com.example.pdf_reader_viewer.UtilClasses.PdfOperations
 import com.example.pdf_reader_viewer.databinding.ImageToPdfFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -46,6 +46,8 @@ class ImageTo_Pdf_Fragment : Fragment() {
     var importingnumberDailogText:TextView?=null
     var importingnumberTextview:TextView?=null
     var swapedbitmaplISTT:ArrayList<Bitmap>?=null
+    var getnameTextinputlayout:TextInputLayout?=null
+    var createButton:AppCompatButton?=null
 
   //  var fromposList:ArrayList<Int>? = ArrayList()
    // var toposlist:ArrayList<Int>? = ArrayList()
@@ -130,7 +132,7 @@ class ImageTo_Pdf_Fragment : Fragment() {
             bottomdialogue?.show()
         }
 
-        var view22 = LayoutInflater.from(requireContext()).inflate(R.layout.customprogressdialogue, activity?.findViewById<ViewGroup>(R.id.content), false)
+        var view22 = LayoutInflater.from(requireContext()).inflate(R.layout.custom_progress_dialogue, activity?.findViewById<ViewGroup>(R.id.content), false)
         alertDialogprogress=createAlertdialogue(view22)
 
 
@@ -191,52 +193,130 @@ class ImageTo_Pdf_Fragment : Fragment() {
 
     fun createAndClickDialog(bitmapList: ArrayList<Bitmap>): androidx.appcompat.app.AlertDialog {
 
-        var alertdialogBuilder = MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
+        var alertdialogBuilder = AlertDialog.Builder(requireContext(), R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
 
         val viewGroup = activity?.findViewById<ViewGroup>(R.id.content)
-        val view = LayoutInflater.from(requireContext()).inflate(R.layout.custom_quality_dialogue, viewGroup)
+        val view = LayoutInflater.from(requireContext()).inflate(R.layout.custom_imagequality_dialogue, viewGroup)
+        createButton=view?.findViewById(R.id.createButtondialogue)
 
+        createButton?.setOnClickListener {
+            if (!bitmapList?.isEmpty()!!) {
+                //  Log.d("3r3fg3",from.toString()+" "+to.toString())
+                // Collections.swap(bitmapLIST,from!!,to!!)
+
+                //getting radiogroup abnd buitton to get quality text
+                radioGroup = alertDialog?.findViewById<RadioGroup>(R.id.radioGroupDialogue)
+                getnameTextinputlayout = alertDialog?.findViewById<TextInputLayout>(R.id.getnamecustomDialogueInputLayout)
+
+                var radbtnID = radioGroup?.checkedRadioButtonId
+                var radioButton = radioGroup?.findViewById<RadioButton>(radbtnID!!)
+
+                //split quality text of radiobutton
+                var imgQuality=splitImgQaulity(radioButton?.text.toString())
+                var pdfName=getnameTextinputlayout?.editText?.text.toString()
+
+                if(!pdfName.equals("null") && !pdfName.isEmpty()) {
+
+                    alertDialog?.hide()
+                    Log.d("ifnmwe",pdfName)
+                    //creating pdf acc to quality
+                    CoroutineScope(Dispatchers.IO).launch {
+                        //showing pleasewait dialogue
+                        withContext(Dispatchers.Main) {
+                            importingDailogTextview = alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
+                            importingnumberDailogText = alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
+                            //these dailog textview had importing and imprting number texts
+                            importingDailogTextview?.text = "please wait..."
+                            importingnumberDailogText?.visibility = View.GONE
+                            alertDialogprogress?.show()
+                        }
+
+                        PdfOperations(requireActivity())?.createPdf( bitmapList,pdfName, imgQuality)
+
+                        //hide please wait dialogue
+                        withContext(Dispatchers.Main) {
+                            alertDialogprogress?.hide()
+                        }
+
+                    }
+                }//if block for pdfname editext is not empty
+                else{
+                    Log.d("3ivnmw3ev","pdfname isempty")
+                    getnameTextinputlayout?.isErrorEnabled=true
+                    getnameTextinputlayout?.error="Invalid"
+                }
+            }//if block for !bitmap.isEmpty()
+            else {
+                Toast.makeText(requireContext(), "No images selected", Toast.LENGTH_SHORT)
+                    .show()
+            }
+              Toast.makeText(requireContext(),"sidhfsfds",Toast.LENGTH_LONG).show()
+          }
         alertdialogBuilder.setView(view)
-            .setPositiveButton("create", object : DialogInterface.OnClickListener {
+            .setCancelable(true)
+          /*  .setPositiveButton("create", object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface?, which: Int) {
                // bitmapLIST?.forEach { Log.d("44fff44ff",it.toString()) }
 
-
-                if (!bitmapList?.isEmpty()!!) {
+               *//* if (!bitmapList?.isEmpty()!!) {
                   //  Log.d("3r3fg3",from.toString()+" "+to.toString())
                    // Collections.swap(bitmapLIST,from!!,to!!)
 
                     //getting radiogroup abnd buitton to get quality text
                     radioGroup = alertDialog?.findViewById<RadioGroup>(R.id.radioGroupDialogue)
+                    getnameTextinputlayout = alertDialog?.findViewById<TextInputLayout>(R.id.getnamecustomDialogueInputLayout)
+
                     var radbtnID = radioGroup?.checkedRadioButtonId
                     var radioButton = radioGroup?.findViewById<RadioButton>(radbtnID!!)
 
-                    Toast.makeText(requireContext(), radioButton?.text.toString(), Toast.LENGTH_SHORT).show()
                     //split quality text of radiobutton
                     var imgQuality=splitImgQaulity(radioButton?.text.toString())
-                    //creating pdf acc to quality
-                    CoroutineScope(Dispatchers.IO).launch {
-                        withContext(Dispatchers.Main) {
-                            importingDailogTextview = alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
-                            importingnumberDailogText = alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
-                         //these dailog textview had importing and imprting number texts
-                            importingDailogTextview?.text="please wait..."
-                            importingnumberDailogText?.visibility=View.GONE
-                            alertDialogprogress?.show()}
+                    var pdfName=getnameTextinputlayout?.editText?.text.toString()
 
-                        PdfOperations(requireActivity())?.createPdf(view, requireActivity(), bitmapList, imgQuality)
+                    if(!pdfName.equals("null") && !pdfName.isEmpty()) {
+                        Log.d("ifnmwe",pdfName)
+                        //creating pdf acc to quality
+                        CoroutineScope(Dispatchers.IO).launch {
+                            withContext(Dispatchers.Main) {
+                                importingDailogTextview =
+                                    alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
+                                importingnumberDailogText =
+                                    alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
+                                //these dailog textview had importing and imprting number texts
+                                importingDailogTextview?.text = "please wait..."
+                                importingnumberDailogText?.visibility = View.GONE
+                                alertDialogprogress?.show()
+                            }
 
-                        withContext(Dispatchers.Main) {alertDialogprogress?.hide()
+                            PdfOperations(requireActivity())?.createPdf(
+                                view,
+                                requireActivity(),
+                                bitmapList,
+                                imgQuality
+                            )
+
+                            withContext(Dispatchers.Main) {
+                                alertDialogprogress?.hide()
+                            }
+
                         }
+                    }//if block for pdfname editext is not empty
+                    else{
+                        Log.d("3ivnmw3ev","pdfname isempty")
+                        getnameTextinputlayout?.isErrorEnabled=true
+                        getnameTextinputlayout?.error="Invalid"
 
                     }
-                  } else {
+                  }//if block for !bitmap.isEmpty()
+                else {
                       Toast.makeText(requireContext(), "No images selected", Toast.LENGTH_SHORT)
                           .show()
-                      }
+                      }*//*
             }
-        })
-            .setCancelable(true)
+        })*/
+
+
+
         var alertDialogue = alertdialogBuilder.create()
 
 
@@ -304,7 +384,8 @@ class ImageTo_Pdf_Fragment : Fragment() {
         if(!quality.equals("null")) {
             Log.d("sdsds",quality)
             var splstringarr = quality.replace(Regex("[ %]"), "")
-            return splstringarr[0].toString().toInt()
+            Log.d("48hfcv","${splstringarr.toInt()}klklk")
+            return splstringarr.toInt()
         }else{
             Log.d("e4eg34g",100.toString())
             return 100

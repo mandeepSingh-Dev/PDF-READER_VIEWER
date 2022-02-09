@@ -19,7 +19,7 @@ class MyAdapter_ImagesToPDF(context: Context, arrayList:ArrayList<Bitmap>):Recyc
     var myviewholder:MyViewHolderr?=null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolderr {
-        var view=LayoutInflater.from(mcontext).inflate(R.layout.images_list_item,parent,false)
+        var view=LayoutInflater.from(mcontext).inflate(R.layout.list_images__item,parent,false)
          myviewholder=MyViewHolderr(view)
         return myviewholder!!
     }

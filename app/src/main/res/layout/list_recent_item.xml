@@ -8,7 +8,6 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:cardPreventCornerOverlap="true"
@@ -41,7 +40,7 @@
             android:textStyle="bold"
             />
             <TextView
-                android:id="@+id/recentpdfTIME"
+                android:id="@+id/recentpdfDATE"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

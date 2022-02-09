@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
 
-// TODO: Rename parameter arguments, choose names that match
 
 class SplitPdf_Fragment : Fragment() {
 
@@ -78,7 +77,7 @@ class SplitPdf_Fragment : Fragment() {
     fun splitPDF(appendedUri: Uri) {
         var totalPages = 0
         CoroutineScope(Dispatchers.Default).launch {
-            var inputStream = ConversionandUtilsClass().convertContentUri_toInputStream(
+            var inputStream = ConversionandUtilsClass.convertContentUri_toInputStream(
                 requireActivity(),
                 appendedUri
             )
@@ -105,9 +104,9 @@ class SplitPdf_Fragment : Fragment() {
                 binding?.splitButton?.setOnClickListener {
                     Log.d("8y7ehfgbne", "dfsdfsf")
                     var atPage = binding?.edittextlayout1?.editText?.text.toString()
-                    var userpdfName = binding?.edittextlayout2?.editText?.text?.toString()
+                    var pdfName = binding?.edittextlayout2?.editText?.text?.toString()
                     // var listnumber = PdfOperations(requireActivity()).formattingof_Pagenumber(atPage)
-                    var listnumber = ConversionandUtilsClass().formattingof_Pagenumber(atPage)
+                    var listnumber = ConversionandUtilsClass.formattingof_Pagenumber(atPage)
 
                     Log.d("SIZEWHAT", listnumber.size.toString())
 
@@ -115,17 +114,13 @@ class SplitPdf_Fragment : Fragment() {
                         Log.d("hfdf", "dkfjdk")
                         binding?.edittextlayout1?.error = "Invalid"
                     } else {
-                        if (!(userpdfName?.isEmpty()!!)) {
+                        if (!(pdfName?.isEmpty()!!)) {
                             Log.d("hfdf", "not dkfjdk")
                             binding?.edittextlayout2?.error = ""
                             binding?.edittextlayout2?.isErrorEnabled = false
                             binding?.edittextlayout1?.isErrorEnabled = false
 
-                            PdfOperations(requireActivity()).splittingPdf(
-                                appendedUri,
-                                listnumber,
-                                userpdfName
-                            )
+                            PdfOperations(requireActivity()).splittingPdf(appendedUri, listnumber, pdfName)
                         } else {
                             binding?.edittextlayout2?.error = "Invalid"
                         }

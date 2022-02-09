@@ -12,11 +12,15 @@ import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter_ForMerge
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
@@ -26,14 +30,33 @@ import com.example.pdf_reader_viewer.databinding.MergePdfsFragmentBinding
 import com.tom_roush.pdfbox.pdmodel.PDDocument
 import java.io.FileDescriptor
 import kotlin.collections.ArrayList
+import androidx.appcompat.app.AlertDialog
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.chip.Chip
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MergePdfs_Fragment : Fragment() {
 
-    var binding: MergePdfsFragmentBinding? = null
-    var isRotate = true
-    var pdfUrifromFileManager:Uri?=null
-    var selectedPdf_list:ArrayList<Items_pdfs>?=null
-    var adapter:MyAdapter_ForMerge?=null
+    private var binding: MergePdfsFragmentBinding? = null
+    private  var isRotate = true
+    private   var pdfUrifromFileManager:Uri?=null
+    private  var selectedPdf_list:ArrayList<Items_pdfs>?=null
+    private  var adapter:MyAdapter_ForMerge?=null
+    private  var alertDialog:AlertDialog?=null
+    private  var chip:Chip?=null
+    private  var getNameinputlayoutMERGE:TextInputLayout?=null
+    private  var secureinputLayout1:TextInputLayout?=null
+    private  var mergeDialogueButton:MaterialButton?=null
+    private  var alertDialogprogress:AlertDialog?=null
+    private var importingDailogTextview: TextView? = null
+    private var importingnumberDailogText: TextView? = null
+
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,10 +97,14 @@ class MergePdfs_Fragment : Fragment() {
             }
             createrecyclerView()
         }
+        alertDialog=createDaiolgue()
         binding?.mergeButton?.setOnClickListener {
            // Log.d("34ge",selectedPdf_list?.get(0)?.appendeduri.toString())
-            mergeSelectedPdfs(selectedPdf_list!!)
+            /*mergeSelectedPdfs(selectedPdf_list!!,alertDialog!!)*/
+            alertDialog?.show()
         }
+        var view22 = LayoutInflater.from(requireContext()).inflate(R.layout.custom_progress_dialogue, activity?.findViewById<ViewGroup>(R.id.content), false)
+        alertDialogprogress = createAlertdialogue(view22)
 
 
         Log.d("vdvdvegvd","dfdsfdfvd")
@@ -172,10 +199,26 @@ class MergePdfs_Fragment : Fragment() {
 
     }
 
-    fun mergeSelectedPdfs(pdflist:ArrayList<Items_pdfs>){
-        Log.d("48hgh4g4",pdflist.size.toString())
-        PdfOperations(requireActivity()).mergePdfs(pdflist,"mymergesFinal")
-        PdfOperations(requireActivity()).myCustomNativeMergePdf(pdflist)
+    fun mergeSelectedPdfs(pdflist:ArrayList<Items_pdfs>,pdfName:String,password:String){
+        Log.d("48hgh4g4",pdflist.size.toString()+"wiodhwuedhwdiwwdwwfwfoh7ufg37j9")
+       // PdfOperations(requireActivity()).mergePdfs(pdflist,"mymergesFinal")
+
+        CoroutineScope(Dispatchers.Main).launch {
+            Log.d("4g93yhg3g",password)
+            importingDailogTextview = alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
+            importingnumberDailogText = alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
+            //these dailog textview had importing and importing number texts
+            importingDailogTextview?.text = "please wait..."
+            importingnumberDailogText?.visibility = View.GONE
+            alertDialogprogress?.show()
+
+            PdfOperations(requireActivity()).myCustomNativeMergePdf(pdflist,pdfName,password)
+
+            alertDialogprogress?.hide()
+
+
+        }
+
        // myCustomNativeMergePdf(pdflist)
 
     }
@@ -198,5 +241,81 @@ class MergePdfs_Fragment : Fragment() {
 
       //  metadata.release()
     return arraylist!!
+    }
+
+    fun createDaiolgue():AlertDialog{
+        var dailogueBuilder = AlertDialog.Builder(requireContext(), R.style.Theme_AppCompat_Dialog_Alert)
+        var viewGroup = activity?.findViewById<ViewGroup>(R.id.content)
+        var view=LayoutInflater.from(requireContext()).inflate(R.layout.custom_merge_dialgue,viewGroup,false)
+
+        chip = view.findViewById(R.id.secureChip)
+        getNameinputlayoutMERGE = view.findViewById(R.id.getNameinputlayoutMERGE)
+        secureinputLayout1 = view.findViewById(R.id.secureinputlayoutMERGE)
+        mergeDialogueButton = view.findViewById(R.id.mergeDialgueButton)
+       // getNameinputlayoutMERGE = view.findViewById(R.id.getNameinputlayoutMERGE)
+        chip?.setOnClickListener {
+
+            if (!chip?.isChecked!!) {
+                    secureinputLayout1?.visibility = View.GONE
+                    //Toast.makeText(requireContext(), "close icon visible", Toast.LENGTH_LONG).show()
+                } else {
+                    secureinputLayout1?.visibility = View.VISIBLE
+                  //  Toast.makeText(requireContext(), " close not visible", Toast.LENGTH_LONG).show()
+                }
+            }
+
+        mergeDialogueButton?.setOnClickListener {
+           //hiding dialogue when click merge dialogue button
+
+            var pdfNamee=getNameinputlayoutMERGE?.editText?.text.toString()
+            lateinit var password:String
+            //checking pdfname is empty or not
+            if(pdfNamee.isEmpty()) {
+                Log.d("38fg3bf",pdfNamee)
+                Toast.makeText(requireContext(),"name is null",Toast.LENGTH_SHORT).show()
+                getNameinputlayoutMERGE?.error="Invalid Name"
+            }
+            else{
+                //checking if chip is checked and if checked then merge with encryptedpassword
+                if(chip?.isChecked!!) {
+                    Toast.makeText(requireContext(),"chip is checked",Toast.LENGTH_SHORT).show()
+                    password = secureinputLayout1?.editText?.text.toString()
+                    //checking password is empty or not
+                    if(password.isEmpty()) {
+                        secureinputLayout1?.error="please enter password."
+                        Toast.makeText(requireContext(), "password is null", Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+                        alertDialog?.hide()
+                        Log.d("38fh3ifgv3fg3f37fgh",selectedPdf_list?.size.toString())
+                        mergeSelectedPdfs(selectedPdf_list!!,pdfNamee,password)
+                        Toast.makeText(requireContext(), "password is not null", Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+                //else merge without encrypted password
+                else{
+                    Toast.makeText(requireContext(),"chip is not checked",Toast.LENGTH_SHORT).show()
+                    alertDialog?.hide()
+                    Log.d("38fh3ifgv3fg3f37fgh",selectedPdf_list?.size.toString())
+                    //here NULL means password and pdf will merge without password Encrypted
+                    mergeSelectedPdfs(selectedPdf_list!!,pdfNamee,"NULL")
+                }
+            }
+
+
+
+        }
+        dailogueBuilder.setCancelable(true)
+        dailogueBuilder.setView(view)
+        return dailogueBuilder.create()
+    }
+
+    fun createAlertdialogue(view:View):androidx.appcompat.app.AlertDialog{
+        var alertbuilder2 = MaterialAlertDialogBuilder(requireContext(),R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
+        alertbuilder2.setView(view)
+        alertbuilder2.setCancelable(false)
+
+        return alertbuilder2.create()
     }
 }

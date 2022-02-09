@@ -30,7 +30,7 @@
                 android:id="@+id/textviewALLL"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/candal"
@@ -41,11 +41,12 @@
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/pdflistSearchView"
-                android:layout_width="200dp"
+                android:layout_width="210dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@color/cardview_dark_background"
+                android:background="@drawable/shape"
+                app:defaultQueryHint="Search"
                 app:iconifiedByDefault="true"
                 app:queryHint="search pdfs" />
 
@@ -59,7 +60,7 @@
             android:layout_below="@id/linearwithSearchView"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:background="#E1EDEC" />
         <!-- <ImageView
             android:id="@+id/EmptyImageView"
@@ -107,20 +108,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_anchor="@id/bottomAppbar"
-        android:src="@drawable/ic_pdf_icon"/>
+        android:src="@drawable/ic_pdf_icon" />
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:fabAlignmentMode="center"
-        app:fabCradleMargin="8dp"
-        app:fabCradleRoundedCornerRadius="50dp"
-        android:backgroundTint="#474051"
+        android:backgroundTint="#1A551D"
         app:fabAnimationMode="slide"
+        android:outlineAmbientShadowColor="#FF0600"
+        android:outlineSpotShadowColor="#000000"
         app:hideOnScroll="true"
-        app:fabCradleVerticalOffset="20dp"
+        app:fabAlignmentMode="end"
+        app:fabCradleMargin="12dp"
+        app:fabCradleRoundedCornerRadius="5dp"
+        app:fabCradleVerticalOffset="10dp"
         android:layout_gravity="bottom"
-        style="@style/Widget.MaterialComponents.BottomAppBar"/>
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        android:scrollIndicators="top"
+        android:layout_margin="10dp"
+        style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
+        app:layout_behavior="com.google.android.material.bottomappbar.BottomAppBar$Behavior"
+     >
+
+        <ImageView
+            android:id="@+id/settingsIcONBottom"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            style="@style/SelectableItemTheme"
+            android:background="@drawable/rippldeimage"
+            android:src="@drawable/ic_outline_settings_24"
+            android:clickable="true"
+
+            app:tint="#76FF03" />
+        <ImageView
+            android:id="@+id/darkmODEIcONBottom"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/ic_outline_dark_mode_24"
+            android:layout_marginLeft="90dp"
+            android:foregroundTint="@color/black"
+            android:clickable="true"
+            android:background="@drawable/rippldeimage"
+            app:tint="#6FFBD8" />
+
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

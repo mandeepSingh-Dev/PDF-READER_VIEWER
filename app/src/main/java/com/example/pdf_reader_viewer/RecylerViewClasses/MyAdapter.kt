@@ -7,15 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pdf_reader_viewer.MCustomOnClickListener
 import com.example.pdf_reader_viewer.PdfView_Activity
 import com.example.pdf_reader_viewer.PdfsTools_Activity
 import com.example.pdf_reader_viewer.R
+import com.example.pdf_reader_viewer.Roomclasses.Room_For_RecentPDFs.Items_RecentPdfs
+import com.example.pdf_reader_viewer.Roomclasses.Room_For_RecentPDFs.MyRoomDatabase
 import com.example.pdf_reader_viewer.UtilClasses.ConversionandUtilsClass
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.DecimalFormat
 import java.util.*
 
@@ -27,6 +33,7 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
     var bottomsheetDialogue:BottomSheetDialog?=null
     var pdfNamebottomsheet:TextView?=null
     var customOnClickListener:CustomOnClickListener?=null
+    var mCustomOnClickListener:MCustomOnClickListener?=null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -49,26 +56,28 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
         var displayName=itemsPdfs?.title
         holder.pdfName.setText(displayName)
 
-        var sizemb=ConversionandUtilsClass().bytesToMB(itemsPdfs?.size!!)
+        var sizemb=ConversionandUtilsClass.bytesToMB(itemsPdfs?.size!!)
         holder.pdfsize.setText(sizemb+" mb")
         holder.dateTextView.setText(itemsPdfs.date_modified)
 
         var longseconds=itemsPdfs.date_modified?.toLong()
        // ConversionClass().convertToDate(longseconds!!)
-        val datelist=ConversionandUtilsClass().convertToDate(longseconds!!)
+        val datelist=ConversionandUtilsClass.convertToDate(longseconds!!)
         holder.dateTextView.text=datelist.get(0) //here 0 position gives date without time
 
         holder.itemView.setOnClickListener {
-            context?.startActivity(
-                Intent(context, PdfView_Activity::class.java)
-                    .putExtra("PDF_URI",itemsPdfs?.appendeduri.toString())
-                    .putExtra(PDFProp.PDF_TITLE,itemsPdfs?.title)
-            )
+            context?.startActivity(Intent(context, PdfView_Activity::class.java).putExtra(PDFProp.PDF_APPENDED_URI,itemsPdfs?.appendeduri.toString()).putExtra(PDFProp.PDF_TITLE,itemsPdfs?.title))
+
+            CoroutineScope(Dispatchers.Main).launch {
+                insertToRecentDATABASE(itemsPdfs?.appendeduri.toString(),System.currentTimeMillis())
+            }
         }
         holder.menubutton.setOnClickListener {
           /*  pdfNamebottomsheet?.text=pdfList?.get(position)?.title
             bottomsheetDialogue?.show()*/
             customOnClickListener?.customOnClick(position)
+
+            mCustomOnClickListener?.onClick(position)
         }
         pdfNamebottomsheet?.setOnClickListener {
             var intent=Intent(context!!,PdfsTools_Activity::class.java)
@@ -103,6 +112,11 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
         this.customOnClickListener=customOnClickListener
     }
 
+    fun setMCustomClickListenr(mCustomOnClickListener: MCustomOnClickListener)
+    {
+        this.mCustomOnClickListener=mCustomOnClickListener
+    }
+
     fun bytesToMB(bytes:String):String{
          var bytess=bytes.toFloat()
         var MEGABYTE = 1024*1024
@@ -115,6 +129,10 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
 
         Log.d("43834hb10",formatedMB)
         return formatedMB
+    }
+
+    suspend fun insertToRecentDATABASE(uri: String,date:Long)= withContext(Dispatchers.IO){
+        MyRoomDatabase.getInstance(context!!)?.daoMethod()?.insert(Items_RecentPdfs(uri,date))
     }
 
 

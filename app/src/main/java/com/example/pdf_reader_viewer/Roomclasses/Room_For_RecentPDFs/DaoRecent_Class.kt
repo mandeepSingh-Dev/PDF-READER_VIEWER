@@ -1,4 +1,4 @@
-package com.example.pdf_reader_viewer.Roomclasses
+package com.example.pdf_reader_viewer.Roomclasses.Room_For_RecentPDFs
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
@@ -19,5 +19,5 @@ interface DaoRecent_Class{
      fun query():LiveData<List<Items_RecentPdfs>>
 
      @Query("SELECT * FROM Recent_PDF_Table WHERE item_id Like :id")
-     fun queryByID(id:Int):Items_RecentPdfs
+     fun queryByID(id:Int): Items_RecentPdfs
 }

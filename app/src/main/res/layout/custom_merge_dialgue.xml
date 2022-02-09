@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+android:paddingBottom="20dp"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#2E8AB6"
+        >
+<TextView
+    android:id="@+id/dialogueMergeTITLE"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Merging 2 PDFs"
+    android:gravity="center"
+    android:textSize="21sp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    android:textColor="@color/white"/>
+
+    </LinearLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/getNameinputlayoutMERGE"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:shapeAppearance="@style/ShapeAppearance.MaterialComponents.SmallComponent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="20dp"
+        android:textColorHint="#C8B5B5"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/purple_700"
+        app:boxCornerRadiusTopStart="20dp"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxStrokeWidth="2dp"
+        app:expandedHintEnabled="true"
+        app:hintAnimationEnabled="true"
+        app:hintTextColor="#5E35B1"
+        app:errorTextColor="#FF4C4C"
+        app:errorEnabled="true"
+        app:boxStrokeErrorColor="#FF4C4C"
+       >
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/enterNameEdittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter File Name"
+        android:textColor="#E65100"
+        android:textColorHint="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.chip.Chip
+            android:id="@+id/secureChip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="Secure PDF"
+            android:textColor="@color/white"
+            style="@style/Widget.MaterialComponents.Chip.Entry"
+            app:closeIconTint="@color/white"
+            app:chipBackgroundColor="#7F9098"
+            app:chipStrokeWidth="1dp"
+            app:closeIconVisible="false"
+            android:layout_marginLeft="20dp"
+            android:checkable="true"
+            app:checkedIconTint="#000000"
+            app:checkedIconEnabled="true"
+            />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/secureinputlayoutMERGE"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:shapeAppearance="@style/ShapeAppearance.MaterialComponents.SmallComponent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="10dp"
+        android:textColorHint="#C8B5B5"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/purple_700"
+        app:boxCornerRadiusTopStart="20dp"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxStrokeWidth="2dp"
+        app:expandedHintEnabled="true"
+        app:hintAnimationEnabled="true"
+        app:hintTextColor="#5E35B1"
+        app:errorTextColor="#FF4C4C"
+        app:errorEnabled="true"
+        app:boxStrokeErrorColor="#FF4C4C"
+        app:passwordToggleEnabled="true"
+        android:visibility="gone"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/secureEdittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Password"
+            android:textColor="#E65100"
+            android:inputType="textPassword"
+
+            android:textColorHint="@color/white" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mergeDialgueButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Merge"
+        android:textAllCaps="false"
+        android:gravity="center"
+        android:layout_gravity="center"
+        app:strokeWidth="2dp"
+        app:strokeColor="#FB8C00"
+        android:layout_marginTop="15dp"
+        android:shadowColor="@color/white"
+        app:rippleColor="@color/white"
+        android:backgroundTint="#00ACC1"/>
+
+</LinearLayout>

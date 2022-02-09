@@ -1,14 +1,11 @@
 package com.example.pdf_reader_viewer.RecylerViewClasses
 
-import android.content.ClipData
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
-import androidx.appcompat.view.menu.ActionMenuItemView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pdf_reader_viewer.R
 
@@ -18,7 +15,7 @@ class MyAdapter_ForMerge(context:Context,arrayList:ArrayList<Items_pdfs>):Recycl
     var pdflist:ArrayList<Items_pdfs> = arrayList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewholderMerge {
-        var view=LayoutInflater.from(contextt).inflate(R.layout.merge_list_item,parent,false)
+        var view=LayoutInflater.from(contextt).inflate(R.layout.list_merge_item,parent,false)
 
          var myViewholderMerge=MyViewholderMerge(view)
         return myViewholderMerge

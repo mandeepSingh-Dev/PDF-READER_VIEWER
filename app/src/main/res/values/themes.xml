@@ -17,10 +17,9 @@
     <style name="myanimation">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+    <style name="SelectableItemTheme" parent="">
+        <item name="android:radius">20sp</item>
+    </style>
 
-    </style>
-    <style name="theme_Dialog" parent="android:Theme.Holo.Dialog">
-        <item name="android:windowMinWidthMajor">100%</item>
-        <item name="android:windowMinWidthMinor">100%</item>
-    </style>
 </resources>

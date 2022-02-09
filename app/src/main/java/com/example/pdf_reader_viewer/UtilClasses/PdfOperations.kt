@@ -33,6 +33,8 @@ import com.tom_roush.pdfbox.pdmodel.graphics.image.LosslessFactory
 import com.tom_roush.pdfbox.pdmodel.graphics.image.PDImageXObject
 import com.tom_roush.pdfbox.rendering.PDFRenderer
 import com.tom_roush.pdfbox.text.PDFTextStripper
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import java.io.*
 import java.security.Security
@@ -139,11 +141,11 @@ class PdfOperations(activity:Activity) {
     }
 
     //this method is for multiple images/bitmaps
-    fun createPdf(v: View?, activity: Activity, imgList: ArrayList<Bitmap>, quality: Int) {
+    fun createPdf( imgList: ArrayList<Bitmap>,pdfName:String, quality: Int) {
 
         val document = PDDocument()
         val appendeddocument=PDDocument()
-        var stream = createPDFFolder( PDFProp.CREATEDPDF_FOLDER, "chalgyoipdf", System.currentTimeMillis())
+        var stream = createPDFFolder( PDFProp.CREATEDPDF_FOLDER, pdfName, System.currentTimeMillis())
           var fos=stream as FileOutputStream
 
         /*  activity?.runOnUiThread {
@@ -249,11 +251,11 @@ class PdfOperations(activity:Activity) {
      * Because thirdParty pdf library doesnt fetch text from pdf only fetch images,
      * so we use combine third party and android native Pdfdocument library which fetch
      * text from pdf as well */
-    fun myCustomNativeMergePdf(pdflist: ArrayList<Items_pdfs>){
+   suspend fun myCustomNativeMergePdf(pdflist: ArrayList<Items_pdfs>,pdfNAME: String,password:String)= withContext(Dispatchers.IO){
 
         var pdDocument= PDDocument()
         var parcelFileDescriptor:ParcelFileDescriptor
-        var stream2 = createPDFFolder( PDFProp.MERGEPDF_FOLDER, "mergedPDF", System.currentTimeMillis())
+        var stream2 = createPDFFolder( PDFProp.MERGEPDF_FOLDER, pdfNAME, System.currentTimeMillis())
 
 
         pdflist.forEach {
@@ -300,9 +302,19 @@ class PdfOperations(activity:Activity) {
 
         }
         Log.d("38f3hfg4",pdDocument.pages.count.toString() )
-        pdDocument.save(stream2)
-        pdDocument.close()
-        stream2.close()
+
+        //if password null then do nothing else ENCRYPT this pdDocument Merged pdf
+        if(password.equals("NULL")){
+            pdDocument.save(stream2)
+            pdDocument.close()
+            stream2.close()}
+        else{
+            var pdDocumentENCRPTD = enryptPdf(pdDocument,password,stream2)
+            pdDocumentENCRPTD.save(stream2)
+            pdDocumentENCRPTD.close()
+            stream2.close()
+        }
+
 
 
     }
@@ -502,13 +514,40 @@ try {
         return pageImage!!
     }
 
-    fun createEncryptedPdf(actvity: Activity, uri: Uri, owner_user_password: String, view: View): Boolean {
+    fun enryptPdf(pdDocument: PDDocument,password: String,outStream:OutputStream):PDDocument
+    {
+        var spp=getStandardProtectionPolicy_forEncrypPDF(password)
+      //pdf is protect
+        pdDocument.protect(spp)
 
-           var outstream = createPDFFolder(PDFProp.ENCRYPTEDPDF_FOLDER,"encryptedPdf",System.currentTimeMillis())
+        return pdDocument
+    }
+    fun getStandardProtectionPolicy_forEncrypPDF(password: String):StandardProtectionPolicy{
+        val keyLength = 128 // 128 bit is the highest currently supported
+        // Limit permissions of those without the password
+        val ap = AccessPermission()
+        ap.setCanPrint(false)
+
+        // Sets the owner password and user password
+        val spp = StandardProtectionPolicy(password, password, ap)
+
+        // Setups up the encryption parameters
+        spp.encryptionKeyLength = keyLength
+        spp.permissions = ap
+        val provider = BouncyCastleProvider()
+        Security.addProvider(provider)
+
+        return spp
+    }
+    fun createEncryptedPdf( uri: Uri,pdfNAME: String, owner_user_password: String, view: View): Boolean {
+
+        //TODO CHANGE THE ENCRYPTED FILE NAME AS A PDF FILE NAME
+           var outstream = createPDFFolder(PDFProp.ENCRYPTEDPDF_FOLDER,pdfNAME,System.currentTimeMillis())
        // var inputStream = ConversionandUtilsClass().convertContentUri_toInputStream(actvity, uri)
         var inputstreamm = activity.contentResolver.openInputStream(uri)
         val path: String = "sdcard/crypt.pdf"
-        val keyLength = 128 // 128 bit is the highest currently supported
+
+       /* val keyLength = 128 // 128 bit is the highest currently supported
 
         // Limit permissions of those without the password
         val ap = AccessPermission()
@@ -521,9 +560,11 @@ try {
         spp.encryptionKeyLength = keyLength
         spp.permissions = ap
         val provider = BouncyCastleProvider()
-        Security.addProvider(provider)
+        Security.addProvider(provider)*/
 
-        val font: PDFont = PDType1Font.HELVETICA
+        //getting spp for protect/encrypt the pdf
+        val spp=getStandardProtectionPolicy_forEncrypPDF(owner_user_password)
+
         val document = PDDocument()
         val page = PDPage()
         document.addPage(page)
@@ -633,8 +674,8 @@ try {
     fun createNativedoc(activity: Activity/*,outp:OutputStream*/) {
 
 
-        var bitmap = BitmapFactory.decodeResource(activity.resources, R.drawable.skywall)
-        var bitmapResult = Bitmap.createScaledBitmap(bitmap, 300, 400, false)
+      //  var bitmap = BitmapFactory.decodeResource(activity.resources, R.drawable.skywall)
+       // var bitmapResult = Bitmap.createScaledBitmap(bitmap, 300, 400, false)
 
 
         var document = PdfDocument()
@@ -645,7 +686,7 @@ try {
 
         var canvas = page.canvas
 
-        canvas.drawBitmap(bitmapResult, 80f, 80f, null)
+       // canvas.drawBitmap(bitmapResult, 80f, 80f, null)
         document.finishPage(page)
 
 

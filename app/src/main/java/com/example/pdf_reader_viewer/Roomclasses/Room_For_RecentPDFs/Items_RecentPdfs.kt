@@ -1,6 +1,5 @@
-package com.example.pdf_reader_viewer.Roomclasses
+package com.example.pdf_reader_viewer.Roomclasses.Room_For_RecentPDFs
 
-import android.net.Uri
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -14,14 +13,13 @@ data class Items_RecentPdfs(
     /*@ColumnInfo(name = "pdfName")
     val pdfName:String,
 
-    @ColumnInfo(name = "date")
-    val date:Long,
-
     @ColumnInfo(name = "pdfSize")
     val pdfSize:String,*/
+    @ColumnInfo(name = "date")
+    val date:Long,
 
     @ColumnInfo(name = "pdfUri")
     val pdfUri:String) {
 
-    constructor( pdfUri:String):this(0,pdfUri)
+    constructor( pdfUri:String,date:Long):this(0,date,pdfUri)
 }

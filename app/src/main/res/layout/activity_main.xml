@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity_ViewPagerHolder"
-    android:orientation="vertical">
+    >
 
 
 
@@ -15,29 +15,70 @@
        android:layout_height="wrap_content"
        android:visibility="gone"
        android:layout_centerInParent="true"
-    />
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent"
 
-   <com.google.android.material.tabs.TabLayout
+    />
+   <LinearLayout
+      android:id="@+id/appLogoLAYOUT"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
+      android:orientation="horizontal"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintBottom_toTopOf="@id/tablayout"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent"
+      >
+      <ImageView
+           android:id="@+id/appLOGO"
+           android:layout_width="35dp"
+           android:layout_height="35dp"
+           android:src="@drawable/ic_pdf_icon"
+           android:layout_marginLeft="14dp"
+         android:layout_marginTop="14dp"
+         android:layout_marginBottom="14dp"/>
+
+   </LinearLayout>
+   <com.google.android.material.tabs.TabLayout
        android:id="@+id/tablayout"
-       tools:ignore="MissingConstraints"
-       android:background="#AE2B2B"
-       app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
        app:tabIconTint="@color/teal_200"
-       app:tabIndicatorColor="@color/white"
-       app:tabSelectedTextColor="@color/white"
-       app:tabTextColor="@color/teal_700" />
+       app:tabRippleColor="#D64278"
+       app:tabSelectedTextColor="#FFFFFF"
+       app:tabMode="fixed"
+       app:tabIndicatorColor="#D64278"
+       app:tabIndicator="@drawable/shape"
+       app:tabIndicatorGravity="stretch"
+       app:tabIndicatorAnimationMode="elastic"
+       android:animateLayoutChanges="true"
+       app:tabIndicatorAnimationDuration="800"
+       app:tabContentStart="56dp"
+       android:layout_marginLeft="10dp"
+       android:layout_marginRight="10dp"
+       app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+       app:tabTextColor="@color/teal_700"
+      app:layout_constraintTop_toBottomOf="@id/appLogoLAYOUT"
+       app:layout_constraintBottom_toTopOf="@id/viewpager2"
+       app:layout_constraintLeft_toLeftOf="parent"
+       style="@style/Widget.MaterialComponents.TabLayout"
+       app:layout_constraintRight_toRightOf="parent"/>
    <androidx.viewpager2.widget.ViewPager2
        android:id="@+id/viewpager2"
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
+       android:layout_height="0dp"
        android:background="@color/white"
        android:layout_below="@id/tablayout"
-       android:layout_weight="1">
+       android:layout_weight="1"
+       app:layout_constraintTop_toBottomOf="@id/tablayout"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent">
    </androidx.viewpager2.widget.ViewPager2>
 
 
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

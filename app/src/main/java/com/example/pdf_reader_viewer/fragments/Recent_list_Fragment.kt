@@ -9,11 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter_RecentLists
-import com.example.pdf_reader_viewer.Roomclasses.Items_RecentPdfs
-import com.example.pdf_reader_viewer.Roomclasses.MyRoomDatabase
+import com.example.pdf_reader_viewer.Roomclasses.Room_For_RecentPDFs.Items_RecentPdfs
+import com.example.pdf_reader_viewer.Roomclasses.Room_For_RecentPDFs.MyRoomDatabase
 import com.example.pdf_reader_viewer.databinding.RecentListpdfFragmentBinding
 import kotlinx.coroutines.*
 
@@ -39,7 +37,7 @@ class Recent_list_Fragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
        var job= CoroutineScope(Dispatchers.IO).async {
-           var liverecentList =MyRoomDatabase.getInstance(requireContext())?.daoMethod()?.query()
+           var liverecentList = MyRoomDatabase.getInstance(requireContext())?.daoMethod()?.query()
 
            withContext(Dispatchers.Main) {
                Log.d("3r883hgf3", liverecentList.value?.size.toString())
@@ -49,7 +47,7 @@ class Recent_list_Fragment : Fragment() {
                    object : Observer<List<Items_RecentPdfs>> {
                        override fun onChanged(it: List<Items_RecentPdfs>?) {
                           myAdapter= MyAdapter_RecentLists(requireContext(),it as ArrayList<Items_RecentPdfs>)
-                           binding?.recentRecyclerView?.layoutManager=GridLayoutManager(requireContext(),2)
+                           binding?.recentRecyclerView?.layoutManager=GridLayoutManager(requireContext(),2,GridLayoutManager.VERTICAL,false)
                            binding?.recentRecyclerView?.adapter=myAdapter
                        }
                    })

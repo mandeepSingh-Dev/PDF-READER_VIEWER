@@ -60,8 +60,8 @@ class EncryptPdf_Fragment : Fragment() {
     }, ActivityResultCallback {
         if(it!=null) {
 
-           // getMetadata(it)
-            binding?.PDFNameEncrypt?.text=getMetadata(it)
+           var pdfName = getMetadata(it)
+            binding?.PDFNameEncrypt?.text = pdfName
             var document=PDDocument.load(activity?.contentResolver?.openInputStream(it))
             var totalpages=document.numberOfPages
             binding?.pdfTotalPage?.text="Total pages : " + totalpages.toString()
@@ -75,7 +75,7 @@ class EncryptPdf_Fragment : Fragment() {
                     if (!text.isEmpty()) {
                  /**here we check whether pdf is encrypted if yes then delete selected pdf and create new one with password]*/
                       var job= CoroutineScope(Dispatchers.IO).async {
-                           isEncrypted = PdfOperations(requireActivity()).createEncryptedPdf(requireActivity(), uri, text, it)
+                           isEncrypted = PdfOperations(requireActivity()).createEncryptedPdf( uri, pdfName,text, it)
                      if (isEncrypted) {
                          Snackbar.make(it, "PDF Encrypted", 3500).show()
                          deleteContent(uri)
