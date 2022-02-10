@@ -11,25 +11,30 @@
             android:id="@+id/appBarlayoutFOLDER"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/teal_200"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="140dp"
                 app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
                 app:title="@string/app_name"
-                app:contentScrim="@color/teal_200">
+                app:titleCollapseMode="scale"
+                app:expandedTitleMarginEnd="30dp"
+                app:expandedTitleGravity="left"
+                app:contentScrim="#C0CA33"
+                app:expandedTitleMarginTop="100dp"
+                app:expandedTitleMarginStart="10dp"
+                app:expandedTitleTextAppearance="@style/customTextAppearance"
+                >
 
-                <ImageView
-                    android:id="@+id/pdfFolderImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:src="@color/teal_200"
-                    app:layout_collapseMode="parallax"/>
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbarFolder"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="55dp"
                     app:layout_collapseMode="pin"
+                    app:title="PDF reader"
+                    app:titleTextColor="@color/white"
+
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 

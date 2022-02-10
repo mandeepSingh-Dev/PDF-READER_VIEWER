@@ -8,22 +8,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import com.example.pdf_reader_viewer.UtilClasses.Read_Pdf_Files
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
 //ViewModel class for getting livedataPDFList from Read_Pdf_Files repositry
-class MyViewModel(application: Application):AndroidViewModel(application)
+class MyViewModel_For_pdflist(application: Application):AndroidViewModel(application)
 {
        var application1=application
        var pdflist:MutableLiveData<ArrayList<Items_pdfs>>?=null
 
     init{
         viewModelScope.launch {
-            pdflist= MutableLiveData<ArrayList<Items_pdfs>>()
-            var pdflisttt= Read_Pdf_Files(application1).getPdfList_2()
-           Read_Pdf_Files(application1).getPdfList_Folder("Download")
+            pdflist = MutableLiveData<ArrayList<Items_pdfs>>()
+            var pdflisttt = Read_Pdf_Files(application1).getPdfList_2()
+            Log.d("3guj3f",this.isActive.toString())
+          // Read_Pdf_Files(application1).getPdfList_Folder("Download")
             pdflist?.value=pdflisttt
            // Log.d("388ry8uwhfd",pdflist?.size.toString())
-
         }
         }
 

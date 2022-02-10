@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pdf_reader_viewer.MCustomOnClickListener
@@ -53,6 +54,7 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         var itemsPdfs=pdfList?.get(position)
+        Log.d("38hffg",itemsPdfs?.appendeduri!!.toString())
         var displayName=itemsPdfs?.title
         holder.pdfName.setText(displayName)
 
@@ -97,7 +99,7 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
 
         var pdfsize:TextView=itemView.findViewById(R.id.sizePDF)
         var pdfName:TextView=itemView.findViewById(R.id.pdfName1)
-        var menubutton=itemView.findViewById<ImageButton>(R.id.threedots_ImageButton)
+        var menubutton=itemView.findViewById<ImageView>(R.id.threedots_ImageButton)
         var dateTextView=itemView.findViewById<TextView>(R.id.dateModifiedText)
 
 

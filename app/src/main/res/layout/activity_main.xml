@@ -54,7 +54,7 @@
        app:tabIndicatorGravity="stretch"
        app:tabIndicatorAnimationMode="elastic"
        android:animateLayoutChanges="true"
-       app:tabIndicatorAnimationDuration="800"
+       app:tabIndicatorAnimationDuration="1200"
        app:tabContentStart="56dp"
        android:layout_marginLeft="10dp"
        android:layout_marginRight="10dp"

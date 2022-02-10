@@ -22,7 +22,7 @@ class Read_Pdf_Files(context:Context)
 
 
     @SuppressLint("Range")
-    suspend fun getPdfList_2():ArrayList<Items_pdfs> = withContext(Dispatchers.Default) {
+    suspend fun getPdfList_2():ArrayList<Items_pdfs> = withContext(Dispatchers.IO) {
 
         pdflist=ArrayList()
         // progressBar?.visibility=View.VISIBLE
@@ -196,7 +196,7 @@ class Read_Pdf_Files(context:Context)
 
         /**values-of-placeholder-variables  giving mimetype to selection_args */
         //val selectionArgs = arrayOf("%Download%")
-        val selectionArgs = arrayOf("%Encrypted PDFs%")
+        val selectionArgs = arrayOf(folderName)
 
         /**content Resolver to get cursor for filess..*/
         /**content Resolver to get cursor for filess..*/
@@ -259,13 +259,13 @@ class Read_Pdf_Files(context:Context)
                 var mimetypee= cursor?.getString(mimetype)
                 Log.d("8785yt85gh58",title+id+bucket+dateModified+size+relativepath)
 
-                if(mimetypee!=null)
+               /* if(mimetypee!=null)
                 Log.d("4g9h5johmn45",mimetypee)
 
                 if(mimetypee.equals("application/pdf"))
                 {
                     Log.d("38yh384g4",title+"k")
-                }else{Log.d("38yh39899999999984g4","titilenull")}
+                }else{Log.d("38yh39899999999984g4","titilenull")}*/
                 //practise
                 Log.d("3ggh3gh3vb",dateModified.toString()+"gfgege")
 
@@ -295,7 +295,7 @@ class Read_Pdf_Files(context:Context)
                 pdflist?.add(Items_pdfs(title!!, size!!, data_uri, dateModified, relativepath!!, bucket))
             }
             cursor.close()
-            Log.d("33fffffffwf",pdflist?.size.toString()+"fed8fhef")
+            Log.d("folderITEMS_SIZE",pdflist?.size.toString()+"fed8fhef")
             return@withContext pdflist!!
         } //END OF IF BLOCK
         else{

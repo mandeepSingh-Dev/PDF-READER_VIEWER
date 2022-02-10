@@ -53,7 +53,10 @@ class PdfTools_Fragment : Fragment() {
             intent.putExtra(FragmentNames.OPEN_IMGTOPDF_FRAGMENT, FragmentNames.OPEN_IMGTOPDF_FRAGMENT)
             startActivity(intent)
         }
-
+binding?.mergefolderImage?.setOnClickListener {
+    startActivity(Intent(activity,PdfsTools_Activity::class.java).putExtra("FOLDERFFRAGMENT","FOLDERFFRAGMENT")
+    )
+}
 
     }
 }

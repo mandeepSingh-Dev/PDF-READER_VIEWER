@@ -21,5 +21,10 @@
     <style name="SelectableItemTheme" parent="">
         <item name="android:radius">20sp</item>
     </style>
+    <style name="customTextAppearance" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
+
+</style>
 
 </resources>

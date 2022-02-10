@@ -10,10 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.UtilClasses.FragmentNames
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
-import com.example.pdf_reader_viewer.fragments.EncryptPdf_Fragment
-import com.example.pdf_reader_viewer.fragments.ImageTo_Pdf_Fragment
-import com.example.pdf_reader_viewer.fragments.MergePdfs_Fragment
-import com.example.pdf_reader_viewer.fragments.SplitPdf_Fragment
+import com.example.pdf_reader_viewer.fragments.*
 import java.nio.BufferUnderflowException
 
 class PdfsTools_Activity : AppCompatActivity() {
@@ -66,6 +63,12 @@ class PdfsTools_Activity : AppCompatActivity() {
         {
             var imagtopdf_fragment=ImageTo_Pdf_Fragment()
             supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView,imagtopdf_fragment).commit()
+        }
+        else if(intent.getStringExtra("FOLDERFFRAGMENT").equals("FOLDERFFRAGMENT"))
+        {
+            var folderPdflistFragment=Folder_PdfList_Fragment()
+            supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView,folderPdflistFragment).commit()
+
         }
 
 

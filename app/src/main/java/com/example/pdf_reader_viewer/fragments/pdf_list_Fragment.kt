@@ -2,6 +2,7 @@ package com.example.pdf_reader_viewer.fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Application
 import android.content.*
 import android.graphics.Bitmap
 import android.net.Uri
@@ -12,8 +13,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pdf_reader_viewer.MCustomOnClickListener
@@ -89,7 +94,36 @@ class pdf_list_Fragment : Fragment() {
         progressBar = activity?.findViewById<ProgressBar>(R.id.progress_bar)
         emptyView = view.findViewById<ImageView>(R.id.emptyView)
 
-        var myViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(activity?.application!!)).get(MyViewModel::class.java)
+
+      Log.d("349tu4jg4",viewLifecycleOwner.lifecycle.currentState.name)
+      //here in ViewModelProvider(this...)
+      var myViewModel=ViewModelProvider(requireActivity(),ViewModelProvider.AndroidViewModelFactory.getInstance(activity?.application!!)).get(MyViewModel_For_pdflist::class.java)
+      myViewModel.getpdflistttt().observe(viewLifecycleOwner, object : Observer<ArrayList<Items_pdfs>> {
+          override fun onChanged(pdflist: ArrayList<Items_pdfs>?) {
+              if (pdflist?.isEmpty()!!) {
+                  Log.d("3tubuenfe", "3ufufbkscsdc")
+                  binding?.emptyView?.visibility = View.VISIBLE
+                  binding?.emptyText?.visibility = View.VISIBLE
+              } else {
+                  Log.d("3u8hfjsncsjcisj8", "cnsncjnj2")
+              }
+              myAdapter = MyAdapter(requireContext(), pdflist!!)
+              recyclerView?.layoutManager = LinearLayoutManager(requireContext())
+              recyclerView?.adapter = myAdapter
+              var textView: TextView = view.findViewById(R.id.textviewALLL)
+              textView.text = "All (" + pdflist?.size.toString() + ")"
+
+              activity?.runOnUiThread {
+                  myAdapter?.notifyDataSetChanged()
+              }
+              searchPdfs(pdflist)
+              //this method for  setCustomClickListner method that is defined in MyAdapter class
+              myAdapterClickListner(myAdapter!!,pdflist)
+
+          }
+      })
+
+    /*  var myViewModel = ViewModelProviders.of(this, ViewModelProvider.AndroidViewModelFactory.getInstance(activity?.application!!)).get(MyViewModel_For_pdflist::class.java)
 
         myViewModel.getpdflistttt().observe(viewLifecycleOwner, object : Observer<ArrayList<Items_pdfs>> {
                 override fun onChanged(pdflist: ArrayList<Items_pdfs>?) {
@@ -116,7 +150,7 @@ class pdf_list_Fragment : Fragment() {
 
                 }
             })
-    }// END OF onViewCreated block
+*/    }// END OF onViewCreated block
 
 
 
@@ -175,6 +209,7 @@ class pdf_list_Fragment : Fragment() {
         bookmarkIcon_bottomsheet = bottomSheetDialog?.findViewById(R.id.bookmarkIcon_bottomsheet)!!
         removebookmark_bottomsheet = bottomSheetDialog?.findViewById(R.id.removebookmarkIcon_bottomsheet)!!
         shareIcon_bottomsheet = bottomSheetDialog?.findViewById(R.id.share_bottomsheet)!!
+
 
 
     }

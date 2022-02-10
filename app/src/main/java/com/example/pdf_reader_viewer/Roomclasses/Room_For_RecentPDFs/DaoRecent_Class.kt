@@ -6,7 +6,7 @@ import androidx.room.*
 @Dao
 interface DaoRecent_Class{
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(itemsRecentpdfs: Items_RecentPdfs)
 
     @Delete

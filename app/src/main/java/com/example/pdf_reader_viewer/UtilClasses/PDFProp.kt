@@ -6,6 +6,8 @@ import java.io.File
 class PDFProp
 {
     companion object {
+        var FOLDER_KEY="FOLDER_KEY"
+
         var PDF_TITLE = "PDFNAME"
         var PDF_SIZE = "PDF_SIZE"
         var PDF_APPENDED_URI = "PDF_URI"
