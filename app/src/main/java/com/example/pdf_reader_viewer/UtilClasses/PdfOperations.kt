@@ -141,12 +141,12 @@ class PdfOperations(activity:Activity) {
     }
 
     //this method is for multiple images/bitmaps
-    fun createPdf( imgList: ArrayList<Bitmap>,pdfName:String, quality: Int) {
+    fun createPdf( imgList: ArrayList<Bitmap>,pdfName:String, quality: Int,outStream: OutputStream) {
 
         val document = PDDocument()
         val appendeddocument=PDDocument()
-        var stream = createPDFFolder( PDFProp.CREATEDPDF_FOLDER, pdfName, System.currentTimeMillis())
-          var fos=stream as FileOutputStream
+//        var stream = createPDFFolder( PDFProp.CREATEDPDF_FOLDER, pdfName, System.currentTimeMillis())
+          //var fos=stream as FileOutputStream
 
         /*  activity?.runOnUiThread {
           AlertDialog.Builder(activity?.applicationContext,  R.style.Theme_AppCompat_Dialog_Alert).setView(v).create().show()
@@ -241,9 +241,12 @@ class PdfOperations(activity:Activity) {
         activity?.runOnUiThread { v?.visibility=View.GONE}
 */     // appendeddocument.save(fos)
         Log.d("38f3hfg4",document.pages.count.toString() )
-        document.save(stream)
+      //  document.save(stream)
+        document.save(outStream)
+
         document.close()
-        stream.close()
+        //stream.close()
+        outStream.close()
 
     }
 
@@ -251,11 +254,11 @@ class PdfOperations(activity:Activity) {
      * Because thirdParty pdf library doesnt fetch text from pdf only fetch images,
      * so we use combine third party and android native Pdfdocument library which fetch
      * text from pdf as well */
-   suspend fun myCustomNativeMergePdf(pdflist: ArrayList<Items_pdfs>,pdfNAME: String,password:String)= withContext(Dispatchers.IO){
+   suspend fun myCustomNativeMergePdf(pdflist: ArrayList<Items_pdfs>,pdfNAME: String,password:String,outputStream: OutputStream)= withContext(Dispatchers.IO){
 
         var pdDocument= PDDocument()
         var parcelFileDescriptor:ParcelFileDescriptor
-        var stream2 = createPDFFolder( PDFProp.MERGEPDF_FOLDER, pdfNAME, System.currentTimeMillis())
+       // var stream2 = createPDFFolder( PDFProp.MERGEPDF_FOLDER, pdfNAME, System.currentTimeMillis())
 
 
         pdflist.forEach {
@@ -305,14 +308,14 @@ class PdfOperations(activity:Activity) {
 
         //if password null then do nothing else ENCRYPT this pdDocument Merged pdf
         if(password.equals("NULL")){
-            pdDocument.save(stream2)
+            pdDocument.save(outputStream)
             pdDocument.close()
-            stream2.close()}
+            outputStream.close()}
         else{
-            var pdDocumentENCRPTD = enryptPdf(pdDocument,password,stream2)
-            pdDocumentENCRPTD.save(stream2)
+            var pdDocumentENCRPTD = enryptPdf(pdDocument,password,outputStream)
+            pdDocumentENCRPTD.save(outputStream)
             pdDocumentENCRPTD.close()
-            stream2.close()
+            outputStream.close()
         }
 
 
