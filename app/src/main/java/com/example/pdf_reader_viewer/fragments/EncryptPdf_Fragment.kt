@@ -1,12 +1,11 @@
 package com.example.pdf_reader_viewer.fragments
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
-import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.DocumentsContract
-import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -15,21 +14,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.UtilClasses.PdfOperations
 import com.example.pdf_reader_viewer.databinding.EncryptPdfFragmentBinding
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.tom_roush.pdfbox.pdmodel.PDDocument
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.DisposableHandle
 import kotlinx.coroutines.async
+import java.io.OutputStream
 import java.lang.Exception
 
 
 class EncryptPdf_Fragment : Fragment() {
+
+    var uri:Uri?=null
 
     var binding:EncryptPdfFragmentBinding?=null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,29 +67,14 @@ class EncryptPdf_Fragment : Fragment() {
             binding?.pdfTotalPage?.text="Total pages : " + totalpages.toString()
 
             Log.d("383hgf", it.toString())
-            var uri = it
-            var isEncrypted = false
-            binding?.encryptButton?.setOnClickListener {
-                var text = binding?.edittextlayout11?.editText?.text.toString()
-                try {
-                    if (!text.isEmpty()) {
-                 /**here we check whether pdf is encrypted if yes then delete selected pdf and create new one with password]*/
-                      var job= CoroutineScope(Dispatchers.IO).async {
-                           isEncrypted = PdfOperations(requireActivity()).createEncryptedPdf( uri, pdfName,text, it)
-                     if (isEncrypted) {
-                         Snackbar.make(it, "PDF Encrypted", 3500).show()
-                         deleteContent(uri)
-                     }
-                      }
+             uri = it
 
-                    } else {
-                        binding?.edittextlayout11?.error = "Invalid"
-                    }
-                } catch (e: Exception) {
-                    if (e.message != null) {
-                        Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
-                    }
-                }
+            var intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
+            intent.type = "application/pdf"
+            intent.putExtra(Intent.EXTRA_TITLE,pdfName)
+
+            binding?.encryptButton?.setOnClickListener {
+                launcher4.launch(intent)
             }
         }
 
@@ -121,5 +106,57 @@ class EncryptPdf_Fragment : Fragment() {
         }
         return name!!
     }
+
+    //custom Contracts for encrypting pdf document
+    var contract = object : ActivityResultContract<Intent, Uri>() {
+        override fun createIntent(context: Context, input: Intent?): Intent {
+            return input!!
+        }
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Uri {
+            var uri = intent?.data
+            if (uri != null) {
+                return uri
+            } else {
+                return Uri.EMPTY
+            }
+        }
+    }
+    var launcher4 = registerForActivityResult(contract, ActivityResultCallback {
+
+        var outputStream: OutputStream? = null
+        if (it != null) {
+            outputStream = activity?.contentResolver?.openOutputStream(it)!!
+
+            Log.d("of66jd", it.path.toString())
+            Log.d("34g93jg", outputStream.toString())
+
+            if (outputStream != null) {
+
+                var isEncrypted = false
+                var passwordText = binding?.edittextlayout11?.editText?.text.toString()
+                try {
+                    if (!passwordText.isEmpty()) {
+                        /**here we check whether pdf is encrypted if yes then delete selected pdf and create new one with password]*/
+                        var job= CoroutineScope(Dispatchers.IO).async {
+                            isEncrypted = PdfOperations(requireActivity()).createEncryptedPdf( uri!!,passwordText, outputStream)
+                            if (isEncrypted) {
+                                Snackbar.make(binding?.holderContstraintlayout!!, "PDF Encrypted", 3500).show()
+                                deleteContent(uri!!)
+                            }
+                        }
+
+                    } else {
+                        binding?.edittextlayout11?.error = "Invalid"
+                    }
+                } catch (e: Exception) {
+                    if (e.message != null) {
+                        Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+            }//if block for output stream null or not
+        }
+    })
 
 }

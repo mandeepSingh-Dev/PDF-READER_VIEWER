@@ -355,7 +355,6 @@ class MergePdfs_Fragment : Fragment() {
     }
 
     //custom Contracts for creating pdf document
-//    fun launcherMethod(passworddd: String): ActivityResultLauncher<Intent>{
     var contract = object : ActivityResultContract<Intent, Uri>() {
         override fun createIntent(context: Context, input: Intent?): Intent {
             return input!!
@@ -387,7 +386,6 @@ class MergePdfs_Fragment : Fragment() {
             }//if block for output stream null or not
         }
     })
-      //  return launcher4
-//}
+
 
     }

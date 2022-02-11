@@ -16,11 +16,11 @@ class SplashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_screen_activity)
 
-
+         supportActionBar?.hide()
 
 
         CoroutineScope(Dispatchers.IO).launch {
-           // delay(1000)
+            delay(500)
 
             startActivity(Intent(applicationContext,MainActivity_ViewPagerHolder::class.java))
             finish()

@@ -4,11 +4,15 @@
     android:layout_height="match_parent" android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
+    android:background="@drawable/splashbakground"
     android:paddingBottom="16dp">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:src="@drawable/ic_pdf_icon"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:soundEffectsEnabled="true"
+        android:outlineSpotShadowColor="@color/black"
+        android:outlineAmbientShadowColor="@color/black"/>
 </LinearLayout>
