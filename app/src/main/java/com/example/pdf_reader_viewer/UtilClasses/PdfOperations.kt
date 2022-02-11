@@ -348,15 +348,15 @@ class PdfOperations(activity:Activity) {
 
     }
 
-   suspend fun splittingPdf( uri: Uri, numberList: List<String>, pdfNAME: String)= withContext(Dispatchers.IO) {
+   suspend fun splittingPdf( uri: Uri, numberList: List<String>,outputStream: OutputStream)= withContext(Dispatchers.IO) {
 
-        var outstream2 = createPDFFolder( PDFProp.SPLITPDF_FOLDER, pdfNAME, System.currentTimeMillis())
+       // var outstream2 = createPDFFolder( PDFProp.SPLITPDF_FOLDER, pdfNAME, System.currentTimeMillis())
 
-      /*  parcelFileDescriptor = activity?.contentResolver?.openFileDescriptor(uri, "r")!!
+        parcelFileDescriptor = activity?.contentResolver?.openFileDescriptor(uri, "r")!!
         val fileDescriptor: FileDescriptor = parcelFileDescriptor?.fileDescriptor!!
-        var inputStraem = FileInputStream(fileDescriptor)*/
+        var inputStraem = FileInputStream(fileDescriptor)
 
-        var inputStraem=activity.contentResolver.openInputStream(uri)
+       // var inputStraem=activity.contentResolver.openInputStream(uri)
         var document = PDDocument.load(inputStraem)
 
         //Instantiating Splitter class
@@ -411,22 +411,22 @@ try {
     while (iterator.hasNext()) {
 
         pd = iterator.next();
-        PDFMergerUtility().appendDocument(
-            pdd,
-            pd
-        )  //here we append every splited page to one pdd PDDdocument
+        PDFMergerUtility().appendDocument(pdd, pd)  //here we append every splited page to one pdd PDDdocument
         // pd.save("sdcard/"+pdfNAME + i++ + ".pdf");
 
     }
 
     //  pdd.save(fileStr + "/" + pdfNAME + i++ + ".pdf")
-    pdd.save(outstream2)
+    pdd.save(outputStream)
 
-    System.out.println("Multiple PDF’s created");
     Log.d("388fh3ev", "Multiple PDF’s created")
+   // pdd.close()
     document.close();
-}catch (e:Exception){
-    Toast.makeText(activity.applicationContext,e.message,Toast.LENGTH_LONG).show()
+    outputStream.close()
+}catch (e:Exception) {
+    withContext(Dispatchers.Main) {
+        Toast.makeText(activity.applicationContext, e.message, Toast.LENGTH_LONG).show()
+              }
 }
     }
 
@@ -542,10 +542,10 @@ try {
 
         return spp
     }
-    fun createEncryptedPdf( uri: Uri,pdfNAME: String, owner_user_password: String, view: View): Boolean {
+    fun createEncryptedPdf( uri: Uri, owner_user_password: String,outputStream: OutputStream): Boolean {
 
         //TODO CHANGE THE ENCRYPTED FILE NAME AS A PDF FILE NAME
-           var outstream = createPDFFolder(PDFProp.ENCRYPTEDPDF_FOLDER,pdfNAME,System.currentTimeMillis())
+         //  var outstream = createPDFFolder(PDFProp.ENCRYPTEDPDF_FOLDER,pdfNAME,System.currentTimeMillis())
        // var inputStream = ConversionandUtilsClass().convertContentUri_toInputStream(actvity, uri)
         var inputstreamm = activity.contentResolver.openInputStream(uri)
         val path: String = "sdcard/crypt.pdf"
@@ -576,11 +576,11 @@ try {
         if (!pdddovcument.isEncrypted) {
             pdddovcument.protect(spp)
            // pdddovcument.save(createFilePath().toString() + "/" + owner_user_password + ".pdf")
-            pdddovcument.save(outstream)
+            pdddovcument.save(outputStream)
 
             pdddovcument.close()
         } else {
-            Snackbar.make(view, "Already Encrypted", 2000).show()
+           // Snackbar.make(view, "Already Encrypted", 2000).show()
         }
 
         var isEncrypted = pdddovcument.isEncrypted
