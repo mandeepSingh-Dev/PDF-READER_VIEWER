@@ -223,7 +223,7 @@ class SplitPdf_Fragment : Fragment() {
                var pdfName = getMetadataf(uri!!)
                binding?.PDFNameSplit?.text = pdfName
 
-               splitPDF(it)
+               splitPDF(uri!!)
            }
        })
 

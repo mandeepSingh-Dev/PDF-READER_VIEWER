@@ -7,10 +7,12 @@ import android.content.*
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -35,7 +37,11 @@ import com.example.pdf_reader_viewer.databinding.PdfListFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.*
+import java.io.File
 import java.lang.Exception
+import java.text.DateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class pdf_list_Fragment : Fragment() {
@@ -89,6 +95,9 @@ class pdf_list_Fragment : Fragment() {
         intent=Intent(Intent.ACTION_SEND)
         intent?.type="application/pdf"
 
+       /**____________________*/
+            //  getNewPdfs()
+       /**____________________*/
 
         recyclerView = view.findViewById(R.id.pdfListRecylerView)
         progressBar = activity?.findViewById<ProgressBar>(R.id.progress_bar)
@@ -453,6 +462,42 @@ class pdf_list_Fragment : Fragment() {
         initializeBottomsheetView()
     }
 
+   // @SuppressLint("Range")
+    fun getNewPdfs():ArrayList<Items_pdfs>
+    {
+        var filelist = arrayListOf<Items_pdfs>()
+       // val selection = "_data LIKE'%.pdf'"
+        /**sql-where-clause-with-placeholder-variables  Here we select MimeType*/
+        val selection = MediaStore.Files.FileColumns.MIME_TYPE + " = ?"
+        /**getting MIME type for pdf*/
+        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension("pdf")
+        /**values-of-placeholder-variables  giving mimetype to selection_args */
+        val selectionArgs = arrayOf(mimeType)
+       var cursor =  activity?.contentResolver?.query(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL),null,selection,selectionArgs,null)
+
+        while(cursor?.moveToNext()!!){
+                Log.d("4389gh4bg",cursor?.count.toString())
+               /* if(cursor == null || cursor.count<=0 )
+                    {
+                        Log.d("39jhfgfg3","error")
+                        return@use
+                    }*/
+              //  do{
+                    val title: String = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE))
+                    val duration: String? = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DURATION))
+                    val data: String = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA))
+                    val file = File(data)
+                    val lastModifiedDate = Date(file.lastModified())
+                    val fileDate = android.text.format.DateFormat.format("hh:mm aa, dd/MM/yyyy", lastModifiedDate).toString()
+                    filelist.add(Items_pdfs(title, "size",Uri.parse(data)))
+
+                    Log.d("39jhfgfg3",title.toString())
+//                } while (cursor.moveToNext())
+            }
+
+
+                return filelist
+            }
 
 
 

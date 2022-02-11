@@ -23,8 +23,8 @@ class PdfsTools_Activity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        var anim = AnimationUtils.loadAnimation(this,R.anim.open_animation)
-        binding?.parentPDFTOOLactivity?.startAnimation(anim)
+//        var anim = AnimationUtils.loadAnimation(this,R.anim.open_animation)
+//        binding?.parentPDFTOOLactivity?.startAnimation(anim)
 
         //opens pdftools_fragment without pdftitle and other details
         if(intent.getStringExtra(FragmentNames.OPEN_MERGE_FRAGMENT).equals(FragmentNames.OPEN_MERGE_FRAGMENT))
