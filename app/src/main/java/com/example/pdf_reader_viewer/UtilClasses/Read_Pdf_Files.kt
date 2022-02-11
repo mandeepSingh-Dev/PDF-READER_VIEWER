@@ -6,12 +6,18 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.os.FileUtils
 import android.provider.MediaStore
+import android.telephony.mbms.FileInfo
 import android.util.Log
 import android.webkit.MimeTypeMap
+import android.widget.Toast
+import androidx.core.content.FileProvider
+import androidx.room.util.FileUtil
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.io.FileOutputStream
 
 // pdfs Repositry (Means that this class is for getting pdflist from local device)
@@ -121,8 +127,8 @@ class Read_Pdf_Files(context:Context)
             /**getting coloumns name*/
             var titleColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.TITLE)!!
             val idColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)!!
-            val displayColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME)!!
-            val bucketColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)!!
+            val displayColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME)!!
+            val bucketColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME)!!
             val dateModColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.DATE_MODIFIED)!!
             val sizeColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.SIZE)!!
             val relativePathColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.RELATIVE_PATH)!!
@@ -154,6 +160,7 @@ class Read_Pdf_Files(context:Context)
                 /** As Data column id deprecated so we appended id with VOLUME_EXTERNAL*/
                 /** As Data column id deprecated so we appended id with VOLUME_EXTERNAL*/
                 var data_uri = Uri.withAppendedPath(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL), id.toString())
+
                 //  pdflist?.add(Items_pdfs(title!!, size!!, data_uri, dateModified, relativepath!!, bucket))
                 /**adding cursoritems to pdflist in loop */
                 /**adding cursoritems to pdflist in loop */
@@ -324,45 +331,49 @@ class Read_Pdf_Files(context:Context)
             /**getting coloumns name*/
             var titleColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.TITLE)!!
             val idColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)!!
-            val displayColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME)!!
-            val bucketColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)!!
+            val bucketColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME)!!
+            val displayColoumn= cursor?.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)!!
             val dateModColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.DATE_MODIFIED)!!
             val sizeColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.SIZE)!!
             val relativePathColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.RELATIVE_PATH)!!
 
 
             /**Getting all cursors in loop*/
-            while (cursor?.moveToNext()!!) {
+          //  if(cursor!=null) {
+                while (cursor?.moveToNext()!!) {
 
-                // Log.d("dfdfd",cursor.toString())
-                var title = cursor?.getString(titleColoumn)
-                var id = cursor?.getLong(idColoumn)
-                var bucket = cursor?.getString(bucketColoumn)
-                var dateModified = cursor?.getString(dateModColoumn)
-                var size = cursor?.getString(sizeColoumn)
+                    // Log.d("dfdfd",cursor.toString())
+                    var title = cursor?.getString(titleColoumn)
+                    var id = cursor?.getLong(idColoumn)
+                    var bucket = cursor?.getString(bucketColoumn)
+                    var dateModified = cursor?.getString(dateModColoumn)
+                    var size = cursor?.getString(sizeColoumn)
 
 
+                    //Handling Nullability for varables
+                    if (bucket != null) { bucketsList.add(bucket!!) }
+                    if (bucket != null) { bucketsList.add(bucket!!) }
+                    if (title == null) { title = "N.A" }
+                    if (dateModified == null) { dateModified = "N.A" }
+                    if (size == null) { size = "N.A" }
+                    if (bucket == null) { bucket = "N.A" }
+                    Log.d("PPPDGGHFDF", " " + title + "____"/*+RELATIVEPATH*/ + id + "_____" + bucket)
+                    // activity?.runOnUiThread {
+                    //   Toast.makeText(context,/*RELATIVEPATH+*/"  " + title + volumename, Toast.LENGTH_LONG).show()
+                    //  }
+                    /** As Data column id deprecated so we appended id with VOLUME_EXTERNAL*/
+                    /** As Data column id deprecated so we appended id with VOLUME_EXTERNAL*/
+                    var data_uri = Uri.withAppendedPath(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL), id.toString())
+//                     Log.d("84YG8HG",data_uri.authority.toString())
+//                    Log.d("3489g4jhg",File(data_uri.toString()).name)
 
-                //Handling Nullability for varables
-                if (bucket != null) { bucketsList.add(bucket!!) }
-                if (bucket != null) { bucketsList.add(bucket!!) }
-                if(title==null){title="N.A"}
-                if(dateModified==null){dateModified="N.A"}
-                if(size==null){size="N.A"}
-                if(bucket==null){bucket="N.A"}
-                Log.d("PPPDFDF",  " " + title + "____"/*+RELATIVEPATH*/ + id +"_____"+bucket)
-                // activity?.runOnUiThread {
-                //   Toast.makeText(context,/*RELATIVEPATH+*/"  " + title + volumename, Toast.LENGTH_LONG).show()
-                //  }
-                /** As Data column id deprecated so we appended id with VOLUME_EXTERNAL*/
-                /** As Data column id deprecated so we appended id with VOLUME_EXTERNAL*/
-                var data_uri = Uri.withAppendedPath(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL), id.toString())
-                //  pdflist?.add(Items_pdfs(title!!, size!!, data_uri, dateModified, relativepath!!, bucket))
-                /**adding cursoritems to pdflist in loop */
-                /**adding cursoritems to pdflist in loop */
+                    //  pdflist?.add(Items_pdfs(title!!, size!!, data_uri, dateModified, relativepath!!, bucket))
+                    /**adding cursoritems to pdflist in loop */
+                    /**adding cursoritems to pdflist in loop */
 
-                pdflist?.add(Items_pdfs(title!!, size!!, data_uri, dateModified, bucket))
-            }
+                    pdflist?.add(Items_pdfs(title!!, size!!, data_uri, dateModified, bucket))
+                }
+          //  }//if block for cursor nullablity
             cursor.close()
 
             return@withContext pdflist!!
