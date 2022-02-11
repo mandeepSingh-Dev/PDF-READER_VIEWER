@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -80,38 +81,47 @@ class Folder_PdfList_Fragment : Fragment() {
         intent=Intent(Intent.ACTION_SEND)
         intent?.type="application/pdf"
 
-//        if(!!arguments?.isEmpty!!)
-//        {
-           //var folderName = arguments?.getString(PDFProp.FOLDER_KEY)
+     /*   var anim = AnimationUtils.loadAnimation(requireContext(),R.anim.open_animation)
+        binding?.parentLayoutflolder?.startAnimation(anim)
+*/
+       if(arguments!=null)
+       {
+           var folderName = arguments?.getString(PDFProp.FOLDER_KEY)
+           Log.d("38fh3f",folderName!!)
+           binding?.collapseToolbarFOLderFrag?.title = folderName
 
-        mfactory = MyViewmodel_InstanceFactory_folderlist(PDFProp.ENCRYPTEDPDF_FOLDER!!,requireContext())
-        myviewmodel = ViewModelProvider(requireActivity().viewModelStore,mfactory!!).get(MyViewModel_for_foldderpdflist::class.java)
+               mfactory = MyViewmodel_InstanceFactory_folderlist(folderName!!, requireContext())
+               myviewmodel = ViewModelProvider(requireActivity().viewModelStore, mfactory!!).get(MyViewModel_for_foldderpdflist::class.java)
 
-        myviewmodel?.getPdflIst()?.observe(viewLifecycleOwner,object:Observer<ArrayList<Items_pdfs>>{
-            override fun onChanged(it: ArrayList<Items_pdfs>?) {
-                Log.d("38hgf3",it?.size.toString())
-                 myAdpater= MyAdapter(requireContext(),it!!)
-                binding?.folderPdfRecyclerView?.layoutManager=LinearLayoutManager(requireContext())
-                binding?.folderPdfRecyclerView?.adapter=myAdpater
+               myviewmodel?.getPdflIst()
+                   ?.observe(viewLifecycleOwner, object : Observer<ArrayList<Items_pdfs>> {
+                       override fun onChanged(it: ArrayList<Items_pdfs>?) {
+                           Log.d("38hgf3", it?.size.toString())
+                           myAdpater = MyAdapter(requireContext(), it!!)
+                           binding?.folderPdfRecyclerView?.layoutManager =
+                               LinearLayoutManager(requireContext())
+                           binding?.folderPdfRecyclerView?.adapter = myAdpater
 
-                myAdpater?.setMCustomClickListenr(object:MCustomOnClickListener{
-                    override fun onClick(position: Int) {
-                        Log.d("3iegnv3me,wv",position.toString())
-                        pdfName1_bottomsheet?.setText(it?.get(position).title)
-                        bottomSheetDialog?.show()
-                        Log.d("hfe","NEW INTERFACE IS NOW READY")
-                        clickOnbottomSheetViews(it!!,position,myAdpater!!)
+                           myAdpater?.setMCustomClickListenr(object : MCustomOnClickListener {
+                               override fun onClick(position: Int) {
+                                   Log.d("3iegnv3me,wv", position.toString())
+                                   pdfName1_bottomsheet?.setText(it?.get(position).title)
+                                   bottomSheetDialog?.show()
+                                   Log.d("hfe", "NEW INTERFACE IS NOW READY")
+                                   clickOnbottomSheetViews(it!!, position, myAdpater!!)
 
-                    }
-                })
+                               }
+                           })
 
-            }
-        })
-       //}
+                       }
+                   })
+
+       }
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
+        Log.d("38gf3","onresume")
         var viewGroup = activity?.findViewById<ViewGroup>(R.id.content)
         bottomSheetView= LayoutInflater.from(requireContext()).inflate(R.layout.bottomsheet_dialogue,viewGroup)
         //creating BottomSheetDialogue instance
@@ -122,6 +132,10 @@ class Folder_PdfList_Fragment : Fragment() {
 
         // function for initializing bottomsheetViews
         initializeBottomsheetView()
+    }
+    override fun onStart() {
+        super.onStart()
+
     }
 
     fun initializeBottomsheetView(){

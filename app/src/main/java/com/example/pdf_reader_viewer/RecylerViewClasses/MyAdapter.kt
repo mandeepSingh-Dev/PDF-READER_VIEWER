@@ -87,8 +87,6 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
             context?.startActivity(intent)
 
         }
-
-
     }
 
     override fun getItemCount(): Int {

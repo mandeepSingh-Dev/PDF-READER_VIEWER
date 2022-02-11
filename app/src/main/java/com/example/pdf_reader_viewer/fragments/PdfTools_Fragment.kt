@@ -53,10 +53,23 @@ class PdfTools_Fragment : Fragment() {
             intent.putExtra(FragmentNames.OPEN_IMGTOPDF_FRAGMENT, FragmentNames.OPEN_IMGTOPDF_FRAGMENT)
             startActivity(intent)
         }
-binding?.mergefolderImage?.setOnClickListener {
-    startActivity(Intent(activity,PdfsTools_Activity::class.java).putExtra("FOLDERFFRAGMENT","FOLDERFFRAGMENT")
-    )
-}
+        //click on merge folder to pass merge folder name to folder fragment
+       binding?.mergefolderLayout?.setOnClickListener {
+          startActivity(Intent(activity,PdfsTools_Activity::class.java).putExtra(PDFProp.MERGEPDF_FOLDER,PDFProp.MERGEPDF_FOLDER))
+            }
+        //click on split folder to pass split folder name to folder fragment
+        binding?.splitFolderlayout?.setOnClickListener {
+            startActivity(Intent(activity,PdfsTools_Activity::class.java).putExtra(PDFProp.SPLITPDF_FOLDER,PDFProp.SPLITPDF_FOLDER))
+
+        }
+        //click on encrypt folder to pass encrypt folder name to folder fragment
+        binding?.encryptFolderlayout?.setOnClickListener {
+            startActivity(Intent(activity,PdfsTools_Activity::class.java).putExtra(PDFProp.ENCRYPTEDPDF_FOLDER,PDFProp.ENCRYPTEDPDF_FOLDER))
+        }
+        //click on imageToPDF folder to pass created folder name to folder fragment
+        binding?.imgtoPDFFolderlayout?.setOnClickListener {
+            startActivity(Intent(activity,PdfsTools_Activity::class.java).putExtra(PDFProp.CREATEDPDF_FOLDER,PDFProp.CREATEDPDF_FOLDER))
+        }
 
     }
 }

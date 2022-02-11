@@ -157,10 +157,12 @@
          android:orientation="horizontal">
          <!--merge folder-->
          <LinearLayout
+             android:id="@+id/mergefolderLayout"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:orientation="vertical"
              android:layout_weight="1"
+             android:background="@drawable/rippldeimage"
              android:weightSum="1">
              <ImageView
                  android:id="@+id/mergefolderImage"
@@ -180,11 +182,13 @@
          </LinearLayout>
          <!--Split folder-->
          <LinearLayout
+             android:id="@+id/splitFolderlayout"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:orientation="vertical"
              android:layout_weight="1"
-            >
+             android:background="@drawable/rippldeimage"
+             >
              <ImageView
                  android:id="@+id/splitfolderImage"
                  android:layout_width="50dp"
@@ -195,7 +199,7 @@
                  android:id="@+id/splitFoldertext"
                  android:layout_width="60dp"
                  android:layout_height="wrap_content"
-                 android:text="Merge PDFs"
+                 android:text="@string/SPLITPDF_FOLDER"
                  android:textAlignment="center"
                  android:layout_marginTop="4dp"
                  android:layout_gravity="center"
@@ -203,22 +207,24 @@
          </LinearLayout>
          <!--Encrypt folder-->
          <LinearLayout
+             android:id="@+id/encryptFolderlayout"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:orientation="vertical"
+             android:background="@drawable/rippldeimage"
              android:layout_weight="1">
              <ImageView
-                 android:id="@+id/lockfolderImage"
+                 android:id="@+id/encryptfolderImage"
                  android:layout_width="50dp"
                  android:layout_height="50dp"
                  android:layout_gravity="center"
 
                  android:src="@drawable/ic_twotone_folder_24"/>
              <TextView
-                 android:id="@+id/lockFoldertext"
-                 android:layout_width="60dp"
+                 android:id="@+id/encryptedFoldertext"
+                 android:layout_width="match_parent"
                  android:layout_height="wrap_content"
-                 android:text="Merge PDFs"
+                 android:text="@string/ENCRYPTEDPDF_FOLDER"
                  android:layout_gravity="center"
                  android:textAlignment="center"
                  android:layout_marginTop="4dp"
@@ -226,9 +232,11 @@
          </LinearLayout>
          <!--Image to PDF folder-->
          <LinearLayout
+             android:id="@+id/imgtoPDFFolderlayout"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:orientation="vertical"
+             android:background="@drawable/rippldeimage"
              android:layout_weight="1"
              >
              <ImageView
@@ -242,7 +250,7 @@
                  android:id="@+id/imagetopdfFoldertext"
                  android:layout_width="60dp"
                  android:layout_height="wrap_content"
-                 android:text="Merge PDFs"
+                 android:text="@string/CREATEDPDF_FOLDER"
                  android:textAlignment="center"
                  android:layout_marginTop="4dp"
                  android:layout_gravity="center"

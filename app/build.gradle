@@ -36,6 +36,9 @@ android {
         jvmTarget = '1.8'
     }
     buildToolsVersion '30.0.3'
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -77,6 +80,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 
+    implementation 'androidx.core:core-splashscreen:1.0.0-beta01'
 
 
 }

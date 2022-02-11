@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/teal_200"
     tools:context=".MainActivity_ViewPagerHolder"
     >
 
@@ -47,6 +48,7 @@
        android:layout_height="wrap_content"
        app:tabIconTint="@color/teal_200"
        app:tabRippleColor="#D64278"
+       android:background="@android:color/transparent"
        app:tabSelectedTextColor="#FFFFFF"
        app:tabMode="fixed"
        app:tabIndicatorColor="#D64278"
@@ -69,9 +71,9 @@
        android:id="@+id/viewpager2"
        android:layout_width="match_parent"
        android:layout_height="0dp"
-       android:background="@color/white"
        android:layout_below="@id/tablayout"
        android:layout_weight="1"
+
        app:layout_constraintTop_toBottomOf="@id/tablayout"
        app:layout_constraintBottom_toBottomOf="parent"
        app:layout_constraintLeft_toLeftOf="parent"

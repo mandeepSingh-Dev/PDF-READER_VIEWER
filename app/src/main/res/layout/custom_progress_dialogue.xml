@@ -37,7 +37,7 @@
         android:id="@+id/importedNumberTextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="0/80"
+        android:text=""
         app:layout_constraintTop_toBottomOf="@id/importingtextview"
         app:layout_constraintLeft_toLeftOf="@id/importingtextview"
         app:layout_constraintRight_toRightOf="@id/importingtextview"

@@ -91,10 +91,12 @@ class MergePdfs_Fragment : Fragment() {
            // Log.d("efhhegfehd",pdfUri.toString())
 
             if( pdfTitle!=null && pdfSize!=null && pdfUri!=null )
-          //  Toast.makeText(requireContext(),arguments?.getString(PDFProp.PDF_TITLE)+"dgd",Toast.LENGTH_LONG).show()
             {
+                Log.d("CHECKINGFRAG","coming from list  ")
                 selectedPdf_list?.add(Items_pdfs(pdfTitle!!, pdfSize!!, pdfUri!!))
             }
+            else { Log.d("CHECKINGFRAG", "coming from just tool fragment") }
+
             createrecyclerView()
         }
         alertDialog=createDaiolgue()

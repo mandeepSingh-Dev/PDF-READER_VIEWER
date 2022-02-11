@@ -345,7 +345,7 @@ class PdfOperations(activity:Activity) {
 
     }
 
-    fun splittingPdf( uri: Uri, numberList: List<String>, pdfNAME: String) {
+   suspend fun splittingPdf( uri: Uri, numberList: List<String>, pdfNAME: String)= withContext(Dispatchers.IO) {
 
         var outstream2 = createPDFFolder( PDFProp.SPLITPDF_FOLDER, pdfNAME, System.currentTimeMillis())
 
@@ -726,14 +726,13 @@ try {
     fun createPDFFolder( folderName: String, pdfNAME: String, dateModified: Long): OutputStream {
 
 
-        val externalUri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL)
+       val externalUri = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL)
+       // val externalUri = MediaStore.Downloads.getContentUri(MediaStore.Downloads.EXTERNAL_CONTENT_URI)
 
         /**to create new  blank file with new folder */
         var values = ContentValues()
-        values.put(
-            MediaStore.DownloadColumns.RELATIVE_PATH,
-            Environment.DIRECTORY_DOWNLOADS + File.separator + "MyPDFs/" + folderName
-        )
+
+        values.put(MediaStore.Files.FileColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + File.separator + "MyPDFs/" + folderName)
         values.put(MediaStore.DownloadColumns.DISPLAY_NAME, pdfNAME + ".pdf")
         values.put(MediaStore.DownloadColumns.MIME_TYPE, "application/pdf")
         values.put(MediaStore.DownloadColumns.DATE_MODIFIED, dateModified)

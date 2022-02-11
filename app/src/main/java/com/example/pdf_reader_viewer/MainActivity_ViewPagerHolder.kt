@@ -4,21 +4,22 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
 import android.util.Log
+import android.view.ActionMode
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.pdf_reader_viewer.ViewPagerAdapter.MyFragmentStateAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
-import java.util.jar.Manifest
 
  class MainActivity_ViewPagerHolder : AppCompatActivity()
  {
@@ -41,7 +42,8 @@ import java.util.jar.Manifest
 
          viewpager2 = findViewById<ViewPager2>(R.id.viewpager2)
          setupViewPager2()
-        /**here we check and request Read_External_Storage and WRITE_EXTERNAL_STORAGE*/
+
+         /**here we check and request Read_External_Storage and WRITE_EXTERNAL_STORAGE*/
          requestPermssions()
          /**Granting MANAGE_EXTERNAL_STORAGE all files access permission*/
          requesting_MANAGE_ALL_DOCUMENT_Permission()
@@ -60,13 +62,8 @@ import java.util.jar.Manifest
          TabLayoutMediator(tabLayout, viewpager2!!) { tab, position ->
              tab.text=texts[position]
          }.attach()
-
-         TabLayoutMediator(tabLayout, viewpager2!!, object : TabLayoutMediator.TabConfigurationStrategy {
-             override fun onConfigureTab(tab: TabLayout.Tab, position: Int)
-             {
-
-             }
-         })//end of TabLayoutMediator
+         viewpager2?.offscreenPageLimit=2
+         //end of TabLayoutMediator
      }
 
     fun requestPermssions()
@@ -133,4 +130,11 @@ import java.util.jar.Manifest
          }
 
      }
+
+     override fun onWindowStartingActionMode(callback: ActionMode.Callback?): ActionMode? {
+         return super.onWindowStartingActionMode(callback)
+         Log.d("34t3g3","efdiheiehn")
+     }
+
+
  }

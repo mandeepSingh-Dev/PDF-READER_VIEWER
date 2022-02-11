@@ -39,12 +39,14 @@ class MyAdapter_ForBookmarks(context: Context,arrayList:ArrayList<Items_Bookmark
             var name:String?=null
             var cursor = context.contentResolver?.query(Uri.parse(uri), null, null, null, null)
 
+            if(cursor!=null) {
                 if (cursor?.moveToFirst()!!) {
-                    name = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME))
-                   if(name==null)
-                   {
-                       name = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.TITLE))
-                   }
+                    name =
+                        cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME))
+                    if (name == null) {
+                        name =
+                            cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.TITLE))
+                    }
                     var size = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.SIZE))
 
                     holder.pdfNameTextView.text = name
@@ -54,7 +56,7 @@ class MyAdapter_ForBookmarks(context: Context,arrayList:ArrayList<Items_Bookmark
                         ConversionandUtilsClass.convertToDate(itempdf.date / 1000L).get(1)
                     // Log.d("85thrng",ConversionandUtilsClass.convertToDate(System.currentTimeMillis()/1000L).get(1))
                 }
-
+            }
 
 
 

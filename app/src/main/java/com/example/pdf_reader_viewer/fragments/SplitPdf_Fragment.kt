@@ -7,13 +7,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.UtilClasses.ConversionandUtilsClass
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.example.pdf_reader_viewer.UtilClasses.PdfOperations
 import com.example.pdf_reader_viewer.databinding.SplitpdfFragmentBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tom_roush.pdfbox.pdmodel.PDDocument
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,6 +30,9 @@ class SplitPdf_Fragment : Fragment() {
     var binding: SplitpdfFragmentBinding? = null
     var startPage: String? = null
     var endPage: String? = null
+    var alertDialogprogress:androidx.appcompat.app.AlertDialog?=null
+    var importingDailogTextview:TextView?=null
+    var importingnumberDailogText:TextView?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,10 +74,15 @@ class SplitPdf_Fragment : Fragment() {
             }
             // createrecyclerView()
 
-            binding?.addpDFImageView?.setOnClickListener {
-                launcher.launch("application/pdf")
-            }
+
         }
+        binding?.addpDFImageView?.setOnClickListener {
+            launcher.launch("application/pdf")
+        }
+        var viewgroup = activity?.findViewById<ViewGroup>(R.id.content)
+        var view22 = LayoutInflater.from(requireContext()).inflate(R.layout.custom_progress_dialogue, viewgroup , false)
+        alertDialogprogress=createAlertdialogue(view22)
+
     }
 
     fun splitPDF(appendedUri: Uri) {
@@ -120,7 +131,19 @@ class SplitPdf_Fragment : Fragment() {
                             binding?.edittextlayout2?.isErrorEnabled = false
                             binding?.edittextlayout1?.isErrorEnabled = false
 
-                            PdfOperations(requireActivity()).splittingPdf(appendedUri, listnumber, pdfName)
+                            CoroutineScope(Dispatchers.Main).launch {
+                                    importingDailogTextview = alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
+                                    importingnumberDailogText = alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
+                                    //these dailog textview had importing and imprting number texts
+                                    importingDailogTextview?.text = "please wait..."
+                                    importingnumberDailogText?.visibility = View.GONE
+                                    alertDialogprogress?.show()
+
+
+                                PdfOperations(requireActivity()).splittingPdf(appendedUri, listnumber, pdfName)
+
+                                  alertDialogprogress?.hide()
+                            }
                         } else {
                             binding?.edittextlayout2?.error = "Invalid"
                         }
@@ -152,9 +175,14 @@ class SplitPdf_Fragment : Fragment() {
             // Log.d("4fj3i3knv",displayName+"fekf")
              binding?.PDFNameSplit?.text=displayName
          }*/
-
-
     })
+    fun createAlertdialogue(view:View):androidx.appcompat.app.AlertDialog{
+        var alertbuilder2 = MaterialAlertDialogBuilder(requireContext(), R.style.ThemeOverlay_MaterialComponents_Dialog_Alert)
+        alertbuilder2.setView(view)
+        alertbuilder2.setCancelable(false)
+
+        return alertbuilder2.create()
+    }
 }
 
 

@@ -191,6 +191,7 @@ class Read_Pdf_Files(context:Context)
         /**sql-where-clause-with-placeholder-variables  Here we select MimeType*/
         val selection = MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME + " like ? "
 
+
         /**getting MIME type for pdf*/
       //  val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension("pdf")
 
@@ -241,7 +242,7 @@ class Read_Pdf_Files(context:Context)
             val dateModColoumn = cursor?.getColumnIndex(MediaStore.MediaColumns.DATE_MODIFIED)!!
             val sizeColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.SIZE)!!
             val relativePathColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.RELATIVE_PATH)!!
-            val mimetype = cursor.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE)
+            val mimetypeColoumn = cursor.getColumnIndex(MediaStore.Files.FileColumns.MIME_TYPE)
             /**Getting all cursors in loop*/
 
            // Log.d("39gh4jg",cursor?.count.toString())
@@ -256,7 +257,7 @@ class Read_Pdf_Files(context:Context)
                 var dateModified = cursor?.getString(dateModColoumn)
                 var size = cursor?.getString(sizeColoumn)
                 var relativepath = cursor?.getString(relativePathColoumn)
-                var mimetypee= cursor?.getString(mimetype)
+                var mimetypee= cursor?.getString(mimetypeColoumn)
                 Log.d("8785yt85gh58",title+id+bucket+dateModified+size+relativepath)
 
                /* if(mimetypee!=null)
@@ -266,6 +267,7 @@ class Read_Pdf_Files(context:Context)
                 {
                     Log.d("38yh384g4",title+"k")
                 }else{Log.d("38yh39899999999984g4","titilenull")}*/
+
                 //practise
                 Log.d("3ggh3gh3vb",dateModified.toString()+"gfgege")
 
@@ -292,8 +294,10 @@ class Read_Pdf_Files(context:Context)
                 //  pdflist?.add(Items_pdfs(title!!, size!!, data_uri, dateModified, relativepath!!, bucket))
                 /**adding cursoritems to pdflist in loop */
                 /**adding cursoritems to pdflist in loop */
-                pdflist?.add(Items_pdfs(title!!, size!!, data_uri, dateModified, relativepath!!, bucket))
-            }
+                if(mimetypee.equals("application/pdf")) {
+                    pdflist?.add(Items_pdfs(title!!, size!!, data_uri, dateModified, relativepath!!, bucket))
+                     }
+                }
             cursor.close()
             Log.d("folderITEMS_SIZE",pdflist?.size.toString()+"fed8fhef")
             return@withContext pdflist!!
