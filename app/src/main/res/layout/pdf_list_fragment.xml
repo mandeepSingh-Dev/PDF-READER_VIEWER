@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.Recent_list_Fragment">
 
@@ -34,9 +35,9 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
                 android:layout_weight="1"
+                android:textColor="@color/textcolor"
                 android:fontFamily="sans-serif-thin"
                 android:text="All"
-                android:textColor="#322C2C"
                 android:textSize="20sp"
                  />
 
@@ -93,8 +94,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
             android:gravity="center"
+            android:textColor="@color/textcolor"
             android:text="There is no pdfs in your device"
-            android:textColor="#9F9191"
             android:textSize="15sp"
             android:visibility="gone"/>
 

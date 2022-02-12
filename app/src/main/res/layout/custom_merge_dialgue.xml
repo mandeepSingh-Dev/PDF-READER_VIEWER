@@ -12,18 +12,19 @@ android:paddingBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#2E8AB6"
+
         >
 <TextView
     android:id="@+id/dialogueMergeTITLE"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="Merging 2 PDFs"
+    android:textColor="@color/textcolor"
     android:gravity="center"
     android:textSize="21sp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
-    android:textColor="@color/white"/>
+   />
 
     </LinearLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -54,7 +55,7 @@ android:paddingBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter File Name"
-        android:textColor="#E65100"
+        android:textColor="@color/textcolor"
         android:textColorHint="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.chip.Chip
@@ -63,7 +64,7 @@ android:paddingBottom="20dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:text="Secure PDF"
-            android:textColor="@color/white"
+            android:textColor="@color/textcolor"
             style="@style/Widget.MaterialComponents.Chip.Entry"
             app:closeIconTint="@color/white"
             app:chipBackgroundColor="#7F9098"
@@ -105,7 +106,7 @@ android:paddingBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Enter Password"
-            android:textColor="#E65100"
+            android:textColor="@color/textcolor"
             android:inputType="textPassword"
 
             android:textColorHint="@color/white" />
@@ -115,6 +116,7 @@ android:paddingBottom="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Merge"
+        android:textColor="@color/textcolor"
         android:textAllCaps="false"
         android:gravity="center"
         android:layout_gravity="center"

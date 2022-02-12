@@ -35,7 +35,7 @@
                     android:layout_height="55dp"
                     app:layout_collapseMode="pin"
                     app:title="PDF reader"
-                    app:titleTextColor="@color/white"
+                    android:textColor="@color/textcolor"
 
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
             </com.google.android.material.appbar.CollapsingToolbarLayout>

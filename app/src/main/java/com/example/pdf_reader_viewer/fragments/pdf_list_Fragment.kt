@@ -2,7 +2,6 @@ package com.example.pdf_reader_viewer.fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Application
 import android.content.*
 import android.graphics.Bitmap
 import android.net.Uri
@@ -17,12 +16,8 @@ import android.widget.*
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pdf_reader_viewer.*
@@ -38,7 +33,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.*
 import java.io.File
 import java.lang.Exception
-import java.text.DateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -108,7 +102,7 @@ class pdf_list_Fragment : Fragment() {
             //  getNewPdfs()
       binding?.textviewALLL?.setOnClickListener {
          // launcher.launch(arrayOf("application/pdf"))
-          var op=PDFOperationNATIVE(requireActivity())
+          var op= PDFOperationNATIVE(requireActivity())
           op.setStartPage(12)
         //  op.showpage()
       }
@@ -254,6 +248,13 @@ class pdf_list_Fragment : Fragment() {
 
     fun clickOnbottomSheetViews(pdflist:ArrayList<Items_pdfs>,position:Int,myAdapter: MyAdapter){
         //this will send user to PdfTools_Activity----> Merge Fragment with pdfuri and other data acc to position
+
+        var appendedurii = pdflist.get(position).appendeduri!!
+        Log.d("38gh8",appendedurii.toString())
+        var sizee = pdflist.get(position).size!!
+        var date_modifiedd = pdflist.get(position).date_modified!!
+        var titlee = pdflist.get(position).title!!
+
         mergeLinearLayout?.setOnClickListener {
 
             var intent=Intent(context,PdfsTools_Activity::class.java)
@@ -312,7 +313,7 @@ class pdf_list_Fragment : Fragment() {
         //to bookmark the pdf into database
         bookmarkIcon_bottomsheet?.setOnClickListener {
                 CoroutineScope(Dispatchers.Main).launch {
-                    addBookmarks(pdflist.get(position).appendeduri!!)
+                    addBookmarks(appendedurii,titlee,sizee,date_modifiedd.toLong())
                     Log.d("38f3gh7fg3h","bookmark")
                     bookmarkIcon_bottomsheet.visibility=View.GONE
 
@@ -443,9 +444,9 @@ class pdf_list_Fragment : Fragment() {
         dialoguee.show()
     }
 
-   suspend fun addBookmarks(uri:Uri) = withContext(Dispatchers.IO)
+   suspend fun addBookmarks(uri:Uri,pdfname:String,pdfsize:String,pdfDate:Long) = withContext(Dispatchers.IO)
     {
-        MyRoomDatabase2.getInstance(requireContext()).daoMethods().insert(Items_Bookmarks(uri.toString()))
+        MyRoomDatabase2.getInstance(requireContext()).daoMethods().insert(Items_Bookmarks(uri.toString(),pdfname,pdfsize,pdfDate))
     }
 
     suspend fun removeBookmarks(uri:Uri) = withContext(Dispatchers.IO)

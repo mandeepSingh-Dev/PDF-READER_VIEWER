@@ -15,11 +15,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.graphics.BitmapCompat
-import com.example.pdf_reader_viewer.PDFOperationNATIVE
-import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
-import com.google.android.material.snackbar.Snackbar
 import com.tom_roush.pdfbox.multipdf.PDFMergerUtility
 import com.tom_roush.pdfbox.multipdf.Splitter
 import com.tom_roush.pdfbox.pdmodel.PDDocument

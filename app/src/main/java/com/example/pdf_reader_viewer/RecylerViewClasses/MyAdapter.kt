@@ -54,36 +54,39 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         var itemsPdfs=pdfList?.get(position)
-        Log.d("38hffg",itemsPdfs?.appendeduri!!.toString())
-        var displayName=itemsPdfs?.title
-        holder.pdfName.setText(displayName)
 
-        var sizemb=ConversionandUtilsClass.bytesToMB(itemsPdfs?.size!!)
+        val appendeduri  =itemsPdfs?.appendeduri
+        val title = itemsPdfs?.title
+        val size = itemsPdfs?.size
+        val date_modified = itemsPdfs?.date_modified
+
+        holder.pdfName.setText(title)
+
+        var sizemb=ConversionandUtilsClass.bytesToMB(size!!)
         holder.pdfsize.setText(sizemb)
-        holder.dateTextView.setText(itemsPdfs.date_modified)
+        holder.dateTextView.setText(date_modified)
 
-        var longseconds=itemsPdfs.date_modified?.toLong()
-       // ConversionClass().convertToDate(longseconds!!)
+        var longseconds=date_modified?.toLong()
         val datelist=ConversionandUtilsClass.convertToDate(longseconds!!)
         holder.dateTextView.text=datelist.get(0) //here 0 position gives date without time
 
         holder.itemView.setOnClickListener {
-            context?.startActivity(Intent(context, PdfView_Activity::class.java).putExtra(PDFProp.PDF_APPENDED_URI,itemsPdfs?.appendeduri.toString()).putExtra(PDFProp.PDF_TITLE,itemsPdfs?.title))
+            context?.startActivity(Intent(context, PdfView_Activity::class.java).putExtra(PDFProp.PDF_APPENDED_URI,appendeduri?.toString()).putExtra(PDFProp.PDF_TITLE,title))
 
             CoroutineScope(Dispatchers.Main).launch {
-                insertToRecentDATABASE(itemsPdfs?.appendeduri.toString(),System.currentTimeMillis())
+                insertToRecentDATABASE(title!!,size!!,appendeduri?.toString()!!,System.currentTimeMillis())
             }
         }
         holder.menubutton.setOnClickListener {
           /*  pdfNamebottomsheet?.text=pdfList?.get(position)?.title
             bottomsheetDialogue?.show()*/
-            customOnClickListener?.customOnClick(position)
+            //customOnClickListener?.customOnClick(position)
 
             mCustomOnClickListener?.onClick(position)
         }
         pdfNamebottomsheet?.setOnClickListener {
             var intent=Intent(context!!,PdfsTools_Activity::class.java)
-            intent.putExtra("pdfName",displayName)
+            intent.putExtra("pdfName",title)
             context?.startActivity(intent)
 
         }
@@ -131,8 +134,8 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
         return formatedMB
     }
 
-    suspend fun insertToRecentDATABASE(uri: String,date:Long)= withContext(Dispatchers.IO){
-        MyRoomDatabase.getInstance(context!!)?.daoMethod()?.insert(Items_RecentPdfs(uri,date))
+    suspend fun insertToRecentDATABASE(pdfName:String,pdfSize:String,uri: String,date:Long)= withContext(Dispatchers.IO){
+        MyRoomDatabase.getInstance(context!!)?.daoMethod()?.insert(Items_RecentPdfs(pdfName,pdfSize,uri,date))
     }
 
 

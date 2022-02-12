@@ -153,14 +153,20 @@ class Folder_PdfList_Fragment : Fragment() {
     }
     fun clickOnbottomSheetViews(pdflist:ArrayList<Items_pdfs>,position:Int,myAdapter: MyAdapter){
         //this will send user to PdfTools_Activity----> Merge Fragment with pdfuri and other data acc to position
+        var appendeduri = pdflist.get(position).appendeduri!!
+        var size = pdflist.get(position).size!!
+        var date_modified = pdflist.get(position).date_modified!!
+        var title = pdflist.get(position).title!!
+
+
         mergeLinearLayout?.setOnClickListener {
 
             var intent= Intent(context, PdfsTools_Activity::class.java)
 
             intent.putExtra(FragmentNames.OPEN_MERGE_FRAGMENT, FragmentNames.OPEN_MERGE_FRAGMENT)
-                .putExtra(PDFProp.PDF_TITLE,pdflist?.get(position)?.title)
-                .putExtra(PDFProp.PDF_APPENDED_URI,pdflist?.get(position)?.appendeduri)
-                .putExtra(PDFProp.PDF_SIZE,pdflist?.get(position)?.size)
+                .putExtra(PDFProp.PDF_TITLE,title)
+                .putExtra(PDFProp.PDF_APPENDED_URI,appendeduri)
+                .putExtra(PDFProp.PDF_SIZE,size)
             startActivity(intent)
 
             Log.d("3igwn3bg","mskmsk")
@@ -172,9 +178,9 @@ class Folder_PdfList_Fragment : Fragment() {
             var intent= Intent(context, PdfsTools_Activity::class.java)
 
             intent.putExtra(FragmentNames.OPEN_SPLIT_FRAGMENT, FragmentNames.OPEN_SPLIT_FRAGMENT)
-                .putExtra(PDFProp.PDF_TITLE,pdflist?.get(position)?.title)
-                .putExtra(PDFProp.PDF_APPENDED_URI,pdflist?.get(position)?.appendeduri)
-                .putExtra(PDFProp.PDF_SIZE,pdflist?.get(position)?.size)
+                .putExtra(PDFProp.PDF_TITLE,title)
+                .putExtra(PDFProp.PDF_APPENDED_URI,appendeduri)
+                .putExtra(PDFProp.PDF_SIZE,size)
 
             startActivity(intent)
             Log.d("3igwn3bg","mskmsk")
@@ -185,8 +191,8 @@ class Folder_PdfList_Fragment : Fragment() {
 
             var intent= Intent(context, PdfView_Activity::class.java)
 
-            intent.putExtra(PDFProp.PDF_APPENDED_URI,pdflist?.get(position)?.appendeduri.toString())
-                .putExtra(PDFProp.PDF_TITLE,pdflist?.get(position)?.title)
+            intent.putExtra(PDFProp.PDF_APPENDED_URI,appendeduri.toString())
+                .putExtra(PDFProp.PDF_TITLE,title)
 
             startActivity(intent)
             Log.d("3igwn3bg","mskmsk")
@@ -200,7 +206,7 @@ class Folder_PdfList_Fragment : Fragment() {
         deleteLinearLayout?.setOnClickListener {
             try {
                 Log.d("in3g3", position.toString())
-                var intt = context?.contentResolver?.delete(pdflist?.get(position)?.appendeduri!!, null, null)
+                var intt = context?.contentResolver?.delete(appendeduri!!, null, null)
                 bottomSheetDialog?.hide()
                 pdflist?.remove(pdflist?.get(position))
                 myAdapter.notifyItemRemoved(position)
@@ -213,7 +219,7 @@ class Folder_PdfList_Fragment : Fragment() {
         //to bookmark the pdf into database
         bookmarkIcon_bottomsheet?.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
-                addBookmarks(pdflist.get(position).appendeduri!!)
+                addBookmarks(appendeduri!!,title,size,date_modified.toLong())
                 Log.d("38f3gh7fg3h","bookmark")
                 bookmarkIcon_bottomsheet.visibility=View.GONE
 
@@ -223,7 +229,7 @@ class Folder_PdfList_Fragment : Fragment() {
         //to undo or remove the bookmarked pdf from database
         removebookmark_bottomsheet?.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
-                removeBookmarks(pdflist.get(position).appendeduri!!)
+                removeBookmarks(appendeduri!!)
                 Log.d("38f3gh7fg3h","Removed bookmark")
                 //  removebookmark_bottomsheet.isEnabled=false
                 removebookmark_bottomsheet.visibility=View.GONE
@@ -234,7 +240,7 @@ class Folder_PdfList_Fragment : Fragment() {
         }
         //to share pdf to another apps
         shareIcon_bottomsheet?.setOnClickListener {
-            intent?.putExtra(Intent.EXTRA_STREAM,pdflist.get(position).appendeduri)
+            intent?.putExtra(Intent.EXTRA_STREAM,appendeduri)
 
             intent?.putExtra(Intent.EXTRA_SUBJECT, "Sharing File from My Pdf App.");
             // intent?.putExtra(Intent.EXTRA_TEXT, "Sharing File from Webkul to purchase items...");
@@ -244,7 +250,7 @@ class Folder_PdfList_Fragment : Fragment() {
 
         //to check if selected pdf is in bookmark database or not for bookmark buttons
         CoroutineScope(Dispatchers.IO).launch {
-            var itemsPdf = MyRoomDatabase2.getInstance(requireContext()).daoMethods().query(pdflist.get(position).appendeduri.toString())
+            var itemsPdf = MyRoomDatabase2.getInstance(requireContext()).daoMethods().query(appendeduri.toString())
 
             withContext(Dispatchers.Main) {
                 if (itemsPdf != null) {
@@ -257,8 +263,8 @@ class Folder_PdfList_Fragment : Fragment() {
             }
         }
     }
-    suspend fun addBookmarks(uri: Uri) = withContext(Dispatchers.IO) {
-        MyRoomDatabase2.getInstance(requireContext()).daoMethods().insert(Items_Bookmarks(uri.toString()))
+    suspend fun addBookmarks(uri: Uri,pdfname:String,pdfSize:String,pdfDate:Long) = withContext(Dispatchers.IO) {
+        MyRoomDatabase2.getInstance(requireContext()).daoMethods().insert(Items_Bookmarks(pdfname,pdfSize,uri.toString(),pdfDate))
     }
     suspend fun removeBookmarks(uri:Uri) = withContext(Dispatchers.IO)
     {

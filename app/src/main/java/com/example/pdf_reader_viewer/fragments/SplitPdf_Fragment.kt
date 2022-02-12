@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.pdf.PdfRenderer
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -14,21 +13,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
-import com.example.pdf_reader_viewer.PDFOperationNATIVE
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.UtilClasses.ConversionandUtilsClass
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.example.pdf_reader_viewer.UtilClasses.PdfOperations
 import com.example.pdf_reader_viewer.databinding.SplitpdfFragmentBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.tom_roush.pdfbox.pdmodel.PDDocument
 import kotlinx.coroutines.*
-import java.io.File
 import java.io.OutputStream
 import java.lang.Exception
 

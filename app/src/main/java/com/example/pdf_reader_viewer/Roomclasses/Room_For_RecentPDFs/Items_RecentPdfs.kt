@@ -10,16 +10,16 @@ data class Items_RecentPdfs(
     @ColumnInfo(name = "item_id")
     val pdf_ID:Int,
 
-    /*@ColumnInfo(name = "pdfName")
+    @ColumnInfo(name = "pdfName")
     val pdfName:String,
 
     @ColumnInfo(name = "pdfSize")
-    val pdfSize:String,*/
+    val pdfSize:String,
     @ColumnInfo(name = "date")
     val date:Long,
 
     @ColumnInfo(name = "pdfUri")
     val pdfUri:String) {
 
-    constructor( pdfUri:String,date:Long):this(0,date,pdfUri)
+    constructor( pdfName:String,pdfSize: String,pdfUri:String,date:Long):this(0,pdfName,pdfSize,date,pdfUri)
 }

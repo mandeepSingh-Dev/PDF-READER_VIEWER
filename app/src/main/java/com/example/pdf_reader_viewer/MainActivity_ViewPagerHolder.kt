@@ -8,23 +8,25 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
 import android.util.Log
-import android.view.ActionMode
-import android.view.View
+import android.view.*
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.pdf_reader_viewer.ViewPagerAdapter.MyFragmentStateAdapter
+import com.example.pdf_reader_viewer.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
  class MainActivity_ViewPagerHolder : AppCompatActivity()
  {
+     var binding:ActivityMainBinding?=null
 
-     private var viewpager2:ViewPager2?=null
      private var isReadPermissionGranted:Boolean?=false
      private var isWritePermissionGranted:Boolean?=false
      private lateinit var permissionLauncher:ActivityResultLauncher<Array<String>>
@@ -36,18 +38,42 @@ import com.google.android.material.tabs.TabLayoutMediator
          })
      override fun onCreate(savedInstanceState: Bundle?) {
          super.onCreate(savedInstanceState)
-         setContentView(R.layout.activity_main)
+            binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
+         setContentView(binding?.root)
 
          supportActionBar?.hide()
 
-
-         viewpager2 = findViewById<ViewPager2>(R.id.viewpager2)
          setupViewPager2()
 
          /**here we check and request Read_External_Storage and WRITE_EXTERNAL_STORAGE*/
          requestPermssions()
          /**Granting MANAGE_EXTERNAL_STORAGE all files access permission*/
          requesting_MANAGE_ALL_DOCUMENT_Permission()
+
+         binding?.threedotsImageButtonMain?.setOnClickListener {
+             var popupMenu = PopupMenu(this,it)
+            // popupMenu.inflate(R.menu.bottombar_icons)
+             popupMenu.getMenuInflater().inflate(R.menu.bottombar_icons, popupMenu.getMenu());
+             popupMenu.setOnMenuItemClickListener {
+                 when(it.itemId){
+
+                     R.id.settingMenuitem -> {
+                         startActivity(Intent(this,SettingsActviity::class.java))
+                         return@setOnMenuItemClickListener true
+                     }
+                     R.id.darkmodeMenuitem -> {
+                         
+                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                         return@setOnMenuItemClickListener true
+                     }
+                     else ->{
+                      return@setOnMenuItemClickListener onOptionsItemSelected(it)
+                          }
+
+                          }//when block
+             }
+             popupMenu.show()
+         }
 
        //  launcher.launch()
        //  var list=ArrayList<String>()
@@ -56,14 +82,14 @@ import com.google.android.material.tabs.TabLayoutMediator
      fun setupViewPager2()
      {
          val myFragmentStateAdapter = MyFragmentStateAdapter(this)
-         viewpager2?.adapter = myFragmentStateAdapter
+         binding?.viewpager2?.adapter = myFragmentStateAdapter
 
          var texts= arrayOf("Recent","starred","All Files","Tools")
          val tabLayout = findViewById<TabLayout>(R.id.tablayout)
-         TabLayoutMediator(tabLayout, viewpager2!!) { tab, position ->
+         TabLayoutMediator(tabLayout, binding?.viewpager2!!) { tab, position ->
              tab.text=texts[position]
          }.attach()
-         viewpager2?.offscreenPageLimit=2
+         binding?.viewpager2?.offscreenPageLimit=2
          //end of TabLayoutMediator
      }
 
@@ -120,21 +146,40 @@ import com.google.android.material.tabs.TabLayoutMediator
      }
 
      override fun onBackPressed() {
-         if(viewpager2?.currentItem!! > 0)
+         if(binding?.viewpager2?.currentItem!! > 0)
          {
-             viewpager2?.setCurrentItem(0,true)
+             binding?.viewpager2?.setCurrentItem(0,true)
          }
          else{
-             Log.d("3g3gf3wg",viewpager2?.currentItem.toString())
+             Log.d("3g3gf3wg",binding?.viewpager2?.currentItem.toString())
 
              super.onBackPressed()
          }
 
      }
 
-     override fun onWindowStartingActionMode(callback: ActionMode.Callback?): ActionMode? {
-         return super.onWindowStartingActionMode(callback)
-         Log.d("34t3g3","efdiheiehn")
+     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+       //  var popupMenu = PopupMenu(this,findViewById(R.menu.bottombar_icons))
+          menuInflater.inflate(R.menu.bottombar_icons,menu)
+         return super.onCreateOptionsMenu(menu)
+     }
+
+     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+         when(item.itemId){
+
+             R.id.settingMenuitem -> {
+                                   startActivity(Intent(this,SettingsActviity::class.java))
+                                     return true
+                                      }
+             R.id.darkmodeMenuitem -> {
+                                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                                       return true
+                                        }
+             else ->{
+                 return super.onOptionsItemSelected(item)
+             }
+         }
      }
 
 

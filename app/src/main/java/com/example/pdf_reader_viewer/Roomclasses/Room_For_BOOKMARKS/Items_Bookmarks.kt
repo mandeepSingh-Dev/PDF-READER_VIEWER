@@ -10,17 +10,17 @@ data class Items_Bookmarks(
     @ColumnInfo(name = "item_id")
     val pdf_ID:Int,
 
-    /*@ColumnInfo(name = "pdfName")
+    @ColumnInfo(name = "pdfName")
     val pdfName:String,
 
     @ColumnInfo(name = "pdfSize")
-    val pdfSize:String,*/
+    val pdfSize:String,
     @ColumnInfo(name = "date")
     val date:Long,
 
     @ColumnInfo(name = "pdfUri")
     val pdfUri:String) {
 
-    constructor( pdfUri:String,date:Long):this(0,date,pdfUri)
-    constructor( pdfUri: String):this(0,11L,pdfUri)
+    constructor( pdfUri:String,pdfName: String,pdfSize: String,date:Long):this(0,pdfName,pdfSize,date,pdfUri)
+    //constructor( pdfUri: String):this(0,11L,pdfUri)
 }

@@ -88,7 +88,7 @@ class MergePdfs_Fragment : Fragment() {
             var pdfUri = arguments?.getParcelable<Uri>(PDFProp.PDF_APPENDED_URI)
             //var pdfdate=arguments?.getString(PDFProp.PDF_DATEMODIFIED)
 
-            // Log.d("efhhegfehd",pdfUri.toString())
+             Log.d("efhhegfehd",pdfUri.toString()+pdfSize+pdfTitle)
 
             if (pdfTitle != null && pdfSize != null && pdfUri != null) {
                 Log.d("CHECKINGFRAG", "coming from list  ")

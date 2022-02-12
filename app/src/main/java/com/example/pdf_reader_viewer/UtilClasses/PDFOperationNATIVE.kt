@@ -1,4 +1,4 @@
-package com.example.pdf_reader_viewer
+package com.example.pdf_reader_viewer.UtilClasses
 
 import android.app.Activity
 import android.graphics.Bitmap
@@ -55,6 +55,7 @@ class PDFOperationNATIVE(activity:Activity)
 
                 val page = document.startPage(pageInfo)
                 var canvas = page.canvas
+
 
                 var divwidth = renderedpage.width / 10
                 var divheight = renderedpage.height / 10
