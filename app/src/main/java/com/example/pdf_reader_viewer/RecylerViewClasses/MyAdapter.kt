@@ -59,7 +59,7 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
         holder.pdfName.setText(displayName)
 
         var sizemb=ConversionandUtilsClass.bytesToMB(itemsPdfs?.size!!)
-        holder.pdfsize.setText(sizemb+" mb")
+        holder.pdfsize.setText(sizemb)
         holder.dateTextView.setText(itemsPdfs.date_modified)
 
         var longseconds=itemsPdfs.date_modified?.toLong()

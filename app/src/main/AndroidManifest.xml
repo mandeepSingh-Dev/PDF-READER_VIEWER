@@ -23,7 +23,8 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PDFREADER_VIEWER">
+        android:theme="@style/Theme.PDFREADER_VIEWER"
+        android:uiOptions="splitActionBarWhenNarrow">
         <activity
             android:name=".SettingsActviity"
             android:exported="false" />

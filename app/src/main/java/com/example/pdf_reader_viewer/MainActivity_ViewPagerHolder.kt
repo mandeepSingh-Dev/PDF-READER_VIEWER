@@ -40,6 +40,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 
          supportActionBar?.hide()
 
+
          viewpager2 = findViewById<ViewPager2>(R.id.viewpager2)
          setupViewPager2()
 

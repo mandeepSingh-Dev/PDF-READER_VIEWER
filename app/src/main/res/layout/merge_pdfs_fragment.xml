@@ -45,18 +45,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_margin="16dp"
                 android:layout_gravity="end"
+                android:layout_marginRight="15dp"
 
                 >
             <TextView
                 android:id="@+id/fab4TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="3dp"
+                android:layout_margin="16dp"
+android:textColor="@color/textcolor"
+                android:layout_marginRight="10dp"
                 android:paddingBottom="3dp"
                 android:background="@drawable/stroke_fabtext"
                 android:text="Files on device"/>
@@ -77,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="end"
-                android:layout_margin="16dp"
+                android:layout_marginRight="15dp"
                 >
             <TextView
                 android:id="@+id/fab3TextView"
@@ -88,6 +90,7 @@
                 android:paddingRight="10dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
+                android:textColor="@color/textcolor"
                 android:background="@drawable/stroke_fabtext"
                 android:text="Image to PDF"/>
 
@@ -106,8 +109,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_margin="16dp"
                 android:layout_gravity="end"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
                 >
             <TextView
                 android:id="@+id/fab2TextView"
@@ -118,6 +122,7 @@
                 android:paddingRight="10dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
+                android:textColor="@color/textcolor"
                 android:background="@drawable/stroke_fabtext"
                 android:text="Text to PDF"/>
 
