@@ -24,6 +24,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="0dp"
             android:layout_marginTop="20dp"
+            android:visibility="gone"
             android:orientation="horizontal">
 
             <TextView
@@ -60,7 +61,8 @@
             android:layout_below="@id/linearwithSearchView"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            />
         <!-- <ImageView
             android:id="@+id/EmptyImageView"
             android:layout_width="match_parent"
@@ -93,11 +95,27 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="There is no pdfs in your device"
-            android:textColor="@color/black"
+            android:textColor="#9F9191"
             android:textSize="15sp"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
-
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/pdflistSearchVieww"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/shape"
+            app:searchIcon="@drawable/ic_outline_search_24"
+            app:defaultQueryHint="Search"
+            app:iconifiedByDefault="true"
+            app:queryHint="search pdfs"
+            android:saveEnabled="true"
+            android:layout_margin="10dp"
+            app:layout_behavior="com.google.android.material.bottomappbar.BottomAppBar$Behavior"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"/>
 
     </RelativeLayout>
 
@@ -123,7 +141,8 @@
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
         app:layout_behavior="com.google.android.material.bottomappbar.BottomAppBar$Behavior"
-     >
+       android:visibility="gone"
+        >
 
         <ImageView
             android:id="@+id/settingsIcONBottom"
@@ -152,10 +171,16 @@
         android:id="@+id/floatingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_anchor="@id/bottomAppbar"
         android:clickable="true"
         android:enabled="true"
         app:rippleColor="#835A39"
-        android:src="@drawable/ic_baseline_add_24" />
+        android:backgroundTint="#FF005D"
+        android:src="@drawable/ic_baseline_add_24"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="30dp"/>
+<!--
+    app:layout_anchor="@id/bottomAppbar"
+-->
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

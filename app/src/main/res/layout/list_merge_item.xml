@@ -24,7 +24,7 @@
         android:ellipsize="end"
         android:singleLine="true"
         android:textSize="15sp"
-        android:textColor="@color/black"
+        android:textColor="@color/textcolor"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="15dp"
         />
@@ -35,6 +35,7 @@
         app:layout_constraintLeft_toLeftOf="@id/pdfNameTextView"
         app:layout_constraintTop_toBottomOf="@id/pdfNameTextView"
         android:text="1.0 mb"
+        android:textColor="@color/textcolor"
         android:singleLine="true"
         android:layout_marginTop="6dp"
         app:layout_constraintRight_toLeftOf="@id/pdfDateTexView"
@@ -49,6 +50,7 @@
         app:layout_constraintBottom_toBottomOf="@id/pdfImageView"
         app:layout_constraintLeft_toRightOf="@id/pdfSize"
         android:text="20.01.2022"
+        android:textColor="@color/textcolor"
         android:singleLine="true"
         android:layout_marginRight="25dp"
         android:layout_marginTop="6dp"
@@ -56,12 +58,14 @@
 
     <ImageView
         android:id="@+id/dragMenuimage"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_baseline_menu_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_more_vert_24"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/pdfImageView"
-        android:layout_marginRight="20dp"
+        android:padding="10dp"
+        android:background="@drawable/rippldeimage"
+        android:layout_marginRight="10dp"
         app:layout_constraintBottom_toBottomOf="@id/pdfImageView"/>
 
 

@@ -22,7 +22,7 @@ class MyAdapter_RecentLists(context: Context,arrayList:ArrayList<Items_RecentPdf
     var recentlist=arrayList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewholder {
-            var view = LayoutInflater.from(context).inflate(R.layout.list_recent_item,parent,false)
+            var view = LayoutInflater.from(context).inflate(R.layout.list_recent_item_2,parent,false)
             var viewHolder=MyViewholder(view)
         return viewHolder
     }

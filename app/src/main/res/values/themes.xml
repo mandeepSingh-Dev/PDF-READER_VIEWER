@@ -15,7 +15,10 @@
 <!--
         <item name="android:windowShowWallpaper">true</item>
 -->
+<!--
         <item name="android:windowBackground">@drawable/splashbakground</item>
+-->
+        <item name="android:windowBackground">@color/white</item>
 
     </style>
 

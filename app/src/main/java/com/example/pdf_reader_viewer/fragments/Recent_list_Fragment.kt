@@ -47,7 +47,7 @@ class Recent_list_Fragment : Fragment() {
                    object : Observer<List<Items_RecentPdfs>> {
                        override fun onChanged(it: List<Items_RecentPdfs>?) {
                           myAdapter= MyAdapter_RecentLists(requireContext(),it as ArrayList<Items_RecentPdfs>)
-                           binding?.recentRecyclerView?.layoutManager=GridLayoutManager(requireContext(),2,GridLayoutManager.VERTICAL,false)
+                           binding?.recentRecyclerView?.layoutManager=GridLayoutManager(requireContext(),1,GridLayoutManager.VERTICAL,false)
                            binding?.recentRecyclerView?.adapter=myAdapter
                        }
                    })

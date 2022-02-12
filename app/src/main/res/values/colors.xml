@@ -10,4 +10,7 @@
 
     <color name="backgroundColor">@color/white</color>
     <color name="textcolor">@color/black</color>
+    <color name="tabcolor">#806464</color>
+    <color name="tabselectedColor">#000000</color>
+
 </resources>

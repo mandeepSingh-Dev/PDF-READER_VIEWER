@@ -21,13 +21,12 @@
        app:layout_constraintRight_toRightOf="parent"
 
     />
-   <LinearLayout
+   <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/appLogoLAYOUT"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
       android:orientation="horizontal"
        app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintBottom_toTopOf="@id/tablayout"
        app:layout_constraintLeft_toLeftOf="parent"
        app:layout_constraintRight_toRightOf="parent"
       >
@@ -38,41 +37,79 @@
            android:src="@drawable/ic_pdf_icon"
            android:layout_marginLeft="14dp"
          android:layout_marginTop="14dp"
-         android:layout_marginBottom="14dp"/>
+          android:layout_weight="1"
+         android:layout_marginBottom="14dp"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintLeft_toLeftOf="parent"/>
 
-   </LinearLayout>
+      <ImageView
+          android:layout_width="40dp"
+          android:layout_height="wrap_content"
+         android:layout_gravity="end"
+         android:layout_weight="1"
+         android:src="@drawable/ic_baseline_more_vert_24"
+          android:backgroundTintMode="src_atop"
+         app:layout_constraintTop_toTopOf="@id/appLOGO"
+         app:layout_constraintRight_toRightOf="parent"
+          android:layout_marginRight="10dp"/>
+
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+   <TextView
+       android:id="@+id/welcometextview"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:fontFamily="@font/candal"
+       android:text="Welcome"
+       android:textColor="@color/textcolor"
+       android:textSize="25sp"
+       android:layout_marginLeft="20dp"
+       android:layout_marginTop="10dp"
+       app:layout_constraintBottom_toTopOf="@id/tablayout"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintTop_toBottomOf="@id/appLogoLAYOUT" />
+
    <com.google.android.material.tabs.TabLayout
        android:id="@+id/tablayout"
-       android:layout_width="match_parent"
+       android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        app:tabIconTint="@color/teal_200"
        app:tabRippleColor="#D64278"
        android:background="@android:color/transparent"
-       app:tabSelectedTextColor="#FFFFFF"
-       app:tabMode="fixed"
-       app:tabIndicatorColor="#D64278"
-       app:tabIndicator="@drawable/shape"
-       app:tabIndicatorGravity="stretch"
-       app:tabIndicatorAnimationMode="elastic"
+       app:tabSelectedTextColor="@color/tabselectedColor"
        android:animateLayoutChanges="true"
+       app:tabMode="fixed"
+       android:elevation="0dp"
+       app:tabMaxWidth="0dp"
+       app:tabGravity="fill"
+       app:tabIndicatorFullWidth="false"
+       android:scrollIndicators="start"
        app:tabIndicatorAnimationDuration="1200"
-       app:tabContentStart="56dp"
-       android:layout_marginLeft="10dp"
-       android:layout_marginRight="10dp"
        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
-       app:tabTextColor="@color/teal_700"
-      app:layout_constraintTop_toBottomOf="@id/appLogoLAYOUT"
+       app:tabTextColor="@color/tabcolor"
+       app:layout_constraintTop_toBottomOf="@+id/welcometextview"
        app:layout_constraintBottom_toTopOf="@id/viewpager2"
        app:layout_constraintLeft_toLeftOf="parent"
        style="@style/Widget.MaterialComponents.TabLayout"
-       app:layout_constraintRight_toRightOf="parent"/>
+/>
+<!--
+   app:tabIndicator="@drawable/shape"
+         app:tabContentStart="56dp"
+         android:layout_marginLeft="10dp"
+       android:layout_marginRight="10dp"
+       app:tabGravity="start"
+       app:tabIndicatorColor="#D64278"
+  app:tabIndicatorGravity="stretch"
+       app:tabIndicatorAnimationMode="elastic"
+-->
+
    <androidx.viewpager2.widget.ViewPager2
        android:id="@+id/viewpager2"
        android:layout_width="match_parent"
        android:layout_height="0dp"
        android:layout_below="@id/tablayout"
        android:layout_weight="1"
-
        app:layout_constraintTop_toBottomOf="@id/tablayout"
        app:layout_constraintBottom_toBottomOf="parent"
        app:layout_constraintLeft_toLeftOf="parent"

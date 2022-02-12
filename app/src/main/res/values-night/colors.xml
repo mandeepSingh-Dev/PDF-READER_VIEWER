@@ -10,5 +10,7 @@
 
     <color name="backgroundColor">#5A4D4D</color>
     <color name="textcolor">@color/white</color>
+    <color name="tabcolor">#D5BABA</color>
+    <color name="tabselectedColor">#FFFFFF</color>
 
 </resources>

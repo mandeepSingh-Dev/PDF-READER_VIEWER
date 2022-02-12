@@ -8,13 +8,11 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pdf_reader_viewer.PdfView_Activity
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.Roomclasses.Room_For_BOOKMARKS.Items_Bookmarks
-import com.example.pdf_reader_viewer.Roomclasses.Room_For_RecentPDFs.Items_RecentPdfs
 import com.example.pdf_reader_viewer.UtilClasses.ConversionandUtilsClass
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 
@@ -26,7 +24,7 @@ class MyAdapter_ForBookmarks(context: Context,arrayList:ArrayList<Items_Bookmark
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewholder {
         //here In bookmarks adpater we have used recent_list_Item layout
-        var view = LayoutInflater.from(context).inflate(R.layout.list_recent_item,parent,false)
+        var view = LayoutInflater.from(context).inflate(R.layout.list_recent_item_2,parent,false)
         var viewHolder=MyViewholder(view)
         return viewHolder
     }

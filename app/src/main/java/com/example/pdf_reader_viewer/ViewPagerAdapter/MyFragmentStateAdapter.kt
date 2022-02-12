@@ -18,15 +18,15 @@ class MyFragmentStateAdapter(fragmentActivity: FragmentActivity):FragmentStateAd
 
         if(position==0)
         {
-            return pdf_list_Fragment()
+            return Recent_list_Fragment()
         }
         else if(position==1)
         {
-            return Recent_list_Fragment()
+            return BookMarks_list_Fragment_()
         }
         else if(position==2)
         {
-            return BookMarks_list_Fragment_()
+            return pdf_list_Fragment()
         }
         else{
             return PdfTools_Fragment()
