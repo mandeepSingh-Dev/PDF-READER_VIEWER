@@ -3,6 +3,7 @@ package com.example.pdf_reader_viewer.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.pdf.PdfRenderer
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,6 +18,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import com.example.pdf_reader_viewer.PDFOperationNATIVE
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.UtilClasses.ConversionandUtilsClass
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
@@ -163,6 +165,7 @@ class SplitPdf_Fragment : Fragment() {
     fun splitPDF(appendedUri: Uri) {
         var totalPages = 0
         CoroutineScope(Dispatchers.Default).launch {
+
             var inputStream = ConversionandUtilsClass.convertContentUri_toInputStream(requireActivity(), appendedUri)
             Log.d("fhdjfdn", inputStream.toString())
             //practise only
@@ -170,12 +173,15 @@ class SplitPdf_Fragment : Fragment() {
             try {
                 var document = PDDocument.load(inputStream)
 
-                    totalPages = document?.numberOfPages!!
+                  //  totalPages = document?.numberOfPages!!
+
             } catch (e: Exception) {
                 Log.d("377t738ghvn", e.cause.toString())
             }
+            var rendere = PdfRenderer(activity?.contentResolver?.openFileDescriptor(appendedUri,"r")!!)
 
             withContext(Dispatchers.Main) {
+                totalPages = rendere.pageCount
                 binding?.pdfTotalPage?.setText("Total pages : " + totalPages.toString())
 
                 binding?.splitButton?.setOnClickListener {
@@ -275,8 +281,8 @@ class SplitPdf_Fragment : Fragment() {
                             importingnumberDailogText?.visibility = View.GONE
                             alertDialogprogress?.show()
 
-                            PdfOperations(requireActivity()).splittingPdf(uri!!, numberList,outputStream)
-
+                           // PdfOperations(requireActivity()).splittingPdf(uri!!, numberList,outputStream)
+                            PdfOperations(requireActivity()).splitPdfNative(uri!!,numberList,outputStream)
                             alertDialogprogress?.hide()
                         }
 //                   /* } else {

@@ -28,16 +28,16 @@
 
             <TextView
                 android:id="@+id/textviewALLL"
-                android:layout_width="100dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="7dp"
                 android:layout_weight="1"
-                android:fontFamily="@font/candal"
+                android:fontFamily="sans-serif-thin"
                 android:text="All"
                 android:textColor="#322C2C"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                 />
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/pdflistSearchView"
@@ -60,8 +60,7 @@
             android:layout_below="@id/linearwithSearchView"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp"
-            android:background="#E1EDEC" />
+            android:layout_marginTop="5dp" />
         <!-- <ImageView
             android:id="@+id/EmptyImageView"
             android:layout_width="match_parent"
@@ -103,12 +102,7 @@
     </RelativeLayout>
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_anchor="@id/bottomAppbar"
-        android:src="@drawable/ic_pdf_icon" />
+
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppbar"
         android:layout_width="match_parent"
@@ -119,7 +113,7 @@
         android:outlineSpotShadowColor="#000000"
         app:hideOnScroll="true"
         app:fabAlignmentMode="end"
-        app:fabCradleMargin="12dp"
+        app:fabCradleMargin="10dp"
         app:fabCradleRoundedCornerRadius="5dp"
         app:fabCradleVerticalOffset="10dp"
         android:layout_gravity="bottom"
@@ -154,6 +148,14 @@
 
 
     </com.google.android.material.bottomappbar.BottomAppBar>
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@id/bottomAppbar"
+        android:clickable="true"
+        android:enabled="true"
+        app:rippleColor="#835A39"
+        android:src="@drawable/ic_baseline_add_24" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

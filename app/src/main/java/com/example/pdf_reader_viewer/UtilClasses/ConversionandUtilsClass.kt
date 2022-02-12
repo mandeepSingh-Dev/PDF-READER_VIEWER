@@ -36,7 +36,7 @@ class ConversionandUtilsClass
             var formatedMB = df.format(totalmb)
 
             Log.d("43834hb10", formatedMB)
-            return formatedMB
+            return formatedMB+" mb"
         }
 
         //this method is for pdfOperation class

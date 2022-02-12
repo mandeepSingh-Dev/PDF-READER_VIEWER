@@ -14,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.*
+import androidx.activity.result.ActivityResultCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -23,10 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.pdf_reader_viewer.MCustomOnClickListener
-import com.example.pdf_reader_viewer.PdfView_Activity
-import com.example.pdf_reader_viewer.PdfsTools_Activity
-import com.example.pdf_reader_viewer.R
+import com.example.pdf_reader_viewer.*
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter
 import com.example.pdf_reader_viewer.Roomclasses.Room_For_BOOKMARKS.Items_Bookmarks
@@ -69,7 +68,17 @@ class pdf_list_Fragment : Fragment() {
     var myAdapter:MyAdapter?=null
     var intent:Intent?=null
 
-
+    var uri :Uri?=null
+    var  launcher= registerForActivityResult(ActivityResultContracts.OpenDocument(),
+        ActivityResultCallback {
+            uri = it
+            launcher4.launch(System.currentTimeMillis().toString()+".pdf")
+        })
+    var launcher4 = registerForActivityResult(ActivityResultContracts.CreateDocument(),
+        ActivityResultCallback {
+            var outputStream = activity?.contentResolver?.openOutputStream(it)
+            PDFOperationNATIVE(requireActivity()).splitPdf(uri!!, outputStream!!)
+        })
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,6 +106,23 @@ class pdf_list_Fragment : Fragment() {
 
        /**____________________*/
             //  getNewPdfs()
+      binding?.textviewALLL?.setOnClickListener {
+         // launcher.launch(arrayOf("application/pdf"))
+          var op=PDFOperationNATIVE(requireActivity())
+          op.setStartPage(12)
+        //  op.showpage()
+      }
+      binding?.settingsIcONBottom?.setOnClickListener {
+          startActivity(Intent(requireContext(),SettingsActviity::class.java))
+      }
+      //performing floating button
+      binding?.floatingButton?.setOnClickListener {
+            var intent=Intent(requireContext(),PdfsTools_Activity::class.java)
+
+            intent.putExtra(FragmentNames.OPEN_IMGTOPDF_FRAGMENT,FragmentNames.OPEN_IMGTOPDF_FRAGMENT)
+            startActivity(intent)
+          Log.d("3igwn3bg","mskmsk")
+      }
        /**____________________*/
 
         recyclerView = view.findViewById(R.id.pdfListRecylerView)
@@ -159,7 +185,10 @@ class pdf_list_Fragment : Fragment() {
 
                 }
             })
-*/    }// END OF onViewCreated block
+*/
+
+
+    }// END OF onViewCreated block
 
 
 
@@ -279,18 +308,7 @@ class pdf_list_Fragment : Fragment() {
                 myAdapter.notifyItemRangeChanged(position, pdflist?.size!!)
             }catch (e:Exception){Toast.makeText(requireContext(),e.message,Toast.LENGTH_SHORT).show()}
         }
-        //performing floating button
-        binding?.floatingButton?.setOnClickListener {
-            var intent=Intent(context,PdfsTools_Activity::class.java)
 
-            intent.putExtra(FragmentNames.OPEN_IMGTOPDF_FRAGMENT,FragmentNames.OPEN_IMGTOPDF_FRAGMENT)
-              /*  .putExtra(PDFProp.PDF_TITLE,pdflist?.get(position)?.title)
-                .putExtra(PDFProp.PDF_APPENDED_URI,pdflist?.get(position)?.appendeduri)
-                .putExtra(PDFProp.PDF_SIZE,pdflist?.get(position)?.size)*/
-
-            startActivity(intent)
-            Log.d("3igwn3bg","mskmsk")
-        }
         //to bookmark the pdf into database
         bookmarkIcon_bottomsheet?.setOnClickListener {
                 CoroutineScope(Dispatchers.Main).launch {
@@ -463,7 +481,8 @@ class pdf_list_Fragment : Fragment() {
     }
 
    // @SuppressLint("Range")
-    fun getNewPdfs():ArrayList<Items_pdfs>
+   @SuppressLint("Range")
+   fun getNewPdfs():ArrayList<Items_pdfs>
     {
         var filelist = arrayListOf<Items_pdfs>()
        // val selection = "_data LIKE'%.pdf'"

@@ -16,6 +16,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.graphics.BitmapCompat
+import com.example.pdf_reader_viewer.PDFOperationNATIVE
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import com.google.android.material.snackbar.Snackbar
@@ -47,6 +48,7 @@ class PdfOperations(activity:Activity) {
     var parcelFileDescriptor: ParcelFileDescriptor? = null
     var startPage: String? = null
     var endPage: String? = null
+    var splitAtpage:String?=null
     var activity = activity
 
     fun createPdf(v: View?, activity: Activity, bitmap: Bitmap) {
@@ -374,9 +376,7 @@ try {
         //  return bool
     }
 
-
     //splitting the pages of a PDF document
-
     if (startPage != null) {
         Log.d("fy7fgsjfstartPage", startPage!!)
         splitter.setStartPage(startPage!!.toInt())
@@ -387,9 +387,7 @@ try {
     }
 
     if (startPage != null && endPage == null) {
-        splitter.setSplitAtPage(
-            startPage!!.toInt().minus(1)
-        ) //here we give .minus(1) because when se split at given pagenumber then splitter split pagenumber single page then further pages gets split.
+        splitter.setSplitAtPage(startPage!!.toInt().minus(1)) //here we give .minus(1) because when se split at given pagenumber then splitter split pagenumber single page then further pages gets split.
         Log.d("fy7fgsjfsplitAtPage", startPage!!)
     }
     //splitter.setSplitAtPage(20)
@@ -490,7 +488,6 @@ try {
         }
 
     }
-
 
     fun renderFile(v: View?, activity: Activity): Bitmap {
         // Render the page and save it to an image file
@@ -607,9 +604,6 @@ try {
         }*/
         return isEncrypted
     }
-
-
-
 
     fun convertContentUri_toInputStream(activity: Activity, appendedUri: Uri): InputStream {
         parcelFileDescriptor = activity?.contentResolver?.openFileDescriptor(appendedUri, "r")!!
@@ -749,5 +743,40 @@ try {
        //...
 
         return fos!!
+    }
+
+   suspend fun splitPdfNative(uri:Uri, numberList: List<String>,outputStream: OutputStream)=
+       withContext(Dispatchers.IO)
+    {
+        var pnative = PDFOperationNATIVE(activity)
+
+        if (numberList.size > 1) {
+            startPage = numberList.get(0)
+            endPage = numberList.get(1)
+            Log.d("ifg7egjdf", startPage + endPage + "sdhsj")
+        } else if (numberList.size == 1) {
+            splitAtpage = numberList.get(0)
+            Log.d("ifg7egjdf", splitAtpage!!)
+        } else {
+            //  return bool
+        }
+
+        if (startPage != null) {
+            Log.d("fy7fgsjfstartPage", startPage!!)
+            pnative.setStartPage(startPage!!.toInt())
+        }
+        if (endPage != null) {
+            Log.d("fy7fgsjfendpage", endPage!!)
+            pnative.setEndPage(endPage!!.toInt())
+        }
+
+       // if (startPage != null && endPage == null)
+        if(splitAtpage!=null)
+        {
+            pnative.setSplitAtPage1(splitAtpage!!.toInt()) //here we give .minus(1) because when se split at given pagenumber then splitter split pagenumber single page then further pages gets split.
+           // Log.d("fy7fgsjfsplitAtPage", startPage!!)
+        }
+
+        pnative.splitPdf(uri,outputStream)
     }
 }

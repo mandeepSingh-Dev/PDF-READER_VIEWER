@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="General">
+
+        <!--in below line we are creating a list preference
+            and we are adding default selected value in list for 3 rd index-->
+        <!--dialog title is to set title for our dialog box
+            entries is used to add list of data which we
+            are adding from our strings file
+            entry values is to add values to our entries.
+            key is use to add key to our list preferences
+            summary is use to add description to our option
+            title is use to add title to our list preferences.-->
+        <!--this list preference is for remind me option-->
+  <!--      <ListPreference
+            android:defaultValue="3"
+            android:title="remind me"/>-->
+        <!--android:dialogTitle="@string/remind_to_take_a_break"
+        android:entries="@array/pref_remind_me_to_take_a_break"
+        android:entryValues="@array/pref_duration"
+        android:key="@string/key_upload_quality"
+        android:summary="@string/remind_me"-->
+
+
+        <!--on below line we are creating a switch preference
+            default value is use to set switch on or off
+            key is use to set key
+            title is use to add title to our switch-->
+        <!--this switch preference option is to remind for a bed time-->
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/Notifications"
+            android:title="@string/NotificationTitle" />
+
+        <!--below switch preference is
+            use for mobile data usage-->
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/Show_Page_Numbers"
+            android:title="@string/Show_Page_NumbersTitle" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/Dark_Theme"
+            android:title="@string/Dark_ThemeTitle" />
+
+
+        <!--below list preference is use for
+            double tap to seek option-->
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Settings">
+
+        <Preference
+            android:key="@string/Share_Application"
+            android:title="@string/Share_ApplicationTitle"/>
+        <Preference
+            android:key="@string/Feedback"
+            android:title="@string/FeedbackTitle"/>
+        <Preference
+            android:key="@string/Privacy_Policy"
+            android:title="@string/Privacy_PolicyTitle"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

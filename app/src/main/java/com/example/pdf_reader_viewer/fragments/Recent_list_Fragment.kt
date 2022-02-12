@@ -36,7 +36,7 @@ class Recent_list_Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       var job= CoroutineScope(Dispatchers.IO).async {
+         CoroutineScope(Dispatchers.IO).async {
            var liverecentList = MyRoomDatabase.getInstance(requireContext())?.daoMethod()?.query()
 
            withContext(Dispatchers.Main) {

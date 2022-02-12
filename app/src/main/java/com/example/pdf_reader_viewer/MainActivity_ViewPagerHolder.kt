@@ -57,7 +57,7 @@ import com.google.android.material.tabs.TabLayoutMediator
          val myFragmentStateAdapter = MyFragmentStateAdapter(this)
          viewpager2?.adapter = myFragmentStateAdapter
 
-         var texts= arrayOf("All Pdfs","Recents","Bookmarks","Tools")
+         var texts= arrayOf("All Files","Recent","Bookmark","Tools")
          val tabLayout = findViewById<TabLayout>(R.id.tablayout)
          TabLayoutMediator(tabLayout, viewpager2!!) { tab, position ->
              tab.text=texts[position]

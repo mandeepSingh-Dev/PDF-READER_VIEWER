@@ -48,7 +48,7 @@ android:layout_marginLeft="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         app:layout_constraintTop_toTopOf="@id/scanImagevIew"
-
+        android:textColor="@color/textcolor"
          app:layout_constraintLeft_toRightOf="@id/scanImagevIew"
       />
     </LinearLayout>
@@ -76,6 +76,7 @@ android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"
             android:text="Select Image"
             android:textSize="20sp"
+            android:textColor="@color/textcolor"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             app:layout_constraintTop_toTopOf="@id/scanImagevIew"
