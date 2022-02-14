@@ -26,16 +26,19 @@ class ConversionandUtilsClass
 
         //this method for MyAdapter class
         fun bytesToMB(bytes: String): String {
-            var bytess = bytes.toFloat()
-            var MEGABYTE = 1024 * 1024
-            var totalmb = bytess / MEGABYTE
+             var formatedMB=""
+            try {
+                var bytess = bytes.toFloat()
+                var MEGABYTE = 1024 * 1024
+                var totalmb = bytess / MEGABYTE
 
-            //formatting totalmb eg. 1.40 mb
-            var df = DecimalFormat()
-            df.maximumFractionDigits = 2
-            var formatedMB = df.format(totalmb)
+                //formatting totalmb eg. 1.40 mb
+                var df = DecimalFormat()
+                df.maximumFractionDigits = 2
+                 formatedMB = df.format(totalmb)
 
-            Log.d("43834hb10", formatedMB)
+                Log.d("43834hb10", formatedMB)
+            }catch (e:Exception){}
             return formatedMB+" mb"
         }
 

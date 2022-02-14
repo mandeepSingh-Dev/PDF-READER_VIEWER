@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
+import com.example.pdf_reader_viewer.UtilClasses.FragmentNames
+import com.example.pdf_reader_viewer.UtilClasses.ViewAnimation
 import com.example.pdf_reader_viewer.ViewPagerAdapter.MyFragmentStateAdapter
 import com.example.pdf_reader_viewer.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayout
@@ -26,6 +28,7 @@ import com.google.android.material.tabs.TabLayoutMediator
  class MainActivity_ViewPagerHolder : AppCompatActivity()
  {
      var binding:ActivityMainBinding?=null
+     private var isRotate = true
 
      private var isReadPermissionGranted:Boolean?=false
      private var isWritePermissionGranted:Boolean?=false
@@ -62,9 +65,29 @@ import com.google.android.material.tabs.TabLayoutMediator
                          return@setOnMenuItemClickListener true
                      }
                      R.id.darkmodeMenuitem -> {
-                         
-                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                         Log.d("3g9h34g",it.isChecked.toString())
+                         it.isChecked = true
+                         it.isCheckable = true
+
+                         Log.d("3g9h34g",it.isChecked.toString())
+                         // Log.d("3f8h3f","sidhsidns")
+                          /* if(it.isChecked) {
+                               Log.d("3f8h3f","isChecked")*/
+                             //  it.setCheckable(false)
+                            // it.setChecked(false)
+                              // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                            //   it.setChecked(true)
+
+                          // }else{
+                             //  it.setCheckable(true)
+                             //  it.setChecked(true)
+
+                               Log.d("3f8h3f","isCheckedNOT")
+                            //   AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                            //   it.setChecked(false)
+                          // }
                          return@setOnMenuItemClickListener true
+
                      }
                      else ->{
                       return@setOnMenuItemClickListener onOptionsItemSelected(it)
@@ -75,9 +98,32 @@ import com.google.android.material.tabs.TabLayoutMediator
              popupMenu.show()
          }
 
+         ViewAnimation.init(binding?.fab2Linearlayout!!)
+         ViewAnimation.init(binding?.fab3Linearlayout!!)
+
+         binding?.topFab?.setOnClickListener {
+             animate_fab_buttons()
+         }
+         binding?.fab2ImagetoPdf?.setOnClickListener {
+             var intent=Intent(applicationContext,PdfsTools_Activity::class.java)
+
+             intent.putExtra(FragmentNames.OPEN_IMGTOPDF_FRAGMENT, FragmentNames.OPEN_IMGTOPDF_FRAGMENT)
+             startActivity(intent)
+             Log.d("3igwn3bg","mskmsk")
+         }
+         binding?.fab3Createpdf?.setOnClickListener {
+             Toast.makeText(applicationContext,"Create Pdf",Toast.LENGTH_SHORT).show()
+         }
+         binding?.fab3Createpdf?.setOnClickListener {
+             var intent= Intent(applicationContext,PdfsTools_Activity::class.java)
+             intent.putExtra(FragmentNames.OPEN_TEXTTOPDF_FRAGMENT, FragmentNames.OPEN_TEXTTOPDF_FRAGMENT)
+             startActivity(intent)
+         }
        //  launcher.launch()
        //  var list=ArrayList<String>()
-     }
+
+
+     }  //oncreate closed here
 
      fun setupViewPager2()
      {
@@ -145,6 +191,22 @@ import com.google.android.material.tabs.TabLayoutMediator
          }//END OF IF BLOCK WHERE WE USE CONDITION FOR ANDROID R.
      }
 
+     fun animate_fab_buttons() {
+         binding?.topFab?.animate()?.rotationBy(90f); //to rotate main fab 180 degree
+         // to show upper fab buttons
+         if (isRotate) {
+             ViewAnimation.showIn(binding?.fab2Linearlayout!!)
+             ViewAnimation.showIn(binding?.fab3Linearlayout!!)
+             isRotate = false
+         }//to hide upper fab button
+         else {
+             Log.d("38thg", isRotate.toString())
+             ViewAnimation.showOut(binding?.fab2Linearlayout!!)
+             ViewAnimation.showOut(binding?.fab3Linearlayout!!)
+             isRotate = true
+         }
+     }
+
      override fun onBackPressed() {
          if(binding?.viewpager2?.currentItem!! > 0)
          {
@@ -158,29 +220,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 
      }
 
-     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-       //  var popupMenu = PopupMenu(this,findViewById(R.menu.bottombar_icons))
-          menuInflater.inflate(R.menu.bottombar_icons,menu)
-         return super.onCreateOptionsMenu(menu)
-     }
-
-     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-         when(item.itemId){
-
-             R.id.settingMenuitem -> {
-                                   startActivity(Intent(this,SettingsActviity::class.java))
-                                     return true
-                                      }
-             R.id.darkmodeMenuitem -> {
-                                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                                       return true
-                                        }
-             else ->{
-                 return super.onOptionsItemSelected(item)
-             }
-         }
-     }
 
 
  }

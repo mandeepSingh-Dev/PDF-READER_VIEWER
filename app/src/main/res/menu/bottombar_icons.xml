@@ -5,15 +5,17 @@
     <item
         android:id="@+id/settingMenuitem"
         android:enabled="true"
-        
-        android:icon="@drawable/ic_outline_settings_24"
         android:orderInCategory="1"
         android:title="Settings"/>
+    <group
+        android:id="@+id/group"
+        android:checkableBehavior="all">
     <item
         android:id="@+id/darkmodeMenuitem"
-        android:enabled="true"
-        android:icon="@drawable/ic_outline_dark_mode_24"
         android:orderInCategory="1"
         android:title="Dark mode"
+
         />
+    </group>
+
 </menu>

@@ -20,7 +20,7 @@
     <!--keys finished_____________________________-->
 
     <!--titles for settings prefrence_____________________________-->
-    <string name="NotificationTitle">Notifications</string>
+    <string name="NotificationTitle">Download Notifications</string>
     <string name="Show_Page_NumbersTitle">Show Page Numbers</string>
     <string name="Dark_ThemeTitle">Dark Theme</string>
     <string name="Share_ApplicationTitle">Share Application</string>

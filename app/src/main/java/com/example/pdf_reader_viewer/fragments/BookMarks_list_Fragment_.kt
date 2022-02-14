@@ -71,22 +71,42 @@ class BookMarks_list_Fragment_ : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        intent=Intent(Intent.ACTION_SEND)
+        intent?.type="application/pdf"
+
         observer = object :Observer<List<Items_Bookmarks>>{
             override fun onChanged(pdflist: List<Items_Bookmarks>?) {
-                Log.d("378fh3",pdflist?.size.toString())
-                    adapter = MyAdapter_ForBookmarks(requireContext(), pdflist as ArrayList<Items_Bookmarks>)
-                    binding?.bookmarksRecyclerView?.layoutManager = LinearLayoutManager(requireContext())
+                if (pdflist?.isEmpty()!!) {
+                    Log.d("3tubuenfe", "3ufufbkscsdc")
+                    binding?.emptyView?.visibility = View.VISIBLE
+                    binding?.emptyText?.visibility = View.VISIBLE
+
+                    binding?.bookmarkProgress?.visibility = View.GONE
+                }else {
+                    Log.d("378fh3", pdflist?.size.toString())
+                    adapter = MyAdapter_ForBookmarks(
+                        requireContext(),
+                        pdflist as ArrayList<Items_Bookmarks>
+                    )
+                    binding?.bookmarksRecyclerView?.layoutManager =
+                        LinearLayoutManager(requireContext())
                     binding?.bookmarksRecyclerView?.adapter = adapter
 
-                adapter?.setMCustomClickListenr(object: MCustomOnClickListener {
-                    override fun onClick(position: Int) {
-                        Log.d("3iegnv3me,wv",position.toString())
-                        pdfName1_bottomsheet?.setText(pdflist.get(position).pdfName)
-                        bottomSheetDialog?.show()
-                        Log.d("hfe","NEW INTERFACE IS NOW READY")
-                        clickOnbottomSheetViews(pdflist,position,adapter!!)
-                    }
-                })
+                    binding?.bookmarkProgress?.visibility = View.GONE
+                    binding?.emptyView?.visibility = View.VISIBLE
+                    binding?.emptyText?.visibility = View.VISIBLE
+
+
+                    adapter?.setMCustomClickListenr(object : MCustomOnClickListener {
+                        override fun onClick(position: Int) {
+                            Log.d("3iegnv3me,wv", position.toString())
+                            pdfName1_bottomsheet?.setText(pdflist.get(position).pdfName)
+                            bottomSheetDialog?.show()
+                            Log.d("hfe", "NEW INTERFACE IS NOW READY")
+                            clickOnbottomSheetViews(pdflist, position, adapter!!)
+                        }
+                    })//adapter click listener closed
+                }//else block
 
             }
         }
@@ -200,11 +220,11 @@ class BookMarks_list_Fragment_ : Fragment() {
         }
         //to share pdf to another apps
         shareIcon_bottomsheet?.setOnClickListener {
-            intent?.putExtra(Intent.EXTRA_STREAM,pdflist.get(position).pdfUri)
+            intent?.putExtra(Intent.EXTRA_STREAM,pdfUri)
 
             intent?.putExtra(Intent.EXTRA_SUBJECT, "Sharing File from My Pdf App.");
             // intent?.putExtra(Intent.EXTRA_TEXT, "Sharing File from Webkul to purchase items...");
-            startActivity(Intent.createChooser(intent,"my PDF FILE"))
+            startActivity(Intent.createChooser(intent,pdfName))
 
         }
 

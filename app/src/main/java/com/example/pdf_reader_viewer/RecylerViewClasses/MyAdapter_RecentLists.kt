@@ -67,7 +67,11 @@ class MyAdapter_RecentLists(context: Context,arrayList:ArrayList<Items_RecentPdf
                     holder.recentpdfDATE.text = ConversionandUtilsClass.convertToDate(itempdf.date / 1000L).get(0)
 
                         holder.itemView.setOnClickListener {
-                            context?.startActivity(Intent(context, PdfView_Activity::class.java).putExtra(PDFProp.PDF_APPENDED_URI,uri.toString()).putExtra(PDFProp.PDF_TITLE,name1))
+                            context?.startActivity(Intent(context, PdfView_Activity::class.java)
+                                .setAction(PDFProp.MY_OPEN_ACTION)
+                                .putExtra(PDFProp.PDF_APPENDED_URI,uri.toString())
+                                .putExtra(PDFProp.PDF_TITLE,name1)
+                                .putExtra(PDFProp.PDF_SIZE,size1))
                           //this is already recent list so no add in database
                            /* CoroutineScope(Dispatchers.Main).launch {
                                 insertToRecentDATABASE(itemsPdfs?.appendeduri.toString(),System.currentTimeMillis())
@@ -79,12 +83,7 @@ class MyAdapter_RecentLists(context: Context,arrayList:ArrayList<Items_RecentPdf
 
                             mCustomOnClickListener?.onClick(position)
                         }//menubutton click
-                        holder.itemView.setOnClickListener {
 
-                            context?.startActivity(Intent(context, PdfView_Activity::class.java)
-                                .putExtra(PDFProp.PDF_APPENDED_URI,uri)
-                                .putExtra(PDFProp.PDF_TITLE,name1))
-                        }
               //  } //withcontext
               //  } //cursor.movetonext
           //  } //cursor!=null

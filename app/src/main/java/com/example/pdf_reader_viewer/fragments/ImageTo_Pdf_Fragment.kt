@@ -428,12 +428,7 @@ class ImageTo_Pdf_Fragment : Fragment() {
                         alertDialogprogress?.show()
                     }
 
-                    PdfOperations(requireActivity())?.createPdf(
-                        bitmapLIST!!,
-                        "pdfName",
-                        0,
-                        outputStream!!
-                    )
+                    PdfOperations(requireActivity())?.createPdf(bitmapLIST!!, "pdfName", 0, outputStream!!)
 
                     //hide please wait dialogue
                     withContext(Dispatchers.Main) {

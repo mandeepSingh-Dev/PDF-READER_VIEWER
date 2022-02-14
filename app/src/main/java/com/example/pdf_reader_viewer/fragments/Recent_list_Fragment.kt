@@ -84,27 +84,40 @@ class Recent_list_Fragment : Fragment() {
              recentdbList = MyRoomDatabase.getInstance(requireContext())?.daoMethod()?.query()
 
            withContext(Dispatchers.Main) {
-
-               recentdbList?.observe(viewLifecycleOwner,
-                   object : Observer<List<Items_RecentPdfs>> {
+               recentdbList?.observe(viewLifecycleOwner, object : Observer<List<Items_RecentPdfs>>
+               {
                        override fun onChanged(pdflist: List<Items_RecentPdfs>?) {
-                           Log.d("eifhefg",pdflist?.size.toString())
+                           if (pdflist?.isEmpty()!!) {
+                               Log.d("3tubuenfe", "3ufufbkscsdc")
+                               binding?.emptyView?.visibility = View.VISIBLE
+                               binding?.emptyText?.visibility = View.VISIBLE
+
+                               binding?.recentProgress?.visibility = View.GONE
+                           }
+                           else {
+                           Log.d("eifhefg", pdflist?.size.toString())
 //                           Log.d("393jg",pdflist?.get(0)?.pdfName!!+pdflist?.get(0)?.pdf_ID!!+pdflist?.get(0)?.pdfUri!!+pdflist?.get(0)?.pdfSize!!)
+                           myAdapter = MyAdapter_RecentLists(
+                               requireContext(),
+                               pdflist as ArrayList<Items_RecentPdfs>
+                           )
+                           binding?.recentRecyclerView?.layoutManager = LinearLayoutManager(requireContext())
+                           binding?.recentRecyclerView?.adapter = myAdapter
 
-                           myAdapter= MyAdapter_RecentLists(requireContext(),pdflist as ArrayList<Items_RecentPdfs>)
-                           binding?.recentRecyclerView?.layoutManager=LinearLayoutManager(requireContext())
-                           binding?.recentRecyclerView?.adapter=myAdapter
+                           binding?.recentProgress?.visibility = View.GONE
+                               binding?.emptyView?.visibility = View.GONE
+                               binding?.emptyText?.visibility = View.GONE
 
-                           myAdapter?.setMCustomClickListenr(object: MCustomOnClickListener {
+                           myAdapter?.setMCustomClickListenr(object : MCustomOnClickListener {
                                override fun onClick(position: Int) {
-                                   Log.d("3iegnv3me,wv",position.toString())
+                                   Log.d("3iegnv3me,wv", position.toString())
                                    pdfName1_bottomsheet?.setText(pdflist.get(position).pdfName)
                                    bottomSheetDialog?.show()
-                                   Log.d("hfe","NEW INTERFACE IS NOW READY")
-                                   clickOnbottomSheetViews(pdflist,position,myAdapter!!)
+                                   Log.d("hfe", "NEW INTERFACE IS NOW READY")
+                                   clickOnbottomSheetViews(pdflist, position, myAdapter!!)
                                }
-                           })
-
+                           })// adapter click listener closed
+                       }//else block
                        }
                    })
            }

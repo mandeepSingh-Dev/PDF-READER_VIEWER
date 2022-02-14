@@ -26,7 +26,7 @@
         app:layout_constraintLeft_toLeftOf="parent"/>
 
 
-    <!-- fab button layout-->
+    <!-- fab buttons layout-->
         <LinearLayout
             android:id="@+id/linearFABSlayout"
             android:layout_width="wrap_content"

@@ -3,12 +3,14 @@ package com.example.pdf_reader_viewer.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.pdf.PdfRenderer
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,7 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.UtilClasses.ConversionandUtilsClass
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
@@ -25,7 +28,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.tom_roush.pdfbox.pdmodel.PDDocument
 import kotlinx.coroutines.*
 import java.io.OutputStream
-import java.lang.Exception
 
 
 class SplitPdf_Fragment : Fragment() {
@@ -90,6 +92,12 @@ class SplitPdf_Fragment : Fragment() {
         var viewgroup = activity?.findViewById<ViewGroup>(R.id.content)
         var view22 = LayoutInflater.from(requireContext()).inflate(R.layout.custom_progress_dialogue, viewgroup , false)
         alertDialogprogress=createAlertdialogue(view22)
+
+      /*  binding?.splitTextViewToolbar?.setOnClickListener {
+           // getBitmapFromView(it)
+            binding?.addpDFImageView?.setImageBitmap(getBitmapFromView(binding?.edittextlayout1?.editText!!))
+
+        }*/
 
     }
 
@@ -304,6 +312,24 @@ class SplitPdf_Fragment : Fragment() {
             }
         }
         return name!!
+    }
+
+    //practise for get bitmap from view
+    fun getBitmapFromView(view: View): Bitmap? {
+        //Define a bitmap with the same size as the view
+        val returnedBitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        //Bind a canvas to it
+        val canvas = Canvas(returnedBitmap)
+        //Get the view's background
+        val bgDrawable = view.background
+        if (bgDrawable != null) //has background drawable, then draw it on the canvas
+            bgDrawable.draw(canvas)
+        else  //does not have background drawable, then draw white background on the canvas
+            canvas.drawColor(Color.WHITE)
+        // draw the view on the canvas
+        view.draw(canvas)
+        //return the bitmap
+        return returnedBitmap
     }
 
 }

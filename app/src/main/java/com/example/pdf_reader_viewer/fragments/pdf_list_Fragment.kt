@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.*
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -25,23 +26,18 @@ import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter
 import com.example.pdf_reader_viewer.Roomclasses.Room_For_BOOKMARKS.Items_Bookmarks
 import com.example.pdf_reader_viewer.Roomclasses.Room_For_BOOKMARKS.MyRoomDatabase2
-
 import com.example.pdf_reader_viewer.UtilClasses.*
 import com.example.pdf_reader_viewer.databinding.PdfListFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.*
-import java.io.File
-import java.lang.Exception
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class pdf_list_Fragment : Fragment() {
 
     var pdflist: ArrayList<Items_pdfs>? = null
     var binding: PdfListFragmentBinding? = null
-    var progressBar: ProgressBar? = null
     var recyclerView: RecyclerView? = null
     var emptyView: ImageView? = null
 
@@ -99,7 +95,7 @@ class pdf_list_Fragment : Fragment() {
         intent?.type="application/pdf"
 
        /**____________________*/
-            //  getNewPdfs()
+              //getNewPdfs()
       binding?.textviewALLL?.setOnClickListener {
          // launcher.launch(arrayOf("application/pdf"))
           var op= PDFOperationNATIVE(requireActivity())
@@ -120,7 +116,7 @@ class pdf_list_Fragment : Fragment() {
        /**____________________*/
 
         recyclerView = view.findViewById(R.id.pdfListRecylerView)
-        progressBar = activity?.findViewById<ProgressBar>(R.id.progress_bar)
+      //  progressBar = activity?.findViewById<ProgressBar>(R.id.progress_bar)
         emptyView = view.findViewById<ImageView>(R.id.emptyView)
 
 
@@ -133,21 +129,29 @@ class pdf_list_Fragment : Fragment() {
                   Log.d("3tubuenfe", "3ufufbkscsdc")
                   binding?.emptyView?.visibility = View.VISIBLE
                   binding?.emptyText?.visibility = View.VISIBLE
+
+                  binding?.pdfListProgress?.visibility = View.GONE
               } else {
                   Log.d("3u8hfjsncsjcisj8", "cnsncjnj2")
-              }
-              myAdapter = MyAdapter(requireContext(), pdflist!!)
-              recyclerView?.layoutManager = LinearLayoutManager(requireContext())
-              recyclerView?.adapter = myAdapter
-              var textView: TextView = view.findViewById(R.id.textviewALLL)
-              textView.text = "All (" + pdflist?.size.toString() + ")"
 
-              activity?.runOnUiThread {
-                  myAdapter?.notifyDataSetChanged()
+                  myAdapter = MyAdapter(requireContext(), pdflist!!)
+                  recyclerView?.layoutManager = LinearLayoutManager(requireContext())
+                  recyclerView?.adapter = myAdapter
+
+                  binding?.pdfListProgress?.visibility = View.GONE
+                  binding?.emptyView?.visibility = View.GONE
+                  binding?.emptyText?.visibility = View.GONE
+
+                  var textView: TextView = view.findViewById(R.id.textviewALLL)
+                  textView.text = "All (" + pdflist?.size.toString() + ")"
+
+                  activity?.runOnUiThread {
+                      myAdapter?.notifyDataSetChanged()
+                  }
+                  searchPdfs(pdflist)
+                  //this method for  setCustomClickListner method that is defined in MyAdapter class
+                  myAdapterClickListner(myAdapter!!, pdflist)
               }
-              searchPdfs(pdflist)
-              //this method for  setCustomClickListner method that is defined in MyAdapter class
-              myAdapterClickListner(myAdapter!!,pdflist)
 
           }
       })
@@ -289,6 +293,7 @@ class pdf_list_Fragment : Fragment() {
 
             intent.putExtra(PDFProp.PDF_APPENDED_URI,pdflist?.get(position)?.appendeduri.toString())
                   .putExtra(PDFProp.PDF_TITLE,pdflist?.get(position)?.title)
+                  .putExtra(PDFProp.PDF_SIZE,pdflist?.get(position)?.size)
 
             startActivity(intent)
             Log.d("3igwn3bg","mskmsk")
@@ -338,7 +343,7 @@ class pdf_list_Fragment : Fragment() {
 
             intent?.putExtra(Intent.EXTRA_SUBJECT, "Sharing File from My Pdf App.");
            // intent?.putExtra(Intent.EXTRA_TEXT, "Sharing File from Webkul to purchase items...");
-            startActivity(Intent.createChooser(intent,"my PDF FILE"))
+            startActivity(Intent.createChooser(intent,pdflist.get(position).title))
 
         }
 
@@ -482,43 +487,83 @@ class pdf_list_Fragment : Fragment() {
     }
 
    // @SuppressLint("Range")
-   @SuppressLint("Range")
-   fun getNewPdfs():ArrayList<Items_pdfs>
+  // @SuppressLint("Range")
+   /*fun getNewPdfs()
     {
-        var filelist = arrayListOf<Items_pdfs>()
+        var collection:Uri
+       *//* var filelist = arrayListOf<Items_pdfs>()
        // val selection = "_data LIKE'%.pdf'"
-        /**sql-where-clause-with-placeholder-variables  Here we select MimeType*/
+        *//**//**sql-where-clause-with-placeholder-variables  Here we select MimeType*//**//*
         val selection = MediaStore.Files.FileColumns.MIME_TYPE + " = ?"
-        /**getting MIME type for pdf*/
+        *//**//**getting MIME type for pdf*//**//*
         val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension("pdf")
-        /**values-of-placeholder-variables  giving mimetype to selection_args */
+        *//**//**values-of-placeholder-variables  giving mimetype to selection_args *//**//*
         val selectionArgs = arrayOf(mimeType)
-       var cursor =  activity?.contentResolver?.query(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL),null,selection,selectionArgs,null)
+//       var cursor =  activity?.contentResolver?.query(MediaStore.Files.getContentUri("external"),null,selection,selectionArgs,null)
+        var cursor =  activity?.contentResolver?.query(MediaStore.Files.getContentUri("external"),null,null,null,null)
+
+        Toast.makeText(requireContext(),"kdnfkdnfkd"+cursor?.count.toString(),Toast.LENGTH_LONG).show()
 
         while(cursor?.moveToNext()!!){
                 Log.d("4389gh4bg",cursor?.count.toString())
-               /* if(cursor == null || cursor.count<=0 )
+            Toast.makeText(requireContext(),"kdnfkdnfkd"+cursor.count.toString(),Toast.LENGTH_LONG).show()
+               *//**//* if(cursor == null || cursor.count<=0 )
                     {
                         Log.d("39jhfgfg3","error")
                         return@use
-                    }*/
+                    }*//**//*
               //  do{
                     val title: String = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE))
                     val duration: String? = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DURATION))
                     val data: String = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA))
-                    val file = File(data)
-                    val lastModifiedDate = Date(file.lastModified())
-                    val fileDate = android.text.format.DateFormat.format("hh:mm aa, dd/MM/yyyy", lastModifiedDate).toString()
-                    filelist.add(Items_pdfs(title, "size",Uri.parse(data)))
+                  //  val file = File(data)
+                   // val lastModifiedDate = Date(file.lastModified())
+                   // val fileDate = android.text.format.DateFormat.format("hh:mm aa, dd/MM/yyyy", lastModifiedDate).toString()
+                  //  filelist.add(Items_pdfs(title, "size",Uri.parse(data)))
 
                     Log.d("39jhfgfg3",title.toString())
 //                } while (cursor.moveToNext())
             }
+         cursor.close()*//*
+
+        val projection = arrayOf(
+            MediaStore.Files.FileColumns.DISPLAY_NAME,
+            MediaStore.Files.FileColumns.DATE_ADDED,
+            MediaStore.Files.FileColumns.DATA,
+            MediaStore.Files.FileColumns.MIME_TYPE
+        )
+
+        val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
+
+        val selection = MediaStore.Files.FileColumns.MIME_TYPE + " = ?"
+
+        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension("pdf")
+        val selectionArgs = arrayOf(mimeType)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            collection = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL)
+        } else {
+            collection = MediaStore.Files.getContentUri("external")
+        }
 
 
-                return filelist
+        activity?.contentResolver?.query(collection, null, null, null, null)
+            .use { cursor ->
+                Toast.makeText(requireContext(),"skdskd"+cursor?.count.toString(),Toast.LENGTH_LONG).show()
+                assert(cursor != null)
+                if (cursor?.moveToFirst()!!) {
+                    val columnData: Int = cursor?.getColumnIndex(MediaStore.Files.FileColumns.DATA)
+                    val columnName: Int = cursor?.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)
+                    do {
+                       // pdfList.add(cursor.getString(columnData))
+                        Log.d("e8hg8heg", "getPdf: " + cursor.getString(columnData))
+                        //you can get your pdf files
+                    } while (cursor.moveToNext())
+                }
+  //          }
+       // return filelist
             }
-
+*/
 
 
 

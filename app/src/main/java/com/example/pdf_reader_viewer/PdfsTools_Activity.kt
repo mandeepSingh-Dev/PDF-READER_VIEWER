@@ -37,8 +37,6 @@ class PdfsTools_Activity : AppCompatActivity() {
 
                 var fragmentTransaction=supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.fragmentContainerView,mergeFragment)/*.addToBackStack(null).setReorderingAllowed(true)*/.commit()
-
-
             }
         //opens pdftools_fragment without pdftitle and other details
         else if(intent.getStringExtra(FragmentNames.OPEN_SPLIT_FRAGMENT).equals(FragmentNames.OPEN_SPLIT_FRAGMENT))
@@ -69,6 +67,11 @@ class PdfsTools_Activity : AppCompatActivity() {
         {
             var imagtopdf_fragment=ImageTo_Pdf_Fragment()
             supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView,imagtopdf_fragment).commit()
+        }
+        else if(intent.getStringExtra(FragmentNames.OPEN_TEXTTOPDF_FRAGMENT).equals(FragmentNames.OPEN_TEXTTOPDF_FRAGMENT))
+        {
+            var texttoPdfFragment = TextTo_pdf_Fragment()
+            supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView,texttoPdfFragment).commit()
         }
 
         //opens folder_pdflist_fragment without pdftitle and other details

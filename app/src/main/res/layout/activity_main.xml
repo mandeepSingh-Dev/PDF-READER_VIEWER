@@ -9,7 +9,7 @@
 
 
 
-   <ProgressBar
+  <!-- <ProgressBar
        android:id="@+id/progress_bar"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
        app:layout_constraintLeft_toLeftOf="parent"
        app:layout_constraintRight_toRightOf="parent"
 
-    />
+    />-->
    <androidx.constraintlayout.widget.ConstraintLayout
       android:id="@+id/appLogoLAYOUT"
        android:layout_width="match_parent"
@@ -131,7 +131,7 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintRight_toRightOf="parent">
 
-      <com.google.android.material.floatingactionbutton.FloatingActionButton
+     <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
           android:id="@+id/floatingButtonMainActivity"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
@@ -143,7 +143,104 @@
           android:background="@color/backgroundColor"
           android:src="@drawable/ic_baseline_add_24"
           android:layout_gravity="bottom|end"
-          android:layout_margin="30dp"/>
+          android:layout_margin="30dp"/>-->
+
+       <!-- fab buttons layout-->
+       <LinearLayout
+           android:id="@+id/linearFABSlayout"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="bottom|end|right"
+           android:orientation="vertical"
+           android:layout_marginRight="6dp"
+           android:layout_marginBottom="70dp"
+           android:gravity="center_horizontal"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintRight_toRightOf="parent">
+
+
+           <!--fab3 ImageToPdf pdf linearlayout-->
+           <LinearLayout
+               android:id="@+id/fab3Linearlayout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_gravity="end"
+               android:layout_marginRight="15dp"
+               >
+               <TextView
+                   android:id="@+id/fab3TextView"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_margin="16dp"
+                   android:paddingLeft="10dp"
+                   android:paddingRight="10dp"
+                   android:paddingTop="3dp"
+                   android:paddingBottom="3dp"
+                   android:textColor="@color/floatTextcolor"
+                   android:background="@drawable/stroke_fabtext"
+                   android:text="Image to PDF"/>
+
+               <com.google.android.material.floatingactionbutton.FloatingActionButton
+                   android:id="@+id/fab2ImagetoPdf"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="end|bottom"
+                   android:src="@drawable/ic_baseline_camera_alt_24"
+                   app:fabSize="mini"
+                   app:rippleColor="#DF3804"/>
+           </LinearLayout>
+           <!--fab2 create pdf linearlayout-->
+           <LinearLayout
+               android:id="@+id/fab2Linearlayout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_gravity="end"
+               android:layout_marginRight="15dp"
+               android:layout_marginBottom="10dp"
+               >
+               <TextView
+                   android:id="@+id/fab2TextView"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_margin="16dp"
+                   android:paddingLeft="10dp"
+                   android:paddingRight="10dp"
+                   android:paddingTop="3dp"
+                   android:paddingBottom="3dp"
+                   android:textColor="@color/floatTextcolor"
+                   android:background="@drawable/stroke_fabtext"
+                   android:text="Text to PDF"/>
+
+               <com.google.android.material.floatingactionbutton.FloatingActionButton
+                   android:id="@+id/fab3Createpdf"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="end|bottom"
+                   android:src="@drawable/ic_baseline_text_fields_24"
+                   app:fabSize="mini"
+                   app:rippleColor="#DF3804"/>
+           </LinearLayout>
+           <!-- main fab button-->
+           <com.google.android.material.floatingactionbutton.FloatingActionButton
+               android:id="@+id/topFab"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="end|bottom"
+               android:layout_marginLeft="18dp"
+               android:layout_marginTop="10dp"
+               android:layout_marginRight="18dp"
+               android:layout_marginBottom="18dp"
+               app:fabSize="normal"
+               android:src="@drawable/ic_baseline_add_24"
+               app:borderWidth="4dp"
+               app:elevation="12dp"
+               app:rippleColor="#DF3804"/>
+
+       </LinearLayout>
+
+
    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

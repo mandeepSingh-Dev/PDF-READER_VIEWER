@@ -12,5 +12,11 @@
     <color name="textcolor">@color/white</color>
     <color name="tabcolor">#D5BABA</color>
     <color name="tabselectedColor">#FFFFFF</color>
+    <color name="headingColor">#FF3030</color>
+    <color name="floatTextBackgroundcolor">#FF0000</color>
+    <color name="floatTextcolor">#000000</color>
+
+
+
 
 </resources>

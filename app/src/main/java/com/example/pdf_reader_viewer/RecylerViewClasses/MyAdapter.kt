@@ -67,11 +67,17 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
         holder.dateTextView.setText(date_modified)
 
         var longseconds=date_modified?.toLong()
-        val datelist=ConversionandUtilsClass.convertToDate(longseconds!!)
-        holder.dateTextView.text=datelist.get(0) //here 0 position gives date without time
+        if(longseconds!=null) {
+            val datelist = ConversionandUtilsClass.convertToDate(longseconds!!)
+            holder.dateTextView.text = datelist.get(0) //here 0 position gives date without time
+        }
 
         holder.itemView.setOnClickListener {
-            context?.startActivity(Intent(context, PdfView_Activity::class.java).putExtra(PDFProp.PDF_APPENDED_URI,appendeduri?.toString()).putExtra(PDFProp.PDF_TITLE,title))
+            context?.startActivity(Intent(context, PdfView_Activity::class.java)
+                .setAction(PDFProp.MY_OPEN_ACTION)
+                .putExtra(PDFProp.PDF_APPENDED_URI,appendeduri?.toString())
+                .putExtra(PDFProp.PDF_TITLE,title)
+                .putExtra(PDFProp.PDF_SIZE,size))
 
             CoroutineScope(Dispatchers.Main).launch {
                 insertToRecentDATABASE(title!!,size!!,appendeduri?.toString()!!,System.currentTimeMillis())

@@ -46,6 +46,7 @@ class PdfOperations(activity:Activity) {
     var endPage: String? = null
     var splitAtpage:String?=null
     var activity = activity
+    lateinit var compressedBitmap:Bitmap
 
     fun createPdf(v: View?, activity: Activity, bitmap: Bitmap) {
 
@@ -139,7 +140,8 @@ class PdfOperations(activity:Activity) {
     }
 
     //this method is for multiple images/bitmaps
-    fun createPdf( imgList: ArrayList<Bitmap>,pdfName:String, quality: Int,outStream: OutputStream) {
+   suspend fun createPdf( imgList: ArrayList<Bitmap>,pdfName:String, quality: Int,outStream: OutputStream)= withContext(Dispatchers.Default) {
+
 
         val document = PDDocument()
         val appendeddocument=PDDocument()
@@ -200,11 +202,15 @@ class PdfOperations(activity:Activity) {
                 //TODO we can tell user that which quality he wants
                 // alphaImage.compress(Bitmap.CompressFormat.JPEG,30,null)
                 //compressbitmap
-                var compressesBitmap = compressBitmap(it, quality)
+                if(quality!=null) {
+                     compressedBitmap = compressBitmap(it, quality)
+                }else{
+                     compressedBitmap = compressBitmap(it, 100)
+                }
                 val alphaXimage: PDImageXObject
 
                 //alphaXimage = LosslessFactory.createFromImage(document, alphaImage)
-                alphaXimage = LosslessFactory.createFromImage(document, compressesBitmap)
+                alphaXimage = LosslessFactory.createFromImage(document, compressedBitmap)
 
                 /*  alphaXimage.width=ViewGroup.LayoutParams.MATCH_PARENT
         alphaXimage.height=ViewGroup.LayoutParams.MATCH_PARENT
@@ -654,7 +660,7 @@ try {
     }
 
     //COMPRESSING BITMAP
-    fun compressBitmap(bitmap: Bitmap, quality: Int): Bitmap {
+    fun compressBitmap(bitmap: Bitmap, quality: Int): Bitmap{
         Log.d("3rf", quality.toString())
         var out = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, quality, out)

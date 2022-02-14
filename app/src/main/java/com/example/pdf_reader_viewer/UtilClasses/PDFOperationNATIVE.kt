@@ -46,11 +46,7 @@ class PDFOperationNATIVE(activity:Activity)
                     renderedpage.width.toString() + "fdfd" + renderedpage.height
                 )
                 //getting bitmap from pdf
-                var bitmap = Bitmap.createBitmap(
-                    renderedpage.width - 20,
-                    renderedpage.height - 20,
-                    Bitmap.Config.ARGB_8888
-                )
+                var bitmap = Bitmap.createBitmap(renderedpage.width - 20, renderedpage.height - 20, Bitmap.Config.ARGB_8888)
                 renderedpage.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
 
                 val page = document.startPage(pageInfo)
@@ -60,13 +56,7 @@ class PDFOperationNATIVE(activity:Activity)
                 var divwidth = renderedpage.width / 10
                 var divheight = renderedpage.height / 10
 
-                // canvas.drawBitmap(bitmap,(renderedpage.width/60).toFloat(),(renderedpage.height/78).toFloat(), Paint())
-                canvas.drawBitmap(
-                    bitmap,
-                    (renderedpage.width / divwidth).toFloat(),
-                    (renderedpage.height / divheight).toFloat(),
-                    Paint()
-                )
+                canvas.drawBitmap(bitmap, (renderedpage.width / divwidth).toFloat(), (renderedpage.height / divheight).toFloat(), Paint())
 
                 /* val content: View? = activity.findViewById(android.R.id.content);
              content?.draw(canvas)*/

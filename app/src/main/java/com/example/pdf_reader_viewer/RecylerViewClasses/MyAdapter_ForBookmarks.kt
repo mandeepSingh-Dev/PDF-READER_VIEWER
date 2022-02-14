@@ -56,19 +56,8 @@ class MyAdapter_ForBookmarks(context: Context,arrayList:ArrayList<Items_Bookmark
             var pdfSize = itempdf.pdfSize
             var pdfName = itempdf.pdfName
             var date = itempdf.date
-           // var cursor = context.contentResolver?.query(Uri.parse(uri), null, null, null, null)
 
-          //  if(cursor!=null) {
-               // if (cursor?.moveToFirst()!!) {
-                  /*  name =
-                        cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME))
-                    if (name == null) {
-                        name =
-                            cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.TITLE))
-                    }
-                    var size = cursor.getString(cursor.getColumnIndex(MediaStore.MediaColumns.SIZE))
-*/
-                    holder.pdfNameTextView.text = pdfName
+                       holder.pdfNameTextView.text = pdfName
                     holder.recentPDFsize.text = ConversionandUtilsClass.bytesToMB(pdfSize)
                     // holder.recentpdfDATE.text=ConversionandUtilsClass.convertToDate(System.currentTimeMillis()/1000L).get(1)
                     holder.recentpdfDATE.text =
@@ -80,7 +69,11 @@ class MyAdapter_ForBookmarks(context: Context,arrayList:ArrayList<Items_Bookmark
 
 
             holder.itemView.setOnClickListener {
-                context?.startActivity(Intent(context, PdfView_Activity::class.java).putExtra(PDFProp.PDF_APPENDED_URI, pdfUri).putExtra(PDFProp.PDF_TITLE, pdfName))
+                context?.startActivity(Intent(context, PdfView_Activity::class.java)
+                    .setAction(PDFProp.MY_OPEN_ACTION)
+                    .putExtra(PDFProp.PDF_APPENDED_URI, pdfUri)
+                    .putExtra(PDFProp.PDF_TITLE, pdfName)
+                    .putExtra(PDFProp.PDF_SIZE,pdfSize))
             }//itemview click
             holder.menubutton.setOnClickListener {
                 /*  pdfNamebottomsheet?.text=pdfList?.get(position)?.title
@@ -88,12 +81,7 @@ class MyAdapter_ForBookmarks(context: Context,arrayList:ArrayList<Items_Bookmark
 
                 mCustomOnClickListener?.onClick(position)
             }//menubutton click
-            holder.itemView.setOnClickListener {
 
-                context?.startActivity(Intent(context, PdfView_Activity::class.java)
-                    .putExtra(PDFProp.PDF_APPENDED_URI,pdfUri)
-                    .putExtra(PDFProp.PDF_TITLE,pdfName))
-            }
         }
 
 

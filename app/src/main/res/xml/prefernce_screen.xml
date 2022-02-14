@@ -42,7 +42,9 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/Dark_Theme"
-            android:title="@string/Dark_ThemeTitle" />
+            android:title="@string/Dark_ThemeTitle" >
+
+        </SwitchPreference>
 
 
         <!--below list preference is use for
