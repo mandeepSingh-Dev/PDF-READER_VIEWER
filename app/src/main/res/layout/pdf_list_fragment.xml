@@ -193,6 +193,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+
         android:indeterminateTint="@color/headingColor"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

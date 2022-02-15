@@ -53,7 +53,7 @@ class PdfTools_Fragment : Fragment() {
             intent.putExtra(FragmentNames.OPEN_IMGTOPDF_FRAGMENT, FragmentNames.OPEN_IMGTOPDF_FRAGMENT)
             startActivity(intent)
         }
-        //click on merge folder to pass merge folder name to folder fragment
+      /*  //click on merge folder to pass merge folder name to folder fragment
        binding?.mergefolderLayout?.setOnClickListener {
           startActivity(Intent(activity,PdfsTools_Activity::class.java).putExtra(PDFProp.MERGEPDF_FOLDER,PDFProp.MERGEPDF_FOLDER))
             }
@@ -70,6 +70,6 @@ class PdfTools_Fragment : Fragment() {
         binding?.imgtoPDFFolderlayout?.setOnClickListener {
             startActivity(Intent(activity,PdfsTools_Activity::class.java).putExtra(PDFProp.CREATEDPDF_FOLDER,PDFProp.CREATEDPDF_FOLDER))
         }
-
+*/
     }
 }

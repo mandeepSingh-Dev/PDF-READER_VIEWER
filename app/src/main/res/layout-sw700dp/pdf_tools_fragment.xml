@@ -12,8 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="PDF Tools"
-        android:padding="12dp"
-        android:textSize="25sp"
+        android:padding="50dp"
+        android:textSize="80sp"
         android:textColor="@color/headingColor"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
@@ -23,7 +23,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="190dp"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintTop_toBottomOf="@id/pdfTools"
    >
@@ -38,15 +38,16 @@
           android:layout_weight="1">
           <ImageView
               android:id="@+id/mergeImage"
-              android:layout_width="60dp"
-              android:layout_height="60dp"
+              android:layout_width="180dp"
+              android:layout_height="180dp"
               android:src="@drawable/ic_baseline_merge_24"
               android:contentDescription="TODO" />
           <TextView
               android:id="@+id/mergetext"
-              android:layout_width="60dp"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Combine"
+              android:textSize="50sp"
               android:textColor="@color/textcolor"
               android:ellipsize="end"
               android:textAlignment="center"
@@ -63,14 +64,15 @@
           android:gravity="center" >
           <ImageView
               android:id="@+id/splitImage"
-              android:layout_width="60dp"
-              android:layout_height="60dp"
+              android:layout_width="180dp"
+              android:layout_height="180dp"
               android:src="@drawable/ic_round_call_split_24"/>
           <TextView
               android:id="@+id/splittext"
-              android:layout_width="60dp"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:text="Split"
+              android:textSize="50sp"
               android:textColor="@color/textcolor"
               android:ellipsize="end"
               android:textAlignment="center"
@@ -98,16 +100,17 @@
             android:layout_weight="1">
             <ImageView
                 android:id="@+id/encryptImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
                 android:src="@drawable/ic_baseline_enhanced_encryption_24"/>
             <TextView
                 android:id="@+id/encrypttext"
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lock PDFs"
                 android:textColor="@color/textcolor"
                 android:ellipsize="end"
+                android:textSize="50sp"
                 android:textAlignment="center"
                 android:layout_gravity="center"/>
         </LinearLayout>
@@ -122,21 +125,22 @@
             android:gravity="center" >
             <ImageView
                 android:id="@+id/imageto_pdfImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="180dp"
+                android:layout_height="180dp"
                 android:src="@drawable/ic_baseline_image_24"/>
             <TextView
                 android:id="@+id/imageto_pdftext"
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Scan to PDF"
                 android:textColor="@color/textcolor"
                 android:ellipsize="end"
+                android:textSize="50sp"
                 android:textAlignment="center"
                 android:layout_gravity="center"/>
         </LinearLayout>
     </LinearLayout>
- <!--   <TextView
+   <!-- <TextView
         android:id="@+id/toolsFoldersText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -271,8 +275,8 @@
          </LinearLayout>
 
      </LinearLayout>
-    </LinearLayout>
--->
+    </LinearLayout>-->
+
 
 
 

@@ -136,7 +136,7 @@
                 android:layout_gravity="center"/>
         </LinearLayout>
     </LinearLayout>
- <!--   <TextView
+  <!--  <TextView
         android:id="@+id/toolsFoldersText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -271,8 +271,8 @@
          </LinearLayout>
 
      </LinearLayout>
-    </LinearLayout>
--->
+    </LinearLayout>-->
+
 
 
 

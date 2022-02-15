@@ -40,7 +40,7 @@
             android:id="@+id/splitTextViewToolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Split PDFs"
+            android:text="@string/SPLITPDF_FOLDER"
             android:textSize="28sp"
             android:textColor="@color/textcolor"
             android:textStyle="bold"

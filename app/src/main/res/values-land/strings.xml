@@ -5,7 +5,7 @@
     <!-- TODO: Remove or change this placeholder text -->
 
     <string name="CREATEDPDF_FOLDER">Created PDFs</string>
-    <string name="SPLITPDF_FOLDER">Split PDFs</string>
+    <string name="SPLITPDF_FOLDER">Split PDFslanscape</string>
     <string name="ENCRYPTEDPDF_FOLDER">Encrypted PDFs</string>
     <string name="MERGEPDF_FOLDER">Merge PDFs</string>
     <string name="title_activity_splash_screen">SplashScreen</string>

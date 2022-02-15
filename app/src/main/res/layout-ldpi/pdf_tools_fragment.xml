@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="PDF Tools"
         android:padding="12dp"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:textColor="@color/headingColor"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
@@ -23,7 +23,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintTop_toBottomOf="@id/pdfTools"
    >
@@ -38,8 +38,8 @@
           android:layout_weight="1">
           <ImageView
               android:id="@+id/mergeImage"
-              android:layout_width="60dp"
-              android:layout_height="60dp"
+              android:layout_width="50dp"
+              android:layout_height="50dp"
               android:src="@drawable/ic_baseline_merge_24"
               android:contentDescription="TODO" />
           <TextView
@@ -63,8 +63,8 @@
           android:gravity="center" >
           <ImageView
               android:id="@+id/splitImage"
-              android:layout_width="60dp"
-              android:layout_height="60dp"
+              android:layout_width="50dp"
+              android:layout_height="50dp"
               android:src="@drawable/ic_round_call_split_24"/>
           <TextView
               android:id="@+id/splittext"
@@ -83,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/container1"
         >
@@ -98,8 +98,8 @@
             android:layout_weight="1">
             <ImageView
                 android:id="@+id/encryptImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/ic_baseline_enhanced_encryption_24"/>
             <TextView
                 android:id="@+id/encrypttext"
@@ -122,8 +122,8 @@
             android:gravity="center" >
             <ImageView
                 android:id="@+id/imageto_pdfImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/ic_baseline_image_24"/>
             <TextView
                 android:id="@+id/imageto_pdftext"
@@ -136,14 +136,14 @@
                 android:layout_gravity="center"/>
         </LinearLayout>
     </LinearLayout>
- <!--   <TextView
+   <!-- <TextView
         android:id="@+id/toolsFoldersText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tool Folders"
         android:textSize="25sp"
         android:textColor="@color/textcolor"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -174,8 +174,8 @@
              android:weightSum="1">
              <ImageView
                  android:id="@+id/mergefolderImage"
-                 android:layout_width="50dp"
-                 android:layout_height="50dp"
+                 android:layout_width="40dp"
+                 android:layout_height="40dp"
                  android:layout_gravity="center"
                  android:src="@drawable/ic_twotone_folder_24"/>
              <TextView
@@ -271,8 +271,8 @@
          </LinearLayout>
 
      </LinearLayout>
-    </LinearLayout>
--->
+    </LinearLayout>-->
+
 
 
 
