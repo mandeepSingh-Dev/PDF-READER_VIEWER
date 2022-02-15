@@ -369,38 +369,42 @@ class pdf_list_Fragment : Fragment() {
     {
         var arrayListt=ArrayList<Items_pdfs>()
 
-        binding?.pdflistSearchView?.setOnQueryTextListener(object:SearchView.OnQueryTextListener, androidx.appcompat.widget.SearchView.OnQueryTextListener {
+       // binding?.pdflistSearchView?.set
 
-            override fun onQueryTextSubmit(query: String?): Boolean {
+            binding?.pdflistSearchView?.setOnQueryTextListener(object :
+                SearchView.OnQueryTextListener,
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
-                return true
-            }
+                override fun onQueryTextSubmit(query: String?): Boolean {
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                arrayListt.removeAll(arrayListt)
-
-                pdfList.forEach {
-                    if(it.title.lowercase().contains(newText?.lowercase()!!)) {
-                        arrayListt.add(it)
-
-                    }
+                    return true
                 }
-                if(arrayListt.isEmpty())
-                {
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    arrayListt.removeAll(arrayListt)
+
+                    pdfList.forEach {
+                        if (it.title.lowercase().contains(newText?.lowercase()!!)) {
+                            arrayListt.add(it)
+
+                        }
+                    }
+                    if (arrayListt.isEmpty()) {
                         binding?.emptyText?.visibility = View.VISIBLE
                         binding?.emptyView?.visibility = View.VISIBLE
-                }else {
-                    myAdapter = MyAdapter(requireContext(), arrayListt)
-                    recyclerView?.layoutManager = LinearLayoutManager(requireContext())
-                    recyclerView?.adapter = myAdapter
-                   //this method for  setCustomClickListner method that is defined in MyAdapter class
-                    myAdapterClickListner(myAdapter!!,arrayListt)
+                    } else {
+                        myAdapter = MyAdapter(requireContext(), arrayListt)
+                        recyclerView?.layoutManager = LinearLayoutManager(requireContext())
+                        recyclerView?.adapter = myAdapter
+                        //this method for  setCustomClickListner method that is defined in MyAdapter class
+                        myAdapterClickListner(myAdapter!!, arrayListt)
 
+                    }
+                    return true
                 }
-                return  true
-            }
 
-        })
+            })
+
     }
     fun myAdapterClickListner(myAdapter:MyAdapter,pdflist:ArrayList<Items_pdfs>)
     {

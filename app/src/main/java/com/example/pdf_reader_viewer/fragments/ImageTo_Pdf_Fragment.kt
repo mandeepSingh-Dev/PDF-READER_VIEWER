@@ -58,6 +58,8 @@ class ImageTo_Pdf_Fragment : Fragment() {
 
      var outputStream:OutputStream?=null
 
+    var  imgQuality:Int?=null
+
   //  var fromposList:ArrayList<Int>? = ArrayList()
    // var toposlist:ArrayList<Int>? = ArrayList()
    /* val itemTouchHelper by lazy {
@@ -154,34 +156,6 @@ class ImageTo_Pdf_Fragment : Fragment() {
 
     }
 
-    // getting result of camera picture bitmap
-    var launcher = registerForActivityResult(ActivityResultContracts.TakePicturePreview(),
-        ActivityResultCallback {
-
-            var thumbnailbitmap:Bitmap?=null
-            if (it != null) {
-
-                thumbnailbitmap=  Bitmap.createScaledBitmap(it,1000,1000,false)
-//                thumbnailbitmap= ThumbnailUtils.extractThumbnail(it,300,300)
-                bitmapLIST?.add(thumbnailbitmap)
-            }
-            if (!bitmapLIST?.isEmpty()!!) {
-                binding?.selectedImagesTextview?.visibility = View.VISIBLE
-                binding?.selectedImagesTextview?.text = bitmapLIST?.size.toString() + " image(s) selected."
-
-                 setup_updateRecyclerView(bitmapLIST!!)
-            }
-            //   PdfOperations(requireActivity())?.createPdf(view,requireActivity(),bitmapLIST!!)
-        })
-
-    // getting result from filemanager
-    var launcher1 = registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments(),
-        ActivityResultCallback {
-           var job= CoroutineScope(Dispatchers.Main).async {
-               decodeUritoBitmap(it as ArrayList<Uri>)
-
-            }
-        })
 
     //create document
     var launcher3 = registerForActivityResult(ActivityResultContracts.CreateDocument(),
@@ -252,7 +226,7 @@ class ImageTo_Pdf_Fragment : Fragment() {
                 var radioButton = radioGroup?.findViewById<RadioButton>(radbtnID!!)
 
                 //split quality text of radiobutton
-                var imgQuality=splitImgQaulity(radioButton?.text.toString())
+                 imgQuality=splitImgQaulity(radioButton?.text.toString())
                 var pdfName=getnameTextinputlayout?.editText?.text.toString()
 
                 if(!pdfName.equals("null") && !pdfName.isEmpty()) {
@@ -388,6 +362,37 @@ class ImageTo_Pdf_Fragment : Fragment() {
 
     }
 
+
+    // getting result of camera picture bitmap
+    var launcher = registerForActivityResult(ActivityResultContracts.TakePicturePreview(),
+        ActivityResultCallback {
+
+            var thumbnailbitmap:Bitmap?=null
+            if (it != null) {
+
+                thumbnailbitmap=  Bitmap.createScaledBitmap(it,1000,1000,false)
+//                thumbnailbitmap= ThumbnailUtils.extractThumbnail(it,300,300)
+                bitmapLIST?.add(thumbnailbitmap)
+            }
+            if (!bitmapLIST?.isEmpty()!!) {
+                binding?.selectedImagesTextview?.visibility = View.VISIBLE
+                binding?.selectedImagesTextview?.text = bitmapLIST?.size.toString() + " image(s) selected."
+
+                setup_updateRecyclerView(bitmapLIST!!)
+            }
+            //   PdfOperations(requireActivity())?.createPdf(view,requireActivity(),bitmapLIST!!)
+        })
+
+    // getting result from filemanager
+    var launcher1 = registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments(),
+        ActivityResultCallback {
+            var job= CoroutineScope(Dispatchers.Main).async {
+                decodeUritoBitmap(it as ArrayList<Uri>)
+
+            }
+        })
+
+
     //custom Contracts for creating pdf document
     var contract = object:ActivityResultContract<Intent,Uri>(){
         override fun createIntent(context: Context, input: Intent?): Intent {
@@ -418,17 +423,15 @@ class ImageTo_Pdf_Fragment : Fragment() {
                 CoroutineScope(Dispatchers.IO).launch {
                     //showing pleasewait dialogue
                     withContext(Dispatchers.Main) {
-                        importingDailogTextview =
-                            alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
-                        importingnumberDailogText =
-                            alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
+                        importingDailogTextview = alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
+                        importingnumberDailogText = alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
                         //these dailog textview had importing and imprting number texts
                         importingDailogTextview?.text = "please wait..."
                         importingnumberDailogText?.visibility = View.GONE
                         alertDialogprogress?.show()
                     }
 
-                    PdfOperations(requireActivity())?.createPdf(bitmapLIST!!, "pdfName", 0, outputStream!!)
+                    PdfOperations(requireActivity())?.createPdf(bitmapLIST!!, "pdfName", imgQuality!!, outputStream!!)
 
                     //hide please wait dialogue
                     withContext(Dispatchers.Main) {

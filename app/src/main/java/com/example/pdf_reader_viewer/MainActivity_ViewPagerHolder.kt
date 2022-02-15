@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -45,6 +46,12 @@ import com.google.android.material.tabs.TabLayoutMediator
          setContentView(binding?.root)
 
          supportActionBar?.hide()
+        // getSupportActionBar()?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+//         supportActionBar?.setDisplayShowHomeEnabled(true)
+//         supportActionBar?.setDisplayUseLogoEnabled(true)
+//         supportActionBar?.setLogo(R.drawable.custom_pdf_free)
+       //  getSupportActionBar()?.setDisplayShowCustomEnabled(true);
+        // supportActionBar?.setCustomView(R.layout.list_images__item)
 
          setupViewPager2()
 
@@ -64,15 +71,15 @@ import com.google.android.material.tabs.TabLayoutMediator
                          startActivity(Intent(this,SettingsActviity::class.java))
                          return@setOnMenuItemClickListener true
                      }
-                     R.id.darkmodeMenuitem -> {
+                   /*  R.id.darkmodeMenuitem -> {
                          Log.d("3g9h34g",it.isChecked.toString())
-                         it.isChecked = true
-                         it.isCheckable = true
+                       //  it.setChecked(true)
+
 
                          Log.d("3g9h34g",it.isChecked.toString())
                          // Log.d("3f8h3f","sidhsidns")
-                          /* if(it.isChecked) {
-                               Log.d("3f8h3f","isChecked")*/
+                          *//* if(it.isChecked) {
+                               Log.d("3f8h3f","isChecked")*//*
                              //  it.setCheckable(false)
                             // it.setChecked(false)
                               // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -88,7 +95,7 @@ import com.google.android.material.tabs.TabLayoutMediator
                           // }
                          return@setOnMenuItemClickListener true
 
-                     }
+                     }*/
                      else ->{
                       return@setOnMenuItemClickListener onOptionsItemSelected(it)
                           }
@@ -220,6 +227,42 @@ import com.google.android.material.tabs.TabLayoutMediator
 
      }
 
+   /*  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+       //  var popupMenu = PopupMenu(this,findViewById(R.menu.bottombar_icons))
+          menuInflater.inflate(R.menu.bottombar_icons,menu)
+         return super.onCreateOptionsMenu(menu)
+     }
+
+     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+         when(item.itemId){
+
+             R.id.settingMenuitem -> {
+                                   startActivity(Intent(this,SettingsActviity::class.java))
+                                     return true
+                                      }
+*//*
+             R.id.darkmodeMenuitem -> {
+                                      if(item.isChecked)
+                                      {
+                                          item.setChecked(false)
+                                          //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+                                      }
+                                      else{
+                                          item.setChecked(true)
+                                         // item.set
+                                         // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
+                                            }
+                                       return true
+                                        }
+*//*
+             else ->{
+                 return super.onOptionsItemSelected(item)
+             }
+         }
+     }*/
 
 
  }
