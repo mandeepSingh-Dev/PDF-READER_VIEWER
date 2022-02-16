@@ -16,7 +16,6 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter_ForMerge
@@ -128,6 +127,11 @@ class MergePdfs_Fragment : Fragment() {
             launcher.launch(intent)
             // Toast.makeText(requireContext(),pdfUrifromFileManager?.toString(),Toast.LENGTH_LONG).show()
         }
+        val manager = activity?.supportFragmentManager
+        manager?.popBackStack()
+       // manager?.isStateSaved
+       // val fragmentPopped: Boolean = manager?.popBackStackImmediate(ImageTo_Pdf_Fragment().javaClass.name, 0)!!
+
         binding?.imagTopdfFab?.setOnClickListener {
            //sending populated or empty selectedPdf_list to Imagetopdf fragment to get newly populated or empty list
             var bundle = Bundle()
@@ -136,7 +140,14 @@ class MergePdfs_Fragment : Fragment() {
             var imagetoPdfFragment = ImageTo_Pdf_Fragment()
             imagetoPdfFragment.arguments = bundle
 
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView,imagetoPdfFragment)?.addToBackStack(null)?.commit()
+           // if(!fragmentPopped) {
+                manager?.beginTransaction()
+                    ?.replace(R.id.fragmentContainerView, imagetoPdfFragment)
+                    ?.addToBackStack(imagetoPdfFragment.javaClass.name)?.commit()
+           // }
+                //here we clear this selectedPdf_list because after coming back
+            // from imagetopdf fragment duplicates recylerview items was created
+            //so whenever we go imagetopdf fragment then new list will be come
            selectedPdf_list?.removeAll(selectedPdf_list!!)
           /*  val imagetoPdfFragment = ImageTo_Pdf_Fragment()
             imagetoPdfFragment.show(activity?.supportFragmentManager!!.beginTransaction(), "ImageTo_Pdf_Fragment")
