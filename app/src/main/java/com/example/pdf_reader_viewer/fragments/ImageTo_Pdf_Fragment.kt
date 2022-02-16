@@ -1,5 +1,6 @@
 package com.example.pdf_reader_viewer.fragments
 
+import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
@@ -7,6 +8,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.os.FileUtils
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,11 +21,14 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.pdf_reader_viewer.R
+import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter_ImagesToPDF
+import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.example.pdf_reader_viewer.UtilClasses.PdfOperations
 import com.example.pdf_reader_viewer.databinding.ImageToPdfFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -35,7 +41,7 @@ import java.io.OutputStream
 import kotlin.collections.ArrayList
 
 
-class ImageTo_Pdf_Fragment : Fragment() {
+class ImageTo_Pdf_Fragment : DialogFragment() {
 
   //  var from:Int?=null
    // var to:Int?=null
@@ -59,6 +65,9 @@ class ImageTo_Pdf_Fragment : Fragment() {
      var outputStream:OutputStream?=null
 
     var  imgQuality:Int?=null
+
+    var Comingfrom_MergeFrag:String?=null
+    var mergeSelectedPdfList:ArrayList<Items_pdfs>?=null
 
   //  var fromposList:ArrayList<Int>? = ArrayList()
    // var toposlist:ArrayList<Int>? = ArrayList()
@@ -117,19 +126,11 @@ class ImageTo_Pdf_Fragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-/*binding?.selectedImagesTextview?.setOnClickListener {
-  //  Log.d("3t3tg3t3",posList?.get(0).toString())
-    bitmapLIST?.forEach { Log.d("44ffyuyy7",it.toString())}
-    var count=0
-    fromposList?.forEach {
-        Collections.swap(bitmapLIST!!,it,toposlist?.get(count)!!)
-        count++
-    }
-    bitmapLIST?.forEach { Log.d("44ffyuyy7",it.toString())}
-
-}*/
-
-
+        if(arguments!=null)
+        {
+           Comingfrom_MergeFrag =  arguments?.getString(PDFProp.COMING_FROM_MERGEFRAG)
+            mergeSelectedPdfList = arguments?.getParcelableArrayList<Items_pdfs>(PDFProp.MERGE_SELECTED_LIST)
+        }
 
         recyclerView = view.findViewById(R.id.imagesRecylerView)
        // itemTouchHelper.attachToRecyclerView(recyclerView)
@@ -410,6 +411,7 @@ class ImageTo_Pdf_Fragment : Fragment() {
             }
         }
     }
+    @SuppressLint("Range")
     var launcher4 = registerForActivityResult(contract, ActivityResultCallback {
 
         if(it!=null) {
@@ -436,6 +438,21 @@ class ImageTo_Pdf_Fragment : Fragment() {
                     //hide please wait dialogue
                     withContext(Dispatchers.Main) {
                         alertDialogprogress?.hide()
+
+                        //if Comingfrom_MergeFrag is not null then return uri to merge frag with new created pdf
+                       if(Comingfrom_MergeFrag.equals(PDFProp.COMING_FROM_MERGEFRAG)) {
+
+                           mergeSelectedPdfList?.add(Items_pdfs("pdfTitle","0",it))
+                           var bundle = Bundle()
+//                                 bundle.putParcelable(PDFProp.PDF_APPENDED_URI,it)
+//                                 bundle.putString(PDFProp.PDF_TITLE,"pdfTitle")
+//                                 bundle.putString(PDFProp.PDF_SIZE,"0")
+                                   bundle.putParcelableArrayList(PDFProp.MERGE_SELECTED_LIST,mergeSelectedPdfList)
+                                 var mergepdfsFragment = MergePdfs_Fragment()
+                                 mergepdfsFragment.arguments = bundle
+                                 activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView,mergepdfsFragment)?.commit()
+
+                         }
                     }
 
                 }
