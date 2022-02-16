@@ -3,6 +3,7 @@ package com.example.pdf_reader_viewer.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.DocumentsContract
@@ -60,22 +61,35 @@ class EncryptPdf_Fragment : Fragment() {
     }, ActivityResultCallback {
         if(it!=null) {
 
-           var pdfName = getMetadata(it)
+             try{
+            var pdfName = getMetadata(it)
             binding?.PDFNameEncrypt?.text = pdfName
-            var document=PDDocument.load(activity?.contentResolver?.openInputStream(it))
-            var totalpages=document.numberOfPages
-            binding?.pdfTotalPage?.text="Total pages : " + totalpages.toString()
+            var document = PDDocument.load(activity?.contentResolver?.openInputStream(it))
+            var totalpages = document.numberOfPages
+            binding?.pdfTotalPage?.text = "Total pages : " + totalpages.toString()
 
             Log.d("383hgf", it.toString())
-             uri = it
+            uri = it
 
             var intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
             intent.type = "application/pdf"
-            intent.putExtra(Intent.EXTRA_TITLE,pdfName)
+            intent.putExtra(Intent.EXTRA_TITLE, pdfName)
 
-            binding?.encryptButton?.setOnClickListener {
-                launcher4.launch(intent)
-            }
+                 var passwordText = binding?.edittextlayout11?.editText?.text.toString()
+                       binding?.encryptButton?.setOnClickListener {
+                           //only create pdf file if password is not empty
+                           if (!passwordText.isEmpty()) {
+                           launcher4.launch(intent)
+                           } else {
+                               binding?.edittextlayout11?.error = "Invalid"
+                           }//else block closed
+                              }//encrypt button closed
+
+        }catch (e:Exception){
+                 binding?.pdfTotalPage?.text = "Cannot Encrypt PDF "
+                 binding?.pdfTotalPage?.setTextColor(Color.RED)
+                 Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_LONG).show()
+             }
         }
 
     })
