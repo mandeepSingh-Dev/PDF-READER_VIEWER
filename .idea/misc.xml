@@ -39,6 +39,7 @@
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/shape2_encrypt.xml" value="0.129" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/splashbakground.xml" value="0.128" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/stroke_fabtext.xml" value="0.136" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/stroke_list_item.xml" value="0.173" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/window_splash.xml" value="0.122" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/font/armata.xml" value="0.22407407407407406" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/cxc.xml" value="1.428125" />
@@ -56,7 +57,7 @@
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-sw700dp/x.xml" value="0.541015625" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-xxhdpi/d.xml" value="0.11901041666666666" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-xxhdpi/encrypt_pdf_fragment.xml" value="0.8" />
-        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_main.xml" value="1.0" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_pdf_view.xml" value="0.176" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_pdfs_tools.xml" value="0.4" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_settings_actviity.xml" value="0.23802083333333332" />

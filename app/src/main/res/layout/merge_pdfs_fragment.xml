@@ -64,7 +64,7 @@ android:textColor="@color/textcolor"
                 android:text="Files on device"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab4"
+                android:id="@+id/devicePdfFab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
@@ -95,7 +95,7 @@ android:textColor="@color/textcolor"
                 android:text="Image to PDF"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab3"
+                android:id="@+id/imagTopdfFab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"

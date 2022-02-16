@@ -21,5 +21,8 @@ class PDFProp()
         const val ENCRYPTEDPDF_FOLDER="Encrypted PDFs"
         const val MERGEPDF_FOLDER="Merge PDFs"
 
+        const val COMING_FROM_MERGEFRAG = "Coming_From_Merge_Fragment"
+        const val MERGE_SELECTED_LIST = "selected_pdfsList_from_MergeFragment"
+
     }
 }

@@ -57,6 +57,8 @@ class PdfView_Activity : AppCompatActivity() {
             pdftitle = intent.extras?.getString(PDFProp.PDF_TITLE)
             size = intent.extras?.getString(PDFProp.PDF_SIZE)
 
+          //  Log.d("3pfgj",pdfuri_String!!+"difhduif")
+
             uri = Uri.parse(pdfuri_String)
            // if (pdfuri_String != null && pdftitle != null) {
 

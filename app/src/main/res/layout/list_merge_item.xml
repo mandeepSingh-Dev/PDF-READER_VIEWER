@@ -2,16 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/pdfImageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_margin="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_pdf_icon"/>
+        android:src="@drawable/ic_item_pdf_icon"/>
     <TextView
         android:id="@+id/pdfNameTextView"
         android:layout_width="0dp"
@@ -34,7 +40,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="@id/pdfNameTextView"
         app:layout_constraintTop_toBottomOf="@id/pdfNameTextView"
-        android:text="1.0 mb"
+        android:text=""
         android:textColor="@color/textcolor"
         android:singleLine="true"
         android:layout_marginTop="6dp"
@@ -49,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@id/pdfNameTextView"
         app:layout_constraintBottom_toBottomOf="@id/pdfImageView"
         app:layout_constraintLeft_toRightOf="@id/pdfSize"
-        android:text="20.01.2022"
+        android:text=""
         android:textColor="@color/textcolor"
         android:singleLine="true"
         android:layout_marginRight="25dp"
@@ -65,7 +71,7 @@
         app:layout_constraintTop_toTopOf="@id/pdfImageView"
         android:padding="10dp"
         android:background="@drawable/rippldeimage"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="8dp"
         app:layout_constraintBottom_toBottomOf="@id/pdfImageView"/>
 
 

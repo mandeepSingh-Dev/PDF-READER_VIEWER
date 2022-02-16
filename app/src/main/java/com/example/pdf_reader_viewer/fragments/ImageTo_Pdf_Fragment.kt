@@ -68,6 +68,7 @@ class ImageTo_Pdf_Fragment : DialogFragment() {
 
     var Comingfrom_MergeFrag:String?=null
     var mergeSelectedPdfList:ArrayList<Items_pdfs>?=null
+    var length_mergeselected_list:Int?=null
 
   //  var fromposList:ArrayList<Int>? = ArrayList()
    // var toposlist:ArrayList<Int>? = ArrayList()
@@ -126,10 +127,12 @@ class ImageTo_Pdf_Fragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //here we'r getting selectedPdfs_list from MergeFragment to add new pdfs list in this list
         if(arguments!=null)
         {
            Comingfrom_MergeFrag =  arguments?.getString(PDFProp.COMING_FROM_MERGEFRAG)
             mergeSelectedPdfList = arguments?.getParcelableArrayList<Items_pdfs>(PDFProp.MERGE_SELECTED_LIST)
+            length_mergeselected_list = mergeSelectedPdfList?.size
         }
 
         recyclerView = view.findViewById(R.id.imagesRecylerView)
@@ -442,7 +445,8 @@ class ImageTo_Pdf_Fragment : DialogFragment() {
                         //if Comingfrom_MergeFrag is not null then return uri to merge frag with new created pdf
                        if(Comingfrom_MergeFrag.equals(PDFProp.COMING_FROM_MERGEFRAG)) {
 
-                           mergeSelectedPdfList?.add(Items_pdfs("pdfTitle","0",it))
+                           var title = getpdfNAME(it)
+                           mergeSelectedPdfList?.add(Items_pdfs(title,"0",it))
                            var bundle = Bundle()
 //                                 bundle.putParcelable(PDFProp.PDF_APPENDED_URI,it)
 //                                 bundle.putString(PDFProp.PDF_TITLE,"pdfTitle")
@@ -459,5 +463,22 @@ class ImageTo_Pdf_Fragment : DialogFragment() {
             }//if block for output stream null or not
         }
     })
+
+    @SuppressLint("Range")
+    fun getpdfNAME(uri:Uri):String{
+       var name = "No name"
+        val cursor = activity?.contentResolver?.query(uri,null,null,null,null)
+     if(cursor!=null)
+     {
+         cursor.let {
+             if(it.moveToFirst()) {
+                 name = it.getString(it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME))
+             }
+         }
+     }
+        return name
+    }
+
+
 
     }
