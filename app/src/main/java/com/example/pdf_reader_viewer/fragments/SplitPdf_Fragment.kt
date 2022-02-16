@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
@@ -174,13 +175,7 @@ class SplitPdf_Fragment : Fragment() {
             //practise only
             //   var inptstrm = activity?.contentResolver?.openInputStream(appendedUri)
             try {
-                var document = PDDocument.load(inputStream)
 
-                  //  totalPages = document?.numberOfPages!!
-
-            } catch (e: Exception) {
-                Log.d("377t738ghvn", e.cause.toString())
-            }
             var rendere = PdfRenderer(activity?.contentResolver?.openFileDescriptor(appendedUri,"r")!!)
 
             withContext(Dispatchers.Main) {
@@ -206,6 +201,13 @@ class SplitPdf_Fragment : Fragment() {
                     }
                 }
             }//withContext closed
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+                binding?.pdfTotalPage?.text = e.message.toString()
+                binding?.pdfTotalPage?.setTextColor(Color.RED)
+                Toast.makeText(requireContext(), e.message.toString(), Toast.LENGTH_LONG).show()
+            }
+       }
         } //coroutine scope closed
     } //split fnction closed
 
@@ -276,18 +278,24 @@ class SplitPdf_Fragment : Fragment() {
 //                        binding?.edittextlayout2?.isErrorEnabled = false
 //                        binding?.edittextlayout1?.isErrorEnabled = false
 
-                        CoroutineScope(Dispatchers.Main).launch {
-                            importingDailogTextview = alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
-                            importingnumberDailogText = alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
-                            //these dailog textview had importing and imprting number texts
-                            importingDailogTextview?.text = "please wait..."
-                            importingnumberDailogText?.visibility = View.GONE
-                            alertDialogprogress?.show()
+    try {
+        CoroutineScope(Dispatchers.Main).launch {
+            importingDailogTextview =
+                alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
+            importingnumberDailogText =
+                alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
+            //these dailog textview had importing and imprting number texts
+            importingDailogTextview?.text = "please wait..."
+            importingnumberDailogText?.visibility = View.GONE
+            alertDialogprogress?.show()
 
-                           // PdfOperations(requireActivity()).splittingPdf(uri!!, numberList,outputStream)
-                            PdfOperations(requireActivity()).splitPdfNative(uri!!,numberList,outputStream)
-                            alertDialogprogress?.hide()
-                        }
+            // PdfOperations(requireActivity()).splittingPdf(uri!!, numberList,outputStream)
+            PdfOperations(requireActivity()).splitPdfNative(uri!!, numberList, outputStream)
+            alertDialogprogress?.hide()
+        }
+    }catch (e:Exception){
+        Toast.makeText(requireContext(),e.cause.toString(),Toast.LENGTH_SHORT).show()
+    }
 //                   /* } else {
 //                        binding?.edittextlayout2?.error = "Invalid"
 //                    }*/

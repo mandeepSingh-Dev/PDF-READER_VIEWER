@@ -102,7 +102,7 @@ class ConversionandUtilsClass
                 // Log.d("eifnefe",pageee)
                 //val pagenumberstr = atPage.replace("\\s", "")
                 var pagenumberstr = atPage.replace(" ", "")
-                var regex = Regex("[a-zA-Z.+ ]*")
+                var regex = Regex("[a-zA-Z.+!@#$%^&*():*/><?:]*")
                 pagenumberstr = atPage.replace(regex, "")
 
 
