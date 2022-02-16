@@ -2,24 +2,19 @@ package com.example.pdf_reader_viewer.fragments
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.pdf.PdfDocument
-import android.graphics.pdf.PdfRenderer
 import android.net.Uri
 import android.os.Bundle
-import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
@@ -28,10 +23,6 @@ import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.example.pdf_reader_viewer.UtilClasses.PdfOperations
 import com.example.pdf_reader_viewer.UtilClasses.ViewAnimation
 import com.example.pdf_reader_viewer.databinding.MergePdfsFragmentBinding
-import com.tom_roush.pdfbox.pdmodel.PDDocument
-import java.io.FileDescriptor
-import kotlin.collections.ArrayList
-import androidx.appcompat.app.AlertDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -39,7 +30,6 @@ import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.OutputStream
 
 class MergePdfs_Fragment : Fragment() {
@@ -90,6 +80,11 @@ class MergePdfs_Fragment : Fragment() {
 
              Log.d("efhhegfehd",pdfUri.toString()+pdfSize+pdfTitle)
 
+            var listFromimgtopdf = arguments?.getParcelableArrayList<Items_pdfs>(PDFProp.MERGE_SELECTED_LIST)
+           if(listFromimgtopdf!=null) {
+               selectedPdf_list?.addAll(listFromimgtopdf!!)
+           }
+
             if (pdfTitle != null && pdfSize != null && pdfUri != null) {
                 Log.d("CHECKINGFRAG", "coming from list  ")
                 selectedPdf_list?.add(Items_pdfs(pdfTitle!!, pdfSize!!, pdfUri!!))
@@ -103,7 +98,9 @@ class MergePdfs_Fragment : Fragment() {
         binding?.mergeButton?.setOnClickListener {
             // Log.d("34ge",selectedPdf_list?.get(0)?.appendeduri.toString())
             /*mergeSelectedPdfs(selectedPdf_list!!,alertDialog!!)*/
-            alertDialog?.show()
+            try {
+                alertDialog?.show()
+            }catch (e:Exception){}
         }
         var view22 = LayoutInflater.from(requireContext()).inflate(
             R.layout.custom_progress_dialogue,
@@ -122,14 +119,23 @@ class MergePdfs_Fragment : Fragment() {
             animate_fab_buttons()
         }
 
-        binding?.fab4?.setOnClickListener {
+        binding?.devicePdfFab?.setOnClickListener {
             //getting pdf document from device \
             var intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.setType("application/pdf")
             launcher.launch(intent)
             // Toast.makeText(requireContext(),pdfUrifromFileManager?.toString(),Toast.LENGTH_LONG).show()
-
         }
+        binding?.imagTopdfFab?.setOnClickListener {
+            var bundle = Bundle()
+            bundle.putString(PDFProp.COMING_FROM_MERGEFRAG,PDFProp.COMING_FROM_MERGEFRAG)
+            bundle.putParcelableArrayList(PDFProp.MERGE_SELECTED_LIST,selectedPdf_list)
+            var imagetoPdfFragment = ImageTo_Pdf_Fragment()
+            imagetoPdfFragment.arguments = bundle
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView,imagetoPdfFragment)?.commit()
+          /*  val imagetoPdfFragment = ImageTo_Pdf_Fragment()
+            imagetoPdfFragment.show(activity?.supportFragmentManager!!.beginTransaction(), "ImageTo_Pdf_Fragment")
+   */     }
 
 
     }
@@ -301,7 +307,7 @@ class MergePdfs_Fragment : Fragment() {
 
                 //checking if chip is checked and if checked then merge with encryptedpassword
                 if (chip?.isChecked!!) {
-                    Toast.makeText(requireContext(), "chip is checked", Toast.LENGTH_SHORT).show()
+                  //  Toast.makeText(requireContext(), "chip is checked", Toast.LENGTH_SHORT).show()
                     password = secureinputLayout1?.editText?.text.toString()
                     //checking password is empty or not
                     if (password.isEmpty()) {
@@ -315,7 +321,13 @@ class MergePdfs_Fragment : Fragment() {
                         //mergeSelectedPdfs(selectedPdf_list!!,pdfNamee,password)
 
                         //launcherMethod(password).launch(intent)
-                        launcher4.launch(intent)
+                        Toast.makeText(requireContext(),"${selectedPdf_list?.size}  PDFs selected",Toast.LENGTH_LONG).show()
+                        if(selectedPdf_list?.size!! > 1) {
+                            launcher4.launch(intent)
+                        }else {
+                            Toast.makeText(requireContext(),"please select Two or more PDFs",Toast.LENGTH_LONG).show()
+                        }
+                        //launcher4.launch(intent)
 
                         Toast.makeText(requireContext(), "password is not null", Toast.LENGTH_SHORT)
                             .show()
@@ -330,9 +342,15 @@ class MergePdfs_Fragment : Fragment() {
                     Log.d("38fh3ifgv3fg3f37fgh", selectedPdf_list?.size.toString())
                     //here NULL means password and pdf will merge without password Encrypted
                    // launcherMethod("NULL").launch(intent)
-                    launcher4.launch(intent)
+                    Toast.makeText(requireContext(),"${selectedPdf_list?.size} PDFs selected",Toast.LENGTH_LONG).show()
+                    if(selectedPdf_list?.size!! > 1) {
+                        launcher4.launch(intent)
+                    }else {
+                        Toast.makeText(requireContext(),"please select Two or more PDFs",Toast.LENGTH_LONG).show()
+                    }
 
-                  //  mergeSelectedPdfs(selectedPdf_list!!, pdfNamee, "NULL")
+
+                    //  mergeSelectedPdfs(selectedPdf_list!!, pdfNamee, "NULL")
                 }
             }
 
@@ -371,6 +389,7 @@ class MergePdfs_Fragment : Fragment() {
     }
     var launcher4 = registerForActivityResult(contract, ActivityResultCallback {
 
+        try{
         var outputStream: OutputStream? = null
         if (it != null) {
             outputStream = activity?.contentResolver?.openOutputStream(it)!!
@@ -381,10 +400,14 @@ class MergePdfs_Fragment : Fragment() {
             if (outputStream != null) {
 
                 Log.d("3g893hjg",password)
-                mergeSelectedPdfs(selectedPdf_list!!, "pdfNamee", password,outputStream)
+
+                    mergeSelectedPdfs(selectedPdf_list!!, "pdfNamee", password, outputStream)
 
             }//if block for output stream null or not
         }
+            }catch (e:Exception){
+                Toast.makeText(requireContext(),e.message.toString(),Toast.LENGTH_LONG).show()
+            }
     })
 
 
