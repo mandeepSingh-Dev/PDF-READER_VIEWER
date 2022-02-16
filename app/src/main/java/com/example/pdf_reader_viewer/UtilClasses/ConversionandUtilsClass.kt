@@ -6,6 +6,7 @@ import android.net.Uri
 import android.provider.DocumentsContract
 import android.util.Log
 import android.widget.Toast
+import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import com.google.android.material.snackbar.Snackbar
 import java.io.FileDescriptor
 import java.io.FileInputStream
@@ -141,4 +142,15 @@ class ConversionandUtilsClass
             return arr.toList() as ArrayList<T>
         }
       }//closing of companion object
+
+//    fun sortingList(list:ArrayList<Items_pdfs>){
+//        for(i in 0..list.size-1)
+//        {
+//            var j = i+1
+//            if(list.get(i).date_modified?.toInt()!! < list.get(j).date_modified?.toInt()!!)
+//            {
+//                list.get()
+//            }
+//        }
+//    }
 }

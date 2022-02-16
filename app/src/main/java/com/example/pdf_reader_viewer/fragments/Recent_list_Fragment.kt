@@ -96,11 +96,12 @@ class Recent_list_Fragment : Fragment() {
                            }
                            else {
                            Log.d("eifhefg", pdflist?.size.toString())
-//                           Log.d("393jg",pdflist?.get(0)?.pdfName!!+pdflist?.get(0)?.pdf_ID!!+pdflist?.get(0)?.pdfUri!!+pdflist?.get(0)?.pdfSize!!)
-                           myAdapter = MyAdapter_RecentLists(
-                               requireContext(),
-                               pdflist as ArrayList<Items_RecentPdfs>
-                           )
+                        var pdflisst = pdflist as ArrayList<Items_RecentPdfs>
+                               //sorting list according recent opened pdf date
+                               pdflisst.sortByDescending {
+                                   it.date?.toInt()
+                               }
+                           myAdapter = MyAdapter_RecentLists(requireContext(), pdflisst)
                            binding?.recentRecyclerView?.layoutManager = LinearLayoutManager(requireContext())
                            binding?.recentRecyclerView?.adapter = myAdapter
 

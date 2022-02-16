@@ -232,6 +232,8 @@ class MergePdfs_Fragment : Fragment() {
         binding?.mergePdfListRecyclerView?.layoutManager = GridLayoutManager(requireContext(),2)
         binding?.mergePdfListRecyclerView?.adapter = adapter
 
+
+
     }
 
     fun mergeSelectedPdfs(pdflist: ArrayList<Items_pdfs>, pdfName: String, password: String,outputStream: OutputStream) {

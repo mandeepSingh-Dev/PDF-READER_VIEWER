@@ -10,11 +10,20 @@
 
     <color name="backgroundColor">@color/white</color>
     <color name="textcolor">@color/black</color>
+
     <color name="tabcolor">#806464</color>
     <color name="tabselectedColor">#000000</color>
+
     <color name="headingColor">#53159F</color>
+
     <color name="floatTextBackgroundcolor">#3E008A</color>
+    <color name="floatTintBackgroundcolor">#FF7700</color>
     <color name="floatTextcolor">#DCC7F6</color>
+
+    <color name="bottomsheetBackgroundcolor">#C56F6F</color>
+
+
+
 
 
 

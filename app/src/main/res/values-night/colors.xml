@@ -9,12 +9,17 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="backgroundColor">#5A4D4D</color>
+
     <color name="textcolor">@color/white</color>
     <color name="tabcolor">#D5BABA</color>
+
     <color name="tabselectedColor">#FFFFFF</color>
     <color name="headingColor">#FF3030</color>
+
     <color name="floatTextBackgroundcolor">#FF0000</color>
     <color name="floatTextcolor">#000000</color>
+    <color name="floatTintBackgroundcolor">#FF0088</color>
+
 
 
 

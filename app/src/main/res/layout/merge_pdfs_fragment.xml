@@ -5,24 +5,44 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.MergePdfs_Fragment">
-    <Toolbar
+   <com.google.android.material.appbar.AppBarLayout
+       android:id="@+id/appbarToolabar"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent"
+>
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#00E5FF"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:title="Merge Pdfs"
+        app:title="Merge PDFs"
+        app:titleTextColor="@color/black"
         android:hapticFeedbackEnabled="true"
         app:layout_constraintRight_toRightOf="parent"
         >
-    </Toolbar>
+        <ImageView
+            android:id="@+id/deletemerge"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_baseline_delete_24"
+            android:layout_gravity="end"
+            android:background="@drawable/rippldeimage"
+            android:layout_marginRight="40dp"
+            />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+   </com.google.android.material.appbar.AppBarLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mergePdfListRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/appbarToolabar"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
 
@@ -57,7 +77,7 @@
                 android:paddingRight="10dp"
                 android:paddingTop="3dp"
                 android:layout_margin="16dp"
-android:textColor="@color/textcolor"
+android:textColor="@color/white"
                 android:layout_marginRight="10dp"
                 android:paddingBottom="3dp"
                 android:background="@drawable/stroke_fabtext"
@@ -68,6 +88,8 @@ android:textColor="@color/textcolor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
+                android:tint="@color/floatTintBackgroundcolor"
+                android:backgroundTint="@color/floatTintBackgroundcolor"
                 android:src="@drawable/ic_twotone_folder_24"
                 app:fabSize="mini"
                 app:rippleColor="#DF3804"/>
@@ -90,7 +112,7 @@ android:textColor="@color/textcolor"
                 android:paddingRight="10dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
-                android:textColor="@color/textcolor"
+                android:textColor="@color/white"
                 android:background="@drawable/stroke_fabtext"
                 android:text="Image to PDF"/>
 
@@ -99,6 +121,7 @@ android:textColor="@color/textcolor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
+                android:backgroundTint="@color/floatTintBackgroundcolor"
                 android:src="@drawable/ic_baseline_camera_alt_24"
                 app:fabSize="mini"
                 app:rippleColor="#DF3804"/>
@@ -122,7 +145,7 @@ android:textColor="@color/textcolor"
                 android:paddingRight="10dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
-                android:textColor="@color/textcolor"
+                android:textColor="@color/white"
                 android:background="@drawable/stroke_fabtext"
                 android:text="Text to PDF"/>
 
@@ -132,6 +155,7 @@ android:textColor="@color/textcolor"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:src="@drawable/ic_baseline_text_fields_24"
+                android:backgroundTint="@color/floatTintBackgroundcolor"
                 app:fabSize="mini"
                 app:rippleColor="#DF3804"/>
               </LinearLayout>

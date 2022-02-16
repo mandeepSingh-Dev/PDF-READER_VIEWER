@@ -84,6 +84,7 @@ class pdf_list_Fragment : Fragment() {
         // Inflate the layout for this fragment
         binding = PdfListFragmentBinding.inflate(inflater)
 
+
         return binding?.root
     }
 
@@ -129,6 +130,9 @@ class pdf_list_Fragment : Fragment() {
                   Log.d("3tubuenfe", "3ufufbkscsdc")
                   binding?.emptyView?.visibility = View.VISIBLE
                   binding?.emptyText?.visibility = View.VISIBLE
+                  if(Build.VERSION.SDK_INT==Build.VERSION_CODES.Q) {
+                      binding?.emptyText?.text = "Only created or modified files will be shown here"
+                  }
 
                   binding?.pdfListProgress?.visibility = View.GONE
               } else {
