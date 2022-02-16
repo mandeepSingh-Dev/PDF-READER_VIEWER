@@ -35,7 +35,7 @@ class MyAdapter_ForMerge(context:Context,arrayList:ArrayList<Items_pdfs>):Recycl
          holder.dragmenuimage?.visibility = View.GONE
 
         var itemPdf=pdflist.get(position)
-        holder.pdfName?.setText(itemPdf?.title)
+            holder.pdfName?.setText(itemPdf?.title)
       //  holder.pdfSize?.setText(itemPdf?.size)
        // holder.pdfDate?.setText(itemPdf?.date_modified)
 
@@ -44,7 +44,7 @@ class MyAdapter_ForMerge(context:Context,arrayList:ArrayList<Items_pdfs>):Recycl
                 Intent(contextt, PdfView_Activity::class.java)
                 .setAction(PDFProp.MY_OPEN_ACTION)
                 .putExtra(PDFProp.PDF_APPENDED_URI,itemPdf.appendeduri.toString())
-                .putExtra(PDFProp.PDF_TITLE,"fdf")
+                .putExtra(PDFProp.PDF_TITLE,itemPdf?.title)
                 .putExtra(PDFProp.PDF_SIZE,"df"))
 
             Log.d("wifhwedf",itemPdf.appendeduri.toString())
