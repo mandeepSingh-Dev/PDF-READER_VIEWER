@@ -15,6 +15,7 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
@@ -80,6 +81,7 @@ class MergePdfs_Fragment : Fragment() {
 
              Log.d("efhhegfehd",pdfUri.toString()+pdfSize+pdfTitle)
 
+            //getting newly populated list from Imagetopdf fragment
             var listFromimgtopdf = arguments?.getParcelableArrayList<Items_pdfs>(PDFProp.MERGE_SELECTED_LIST)
            if(listFromimgtopdf!=null) {
                selectedPdf_list?.addAll(listFromimgtopdf!!)
@@ -127,12 +129,15 @@ class MergePdfs_Fragment : Fragment() {
             // Toast.makeText(requireContext(),pdfUrifromFileManager?.toString(),Toast.LENGTH_LONG).show()
         }
         binding?.imagTopdfFab?.setOnClickListener {
+           //sending populated or empty selectedPdf_list to Imagetopdf fragment to get newly populated or empty list
             var bundle = Bundle()
             bundle.putString(PDFProp.COMING_FROM_MERGEFRAG,PDFProp.COMING_FROM_MERGEFRAG)
             bundle.putParcelableArrayList(PDFProp.MERGE_SELECTED_LIST,selectedPdf_list)
             var imagetoPdfFragment = ImageTo_Pdf_Fragment()
             imagetoPdfFragment.arguments = bundle
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView,imagetoPdfFragment)?.commit()
+
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView,imagetoPdfFragment)?.addToBackStack(null)?.commit()
+           selectedPdf_list?.removeAll(selectedPdf_list!!)
           /*  val imagetoPdfFragment = ImageTo_Pdf_Fragment()
             imagetoPdfFragment.show(activity?.supportFragmentManager!!.beginTransaction(), "ImageTo_Pdf_Fragment")
    */     }
@@ -213,7 +218,7 @@ class MergePdfs_Fragment : Fragment() {
     //creating adapter and set to recyclerView
     fun createrecyclerView() {
         adapter = MyAdapter_ForMerge(requireContext(), selectedPdf_list!!)
-        binding?.mergePdfListRecyclerView?.layoutManager = LinearLayoutManager(requireContext())
+        binding?.mergePdfListRecyclerView?.layoutManager = GridLayoutManager(requireContext(),2)
         binding?.mergePdfListRecyclerView?.adapter = adapter
 
     }
@@ -409,6 +414,12 @@ class MergePdfs_Fragment : Fragment() {
                 Toast.makeText(requireContext(),e.message.toString(),Toast.LENGTH_LONG).show()
             }
     })
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+        adapter = null
+    }
 
 
     }
