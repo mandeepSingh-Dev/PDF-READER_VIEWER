@@ -294,7 +294,7 @@ class pdf_list_Fragment : Fragment() {
         openLinearLayout?.setOnClickListener {
 
             var intent=Intent(context,PdfView_Activity::class.java)
-
+                intent.setAction(PDFProp.MY_OPEN_ACTION)
             intent.putExtra(PDFProp.PDF_APPENDED_URI,pdflist?.get(position)?.appendeduri.toString())
                   .putExtra(PDFProp.PDF_TITLE,pdflist?.get(position)?.title)
                   .putExtra(PDFProp.PDF_SIZE,pdflist?.get(position)?.size)

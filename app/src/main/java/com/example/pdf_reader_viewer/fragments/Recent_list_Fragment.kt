@@ -1,18 +1,18 @@
 package com.example.pdf_reader_viewer.fragments
 
+import android.app.AlertDialog
 import android.content.ClipData
+import android.content.ContentValues
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.LiveData
@@ -33,7 +33,9 @@ import com.example.pdf_reader_viewer.UtilClasses.FragmentNames
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.example.pdf_reader_viewer.databinding.RecentListpdfFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
 import java.lang.Exception
 
@@ -59,6 +61,7 @@ class Recent_list_Fragment : Fragment() {
     lateinit var shareIcon_bottomsheet: ImageView
 
     var intent:Intent?=null
+    lateinit var renameDialog :AlertDialog
 
 
 
@@ -178,7 +181,7 @@ class Recent_list_Fragment : Fragment() {
         openLinearLayout?.setOnClickListener {
 
             var intent= Intent(context, PdfView_Activity::class.java)
-
+            intent.setAction(PDFProp.MY_OPEN_ACTION)
             intent.putExtra(PDFProp.PDF_APPENDED_URI,pdfUri)
                 .putExtra(PDFProp.PDF_TITLE,pdfName)
 
@@ -231,6 +234,59 @@ class Recent_list_Fragment : Fragment() {
             // intent?.putExtra(Intent.EXTRA_TEXT, "Sharing File from Webkul to purchase items...");
             startActivity(Intent.createChooser(intent,"my PDF FILE"))
 
+        }
+        //to rename pdf name
+        renameeLinearLayout?.setOnClickListener {
+            var builder = AlertDialog.Builder(requireContext(),R.style.Theme_AppCompat_Dialog_Alert)
+            var viewgroup=activity?.findViewById<ViewGroup>(R.id.content)
+            var view =  LayoutInflater.from(requireContext()).inflate(R.layout.rename_dialog,viewgroup , false)
+            builder.setView(view)
+            builder.setCancelable(true)
+
+            var renameButton = view.findViewById<MaterialButton>(R.id.renameButton)
+            renameButton.setOnClickListener {
+
+                var renamedittext = view.findViewById<EditText>(R.id.renameEdittext)
+                var renamed = renamedittext.text.toString()
+
+                if(!renamed.isEmpty()) {
+                    var contentValues = ContentValues()
+                    contentValues.put(MediaStore.MediaColumns.TITLE, renamed)
+                    contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, renamed+".pdf")
+
+                    //to update item in mediastore shared storage
+                    var intt = activity?.contentResolver?.update(Uri.parse(pdfUri), contentValues, null, null)
+
+                    if (intt == 1) { //and this is for update item in Room Database
+                        CoroutineScope(Dispatchers.IO).launch {
+                            var bookmarkedItem = MyRoomDatabase?.getInstance(requireContext()).daoMethod().query(pdflist.get(position).pdfUri)
+                            var newitem = Items_RecentPdfs(bookmarkedItem.pdf_ID, renamed, bookmarkedItem.pdfSize, bookmarkedItem.date, bookmarkedItem.pdfUri)
+
+                            Log.d("2f89efhef", newitem.pdfName + "k")
+                            //now update with new item replace with previous one
+                            MyRoomDatabase.getInstance(requireContext()).daoMethod().update(newitem)
+
+                            withContext(Dispatchers.Main){
+                                Snackbar.make(binding?.recentRecyclerView!!,"Name Changed",2000).show()
+                            }
+                        }//coroutinescope
+
+
+                    }
+                    Log.d("4gf4h3g", intt.toString())
+                    renameDialog.hide()
+                    bottomSheetDialog?.hide()
+                }
+                else{
+                    Toast.makeText(requireContext(),"Please enter name",Toast.LENGTH_SHORT).show()
+                    //  renameDialog.hide()
+                    // bottomSheetDialog?.hide()
+
+                }
+            } //positive button of dialog
+
+            renameDialog = builder.create()
+            renameDialog.show()
         }
 
         //to check if selected pdf is in bookmark database or not for bookmark buttons

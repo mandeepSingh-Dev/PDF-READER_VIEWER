@@ -20,6 +20,8 @@
     <color name="floatTextcolor">#000000</color>
     <color name="floatTintBackgroundcolor">#FF0088</color>
 
+    <color name="renameBackgroundcolor">#006068</color>
+    <color name="renameButtoncolor">#4807A3</color>
 
 
 

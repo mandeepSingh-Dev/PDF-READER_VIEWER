@@ -89,19 +89,22 @@ class PdfView_Activity : AppCompatActivity() {
 
 
             // var intentUri=intent.data
-        binding?.pdfView?.fromUri(uri)?.onTap { e ->
-            e.action = MotionEvent.ACTION_SCROLL
-            true
-        }?.spacing(0)?.onPageChange { page, pageCount ->
-            //pageNumber.setText(page.toString())
-                if(showPage.equals("true")) {
+        if(uri!=null) {
+            binding?.pdfView?.fromUri(uri)?.onTap { e ->
+                e.action = MotionEvent.ACTION_SCROLL
+                true
+            }?.spacing(0)?.onPageChange { page, pageCount ->
+                //pageNumber.setText(page.toString())
+                if (showPage.equals("true")) {
                     binding?.pageNumber?.visibility = View.VISIBLE
                     binding?.pageNumber?.setText((page + 1).toString())
                 }
 
-        }?.enableSwipe(true)?.swipeHorizontal(false)?.enableAnnotationRendering(false)
-            ?.enableDoubletap(true)?.enableAntialiasing(true)?.defaultPage(0)?.spacing(10)?.load()
+            }?.enableSwipe(true)?.swipeHorizontal(false)?.enableAnnotationRendering(false)
+                ?.enableDoubletap(true)?.enableAntialiasing(true)?.defaultPage(0)?.spacing(10)
+                ?.load()
 
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

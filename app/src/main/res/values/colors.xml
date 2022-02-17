@@ -22,6 +22,10 @@
 
     <color name="bottomsheetBackgroundcolor">#C56F6F</color>
 
+    <color name="renameBackgroundcolor">#E65151</color>
+    <color name="renameButtoncolor">#6CAF88</color>
+
+
 
 
 

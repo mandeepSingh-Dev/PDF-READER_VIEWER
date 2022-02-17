@@ -8,18 +8,18 @@ import androidx.room.PrimaryKey
 data class Items_Bookmarks(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "item_id")
-    val pdf_ID:Int,
+    var pdf_ID:Int,
 
     @ColumnInfo(name = "pdfName")
-    val pdfName:String,
+    var pdfName:String,
 
     @ColumnInfo(name = "pdfSize")
-    val pdfSize:String,
+    var pdfSize:String,
     @ColumnInfo(name = "date")
-    val date:Long,
+    var date:Long,
 
     @ColumnInfo(name = "pdfUri")
-    val pdfUri:String) {
+    var pdfUri:String) {
 
     constructor( pdfUri:String,pdfName: String,pdfSize: String,date:Long):this(0,pdfName,pdfSize,date,pdfUri)
     //constructor( pdfUri: String):this(0,11L,pdfUri)
