@@ -98,6 +98,7 @@ class Recent_list_Fragment : Fragment() {
                                binding?.recentProgress?.visibility = View.GONE
                            }
                            else {
+
                            Log.d("eifhefg", pdflist?.size.toString())
                         var pdflisst = pdflist as ArrayList<Items_RecentPdfs>
                                //sorting list according recent opened pdf date
@@ -207,7 +208,9 @@ class Recent_list_Fragment : Fragment() {
 
         //to bookmark the pdf into database
         bookmarkIcon_bottomsheet?.setOnClickListener {
-            CoroutineScope(Dispatchers.Main).launch { addBookmarks(Uri.parse(pdfUri),pdfName,pdfSize,date.toLong())
+            CoroutineScope(Dispatchers.Main).launch {
+                Log.d("3g8h3g",date.toString())
+                addBookmarks(Uri.parse(pdfUri),pdfName,pdfSize,date)
                 Log.d("38f3gh7fg3h","bookmark")
                 bookmarkIcon_bottomsheet.visibility=View.GONE
 
@@ -237,7 +240,7 @@ class Recent_list_Fragment : Fragment() {
         }
         //to rename pdf name
         renameeLinearLayout?.setOnClickListener {
-            var builder = AlertDialog.Builder(requireContext(),R.style.Theme_AppCompat_Dialog_Alert)
+           /* var builder = AlertDialog.Builder(requireContext(),R.style.Theme_AppCompat_Dialog_Alert)
             var viewgroup=activity?.findViewById<ViewGroup>(R.id.content)
             var view =  LayoutInflater.from(requireContext()).inflate(R.layout.rename_dialog,viewgroup , false)
             builder.setView(view)
@@ -286,7 +289,8 @@ class Recent_list_Fragment : Fragment() {
             } //positive button of dialog
 
             renameDialog = builder.create()
-            renameDialog.show()
+            renameDialog.show()*/
+        ConversionandUtilsClass.renameFrom_everywhere(pdfUri,requireContext(),requireActivity(),bottomSheetDialog!!)
         }
 
         //to check if selected pdf is in bookmark database or not for bookmark buttons
@@ -328,7 +332,7 @@ class Recent_list_Fragment : Fragment() {
 
     suspend fun addBookmarks(uri:Uri,pdfname:String,pdfsize:String,pdfDate:Long) = withContext(Dispatchers.IO)
     {
-        MyRoomDatabase2.getInstance(requireContext()).daoMethods().insert(Items_Bookmarks(uri.toString(),pdfname,pdfsize,pdfDate))
+        MyRoomDatabase2.getInstance(requireContext()).daoMethods().insert(Items_Bookmarks(uri.toString(),pdfname,pdfsize,pdfDate/1000L))
     }
     suspend fun removeBookmarks(uri:Uri) = withContext(Dispatchers.IO)
     {
