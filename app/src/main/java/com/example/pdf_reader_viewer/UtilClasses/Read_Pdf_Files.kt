@@ -70,8 +70,8 @@ class Read_Pdf_Files(context:Context)
              /**getting coloumns name*/
             var titleColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.TITLE)!!
             val idColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)!!
-            val displayColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME)!!
-            val bucketColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)!!
+            val displayColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME)!!
+            val bucketColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME)!!
             val dateModColoumn = cursor?.getColumnIndex(MediaStore.MediaColumns.DATE_MODIFIED)!!
             val sizeColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.SIZE)!!
             val relativePathColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.RELATIVE_PATH)!!
@@ -89,7 +89,8 @@ class Read_Pdf_Files(context:Context)
 
                 //Handling Nullability for varables
                 if (bucket != null) { bucketsList.add(bucket!!) }
-                if(title==null){title="N.A"}
+                if(title==null){ title="N.A"}
+                if(displeynamee==null){displeynamee="N.A"}
                 if(dateModified==null){dateModified="N.A"}
                 if(size==null){size="N.A"}
                 if(relativepath==null){relativepath="N.A"}
@@ -99,7 +100,7 @@ class Read_Pdf_Files(context:Context)
                 var data_uri = Uri.withAppendedPath(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL), id.toString())
                 //  pdflist?.add(Items_pdfs(title!!, size!!, data_uri, dateModified, relativepath!!, bucket))
                 /**adding cursoritems to pdflist in loop */
-                pdflist?.add(Items_pdfs(title!!, size!!, data_uri, dateModified, relativepath!!, bucket))
+                pdflist?.add(Items_pdfs(displeynamee!!, size!!, data_uri, dateModified, relativepath!!, bucket))
             }
             cursor.close()
             Log.d("33fffffffwf",pdflist?.size.toString()+"fed8fhef")
