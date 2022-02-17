@@ -57,11 +57,10 @@ class MyAdapter_ForBookmarks(context: Context,arrayList:ArrayList<Items_Bookmark
             var pdfName = itempdf.pdfName
             var date = itempdf.date
 
-                       holder.pdfNameTextView.text = pdfName
-                    holder.recentPDFsize.text = ConversionandUtilsClass.bytesToMB(pdfSize)
-                    // holder.recentpdfDATE.text=ConversionandUtilsClass.convertToDate(System.currentTimeMillis()/1000L).get(1)
-                    holder.recentpdfDATE.text =
-                        ConversionandUtilsClass.convertToDate(date / 1000L).get(1)
+            holder.pdfNameTextView.text = pdfName
+            holder.recentPDFsize.text = ConversionandUtilsClass.bytesToMB(pdfSize)
+            // holder.recentpdfDATE.text=ConversionandUtilsClass.convertToDate(System.currentTimeMillis()/1000L).get(1)
+            holder.recentpdfDATE.text = ConversionandUtilsClass.convertToDate(date ).get(1)
                     // Log.d("85thrng",ConversionandUtilsClass.convertToDate(System.currentTimeMillis()/1000L).get(1))
                // }
           //  }

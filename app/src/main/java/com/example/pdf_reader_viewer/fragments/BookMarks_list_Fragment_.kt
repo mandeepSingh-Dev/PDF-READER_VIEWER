@@ -2,13 +2,10 @@ package com.example.pdf_reader_viewer.fragments
 
 import android.app.AlertDialog
 import android.content.ContentValues
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.DocumentsContract
 import android.provider.MediaStore
-import android.text.Layout
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,17 +14,16 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pdf_reader_viewer.MCustomOnClickListener
 import com.example.pdf_reader_viewer.PdfView_Activity
 import com.example.pdf_reader_viewer.PdfsTools_Activity
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter_ForBookmarks
-import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter_RecentLists
 import com.example.pdf_reader_viewer.Roomclasses.Room_For_BOOKMARKS.Items_Bookmarks
 import com.example.pdf_reader_viewer.Roomclasses.Room_For_BOOKMARKS.MyRoomDatabase2
 import com.example.pdf_reader_viewer.Roomclasses.Room_For_RecentPDFs.Items_RecentPdfs
+import com.example.pdf_reader_viewer.Roomclasses.Room_For_RecentPDFs.MyRoomDatabase
 import com.example.pdf_reader_viewer.UtilClasses.ConversionandUtilsClass
 import com.example.pdf_reader_viewer.UtilClasses.FragmentNames
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
@@ -91,17 +87,16 @@ class BookMarks_list_Fragment_ : Fragment() {
                     binding?.bookmarkProgress?.visibility = View.GONE
                 }else {
                     Log.d("378fh3", pdflist?.size.toString())
-                    adapter = MyAdapter_ForBookmarks(
-                        requireContext(),
-                        pdflist as ArrayList<Items_Bookmarks>
-                    )
-                    binding?.bookmarksRecyclerView?.layoutManager =
-                        LinearLayoutManager(requireContext())
+                  var pdfllist = pdflist as ArrayList<Items_Bookmarks>
+                    pdfllist.sortedByDescending { it.pdf_ID }
+
+                    adapter = MyAdapter_ForBookmarks(requireContext(), pdfllist)
+                    binding?.bookmarksRecyclerView?.layoutManager = LinearLayoutManager(requireContext())
                     binding?.bookmarksRecyclerView?.adapter = adapter
 
                     binding?.bookmarkProgress?.visibility = View.GONE
-                    binding?.emptyView?.visibility = View.VISIBLE
-                    binding?.emptyText?.visibility = View.VISIBLE
+                    binding?.emptyView?.visibility = View.GONE
+                    binding?.emptyText?.visibility = View.GONE
 
 
                     adapter?.setMCustomClickListenr(object : MCustomOnClickListener {
@@ -239,63 +234,8 @@ class BookMarks_list_Fragment_ : Fragment() {
         }
         //to rename the pdf file
         renameeLinearLayout?.setOnClickListener {
-
-            var builder = AlertDialog.Builder(requireContext(),R.style.Theme_AppCompat_Dialog_Alert)
-            var viewgroup=activity?.findViewById<ViewGroup>(R.id.content)
-            var view =  LayoutInflater.from(requireContext()).inflate(R.layout.rename_dialog,viewgroup , false)
-            builder.setView(view)
-            builder.setCancelable(true)
-
-            var renameButton = view.findViewById<MaterialButton>(R.id.renameButton)
-            renameButton.setOnClickListener {
-
-                var renamedittext = view.findViewById<EditText>(R.id.renameEdittext)
-                var renamed = renamedittext.text.toString()
-
-                if(!renamed.isEmpty()) {
-                    var contentValues = ContentValues()
-                    contentValues.put(MediaStore.MediaColumns.TITLE, renamed)
-                    contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, renamed+".pdf")
-
-                    //to update item in mediastore shared storage
-                    var intt = activity?.contentResolver?.update(Uri.parse(pdfUri), contentValues, null, null)
-
-                    if (intt == 1) { //and this is for update item in Room Database
-                        CoroutineScope(Dispatchers.IO).launch {
-                            var livebookmarkedItem = MyRoomDatabase2?.getInstance(requireContext()).daoMethods().query(pdflist.get(position).pdfUri)
-                            var newitem = Items_Bookmarks(
-                                livebookmarkedItem.pdf_ID,
-                                renamed,
-                                livebookmarkedItem.pdfSize,
-                                livebookmarkedItem.date,
-                                livebookmarkedItem.pdfUri)
-
-                            Log.d("2f89efhef", newitem.pdfName + "k")
-                            //now update with new item replace with previous one
-                            MyRoomDatabase2.getInstance(requireContext()).daoMethods().update(newitem)
-
-                            withContext(Dispatchers.Main){
-                                Snackbar.make(binding?.bookmarksRecyclerView!!,"Name Changed",2000).show()
-                            }
-                        }//coroutinescope
-
-
-                    }
-                    Log.d("4gf4h3g", intt.toString())
-                    renameDialog.hide()
-                    bottomSheetDialog?.hide()
-                }
-                else{
-                    Toast.makeText(requireContext(),"Please enter name",Toast.LENGTH_SHORT).show()
-                  //  renameDialog.hide()
-                   // bottomSheetDialog?.hide()
-
-                }
-            } //positive button of dialog
-
-            renameDialog = builder.create()
-            renameDialog.show()
-
+            //renameFrom_everywhere(pdfUri)
+            ConversionandUtilsClass.renameFrom_everywhere(pdfUri,requireContext(),requireActivity(),bottomSheetDialog!!)
         }
 
         //to check if selected pdf is in bookmark database or not for bookmark buttons
@@ -374,6 +314,75 @@ class BookMarks_list_Fragment_ : Fragment() {
         liveList?.removeObserver(observer!!)
         Log.d("38fhncs/",liveList?.hasObservers().toString())
 
+    }
+
+     fun renameFrom_everywhere(pdfUri:String)
+     {
+
+        var builder = AlertDialog.Builder(requireContext(),R.style.Theme_AppCompat_Dialog_Alert)
+        var viewgroup=activity?.findViewById<ViewGroup>(R.id.content)
+        var view =  LayoutInflater.from(requireContext()).inflate(R.layout.rename_dialog,viewgroup , false)
+        builder.setView(view)
+        builder.setCancelable(true)
+
+        var renameButton = view.findViewById<MaterialButton>(R.id.renameButton)
+        renameButton.setOnClickListener {
+
+            var renamedittext = view.findViewById<EditText>(R.id.renameEdittext)
+            var renamed = renamedittext.text.toString()
+
+            if(!renamed.isEmpty()) {
+                var contentValues = ContentValues()
+                contentValues.put(MediaStore.MediaColumns.TITLE, renamed)
+                contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, renamed+".pdf")
+
+                //to update item in mediastore shared storage
+                var intt = activity?.contentResolver?.update(Uri.parse(pdfUri), contentValues, null, null)
+
+                if (intt == 1) { //and this is for update item in Room Database
+                    CoroutineScope(Dispatchers.IO).launch {
+                        var bookmarkedItem = MyRoomDatabase2?.getInstance(requireContext()).daoMethods().query(pdfUri)
+                        var recentItem = MyRoomDatabase?.getInstance(requireContext()).daoMethod().query(pdfUri)
+                        if (bookmarkedItem != null)
+                        {
+                            Log.d("hfsst565r",bookmarkedItem.pdfName)
+                            var newitem = Items_Bookmarks(bookmarkedItem.pdf_ID, renamed, bookmarkedItem.pdfSize, bookmarkedItem.date, bookmarkedItem.pdfUri)
+
+                            //now update with new item replace with previous one in bookmark database
+                            MyRoomDatabase2.getInstance(requireContext()).daoMethods().update(newitem)
+                            /* withContext(Dispatchers.Main) {
+                                Snackbar.make(binding?.bookmarksRecyclerView!!, "Name Changed", 2000).show()
+                            }*/
+                        }
+                        if(recentItem!=null)
+                        {
+                            Log.d("hfsst565r",recentItem.pdfName)
+
+                            var newitem = Items_RecentPdfs(recentItem.pdf_ID, renamed, recentItem.pdfSize, recentItem.date, recentItem.pdfUri)
+                            //now update with new item replace with previous one in bookmark database
+                            MyRoomDatabase.getInstance(requireContext()).daoMethod().update(newitem)
+                            /* withContext(Dispatchers.Main) {
+                                  Snackbar.make(binding?.bookmarksRecyclerView!!, "Name Changed", 2000).show()
+                              }*/
+                        }
+                    }//coroutinescope
+
+
+                }
+                Log.d("4gf4h3g", intt.toString())
+                renameDialog.hide()
+                bottomSheetDialog?.hide()
+            }
+            else{
+                Toast.makeText(requireContext(),"Please enter name",Toast.LENGTH_SHORT).show()
+                //  renameDialog.hide()
+                // bottomSheetDialog?.hide()
+
+            }
+        } //positive button of dialog
+
+        renameDialog = builder.create()
+        renameDialog.show()
     }
 
 }

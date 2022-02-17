@@ -16,6 +16,8 @@
     <color name="tabselectedColor">#FFFFFF</color>
     <color name="headingColor">#FF3030</color>
 
+    <color name="bottomsheetBackgroundcolor">#255EFB</color>
+
     <color name="floatTextBackgroundcolor">#FF0000</color>
     <color name="floatTextcolor">#000000</color>
     <color name="floatTintBackgroundcolor">#FF0088</color>
@@ -23,6 +25,7 @@
     <color name="renameBackgroundcolor">#006068</color>
     <color name="renameButtoncolor">#4807A3</color>
 
+    <color name="CardBackgroundcolor">#343C37</color>
 
 
 

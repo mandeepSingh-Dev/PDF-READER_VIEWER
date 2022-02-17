@@ -8,6 +8,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,11 +18,14 @@ import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.pdf_reader_viewer.*
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter
@@ -30,6 +35,7 @@ import com.example.pdf_reader_viewer.UtilClasses.*
 import com.example.pdf_reader_viewer.databinding.PdfListFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -103,10 +109,11 @@ class pdf_list_Fragment : Fragment() {
           op.setStartPage(12)
         //  op.showpage()
       }
-      binding?.settingsIcONBottom?.setOnClickListener {
+   /*   binding?.settingsIcONBottom?.setOnClickListener {
           startActivity(Intent(requireContext(),SettingsActviity::class.java))
-      }
+      }*/
       //performing floating button
+/*
       binding?.floatingButton?.setOnClickListener {
             var intent=Intent(requireContext(),PdfsTools_Activity::class.java)
 
@@ -114,6 +121,7 @@ class pdf_list_Fragment : Fragment() {
             startActivity(intent)
           Log.d("3igwn3bg","mskmsk")
       }
+*/
        /**____________________*/
 
         recyclerView = view.findViewById(R.id.pdfListRecylerView)
@@ -122,7 +130,7 @@ class pdf_list_Fragment : Fragment() {
 
 
       Log.d("349tu4jg4",viewLifecycleOwner.lifecycle.currentState.name)
-      //here in ViewModelProvider(this...)
+     /* //here in ViewModelProvider(this...)
       var myViewModel=ViewModelProvider(requireActivity(),ViewModelProvider.AndroidViewModelFactory.getInstance(activity?.application!!)).get(MyViewModel_For_pdflist::class.java)
       myViewModel.getpdflistttt().observe(viewLifecycleOwner, object : Observer<ArrayList<Items_pdfs>> {
           override fun onChanged(pdflist: ArrayList<Items_pdfs>?) {
@@ -159,36 +167,13 @@ class pdf_list_Fragment : Fragment() {
 
           }
       })
-
-    /*  var myViewModel = ViewModelProviders.of(this, ViewModelProvider.AndroidViewModelFactory.getInstance(activity?.application!!)).get(MyViewModel_For_pdflist::class.java)
-
-        myViewModel.getpdflistttt().observe(viewLifecycleOwner, object : Observer<ArrayList<Items_pdfs>> {
-                override fun onChanged(pdflist: ArrayList<Items_pdfs>?) {
-
-                    if (pdflist?.isEmpty()!!) {
-                        Log.d("3tubuenfe", "3ufufbkscsdc")
-                        binding?.emptyView?.visibility = View.VISIBLE
-                        binding?.emptyText?.visibility = View.VISIBLE
-                    } else {
-                        Log.d("3u8hfjsncsjcisj8", "cnsncjnj2")
-                    }
-                     myAdapter = MyAdapter(requireContext(), pdflist!!)
-                    recyclerView?.layoutManager = LinearLayoutManager(requireContext())
-                    recyclerView?.adapter = myAdapter
-                    var textView: TextView = view.findViewById(R.id.textviewALLL)
-                    textView.text = "All (" + pdflist?.size.toString() + ")"
-
-             activity?.runOnUiThread {
-                   myAdapter?.notifyDataSetChanged()
-             }
-                    searchPdfs(pdflist)
-                    //this method for  setCustomClickListner method that is defined in MyAdapter class
-                    myAdapterClickListner(myAdapter!!,pdflist)
-
-                }
-            })
 */
+      setUpviewmodelWithRECYLERView(view)
+      binding?.swipeRefreshLayout?.setOnRefreshListener {
+          binding?.swipeRefreshLayout?.setRefreshing(false);
+          setUpviewmodelWithRECYLERView(view)
 
+      }
 
     }// END OF onViewCreated block
 
@@ -322,6 +307,8 @@ class pdf_list_Fragment : Fragment() {
         //to bookmark the pdf into database
         bookmarkIcon_bottomsheet?.setOnClickListener {
                 CoroutineScope(Dispatchers.Main).launch {
+                    Log.d("3g8h3g",date_modifiedd.toString())
+
                     addBookmarks(appendedurii,titlee,sizee,date_modifiedd.toLong())
                     Log.d("38f3gh7fg3h","bookmark")
                     bookmarkIcon_bottomsheet.visibility=View.GONE
@@ -375,7 +362,41 @@ class pdf_list_Fragment : Fragment() {
 
        // binding?.pdflistSearchView?.set
 
-            binding?.pdflistSearchView?.setOnQueryTextListener(object :
+        binding?.searchEdittext?.addTextChangedListener(object:TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                          }
+
+            override fun afterTextChanged(s: Editable?) {
+                var newText = s.toString()
+                arrayListt.removeAll(arrayListt)
+
+                pdfList.forEach {
+                    if (it.title.lowercase().contains(newText?.lowercase()!!)) {
+                        binding?.emptyText?.visibility = View.GONE
+                        binding?.emptyView?.visibility = View.GONE
+                        arrayListt.add(it)
+
+                    }
+                }
+                if (arrayListt.isEmpty()) {
+                    binding?.emptyText?.visibility = View.VISIBLE
+                    binding?.emptyView?.visibility = View.VISIBLE
+                } else {
+                    myAdapter = MyAdapter(requireContext(), arrayListt)
+                    recyclerView?.layoutManager = LinearLayoutManager(requireContext())
+                    recyclerView?.adapter = myAdapter
+                    //this method for  setCustomClickListner method that is defined in MyAdapter class
+                    myAdapterClickListner(myAdapter!!, arrayListt)
+                }
+            }
+        })
+
+          /*  binding?.pdflistSearchView?.setOnQueryTextListener(object :
                 SearchView.OnQueryTextListener,
                 androidx.appcompat.widget.SearchView.OnQueryTextListener {
 
@@ -407,7 +428,7 @@ class pdf_list_Fragment : Fragment() {
                     return true
                 }
 
-            })
+            })*/
 
     }
     fun myAdapterClickListner(myAdapter:MyAdapter,pdflist:ArrayList<Items_pdfs>)
@@ -492,6 +513,52 @@ class pdf_list_Fragment : Fragment() {
 
         // function for initializing bottomsheetViews
         initializeBottomsheetView()
+    }
+
+    fun setUpviewmodelWithRECYLERView(view:View){
+        //here in ViewModelProvider(this...)
+       var myViewModel=ViewModelProvider(requireActivity(),ViewModelProvider.AndroidViewModelFactory.getInstance(activity?.application!!)).get(MyViewModel_For_pdflist::class.java)
+
+        myViewModel.getpdflistttt().observe(viewLifecycleOwner, object : Observer<ArrayList<Items_pdfs>> {
+            override fun onChanged(pdflist: ArrayList<Items_pdfs>?) {
+                if (pdflist?.isEmpty()!!) {
+                    Log.d("3tubuenfe", "3ufufbkscsdc")
+                    binding?.emptyView?.visibility = View.VISIBLE
+                    binding?.emptyText?.visibility = View.VISIBLE
+                    if(Build.VERSION.SDK_INT==Build.VERSION_CODES.Q) {
+                        binding?.emptyText?.text = "Only created or modified files will be shown here"
+                    }
+
+                    binding?.pdfListProgress?.visibility = View.GONE
+                } else {
+                    Log.d("3u8hfjsncsjcisj8", "cnsncjnj2")
+
+                    myAdapter = MyAdapter(requireContext(), pdflist!!)
+                    recyclerView?.layoutManager = LinearLayoutManager(requireContext())
+                    recyclerView?.adapter = myAdapter
+
+                    binding?.pdfListProgress?.visibility = View.GONE
+                    binding?.emptyView?.visibility = View.GONE
+                    binding?.emptyText?.visibility = View.GONE
+
+                    var textView: TextView = view.findViewById(R.id.textviewALLL)
+                    textView.text = "All (" + pdflist?.size.toString() + ")"
+
+                    activity?.runOnUiThread {
+                        myAdapter?.notifyDataSetChanged()
+
+                    }
+                    searchPdfs(pdflist)
+                    //this method for  setCustomClickListner method that is defined in MyAdapter class
+                    myAdapterClickListner(myAdapter!!, pdflist)
+                }
+
+            }
+        })
+
+
+       // myViewModel.viewModelScope.cancel(null)
+
     }
 
    // @SuppressLint("Range")

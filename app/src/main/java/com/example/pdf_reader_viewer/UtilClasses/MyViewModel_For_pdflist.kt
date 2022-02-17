@@ -8,6 +8,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
 import com.example.pdf_reader_viewer.UtilClasses.Read_Pdf_Files
+import kotlinx.coroutines.async
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
@@ -18,15 +20,20 @@ class MyViewModel_For_pdflist(application: Application):AndroidViewModel(applica
        var pdflist:MutableLiveData<ArrayList<Items_pdfs>>?=null
 
     init{
-        viewModelScope.launch {
+        var job = viewModelScope.async {
             pdflist = MutableLiveData<ArrayList<Items_pdfs>>()
             var pdflisttt = Read_Pdf_Files(application1).getPdfList_2()
             Log.d("3guj3f",this.isActive.toString())
           // Read_Pdf_Files(application1).getPdfList_Folder("Download")
             pdflist?.value=pdflisttt
            // Log.d("388ry8uwhfd",pdflist?.size.toString())
+
         }
-        }
+Log.d("23f0jgf",job.isActive.toString())
+        Log.d("23f0jgf",job.isCancelled.toString())
+        Log.d("23f0jgf",job.isCompleted.toString())
+
+    }
 
 
       /*  suspend fun getList():ArrayList<Items_pdfs>{

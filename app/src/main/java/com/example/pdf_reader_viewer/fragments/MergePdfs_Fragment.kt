@@ -9,6 +9,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
@@ -16,8 +18,11 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.pdf_reader_viewer.MCustomOnClickListener
 import com.example.pdf_reader_viewer.R
 import com.example.pdf_reader_viewer.RecylerViewClasses.Items_pdfs
+import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter
 import com.example.pdf_reader_viewer.RecylerViewClasses.MyAdapter_ForMerge
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.example.pdf_reader_viewer.UtilClasses.PdfOperations
@@ -229,8 +234,10 @@ class MergePdfs_Fragment : Fragment() {
     //creating adapter and set to recyclerView
     fun createrecyclerView() {
         adapter = MyAdapter_ForMerge(requireContext(), selectedPdf_list!!)
-        binding?.mergePdfListRecyclerView?.layoutManager = GridLayoutManager(requireContext(),2)
+        binding?.mergePdfListRecyclerView?.layoutManager = LinearLayoutManager(requireContext())
         binding?.mergePdfListRecyclerView?.adapter = adapter
+
+        myAdapterClickListner(adapter!!,selectedPdf_list!!)
 
 
 
@@ -427,6 +434,32 @@ class MergePdfs_Fragment : Fragment() {
                 Toast.makeText(requireContext(),e.message.toString(),Toast.LENGTH_LONG).show()
             }
     })
+
+    fun myAdapterClickListner(myAdapter: MyAdapter_ForMerge, pdflist: java.util.ArrayList<Items_pdfs>)
+    {
+/*
+        myAdapter?.setCustomOnClickListenerr(object:MyAdapter.CustomOnClickListener{
+            override fun customOnClick(position: Int) {
+                Log.d("3iegnv3me,wv",position.toString())
+                pdfName1_bottomsheet?.setText(position.toString())
+                bottomSheetDialog?.show()
+                clickOnbottomSheetViews(pdflist,position,myAdapter)
+
+            }
+        })
+*/
+        myAdapter?.setMCustomClickListenr(object: MCustomOnClickListener {
+            override fun onClick(position: Int) {
+//
+//               var view =  LayoutInflater.from(requireContext()).inflate(R.layout.list_merge_item,activity?.findViewById(R.id.content),false)
+//               var dragimage =  view.findViewById<ImageView>(R.id.dragMenuimage)
+
+
+                }
+            })
+
+
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

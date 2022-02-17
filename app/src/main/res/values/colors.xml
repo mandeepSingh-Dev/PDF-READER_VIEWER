@@ -20,10 +20,13 @@
     <color name="floatTintBackgroundcolor">#FF7700</color>
     <color name="floatTextcolor">#DCC7F6</color>
 
-    <color name="bottomsheetBackgroundcolor">#C56F6F</color>
+    <color name="bottomsheetBackgroundcolor">#BA31FF</color>
 
     <color name="renameBackgroundcolor">#E65151</color>
     <color name="renameButtoncolor">#6CAF88</color>
+
+    <color name="CardBackgroundcolor">#FFFFFF</color>
+
 
 
 
