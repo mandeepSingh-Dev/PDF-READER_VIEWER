@@ -1,17 +1,20 @@
 package com.example.pdf_reader_viewer.fragments
 
+import android.app.AlertDialog
+import android.content.ContentValues
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.DocumentsContract
+import android.provider.MediaStore
+import android.text.Layout
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -30,7 +33,9 @@ import com.example.pdf_reader_viewer.UtilClasses.FragmentNames
 import com.example.pdf_reader_viewer.UtilClasses.PDFProp
 import com.example.pdf_reader_viewer.databinding.BookMarksListFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -59,6 +64,8 @@ class BookMarks_list_Fragment_ : Fragment() {
     lateinit var bookmarkIcon_bottomsheet: ImageView
     lateinit var removebookmark_bottomsheet: ImageView
     lateinit var shareIcon_bottomsheet: ImageView
+
+      lateinit var renameDialog :AlertDialog
 
     var intent:Intent?=null
 
@@ -132,6 +139,8 @@ class BookMarks_list_Fragment_ : Fragment() {
         bookmarkIcon_bottomsheet = bottomSheetDialog?.findViewById(R.id.bookmarkIcon_bottomsheet)!!
         removebookmark_bottomsheet = bottomSheetDialog?.findViewById(R.id.removebookmarkIcon_bottomsheet)!!
         shareIcon_bottomsheet = bottomSheetDialog?.findViewById(R.id.share_bottomsheet)!!
+
+
     }
 
     fun clickOnbottomSheetViews(pdflist:ArrayList<Items_Bookmarks>, position:Int, myAdapter: MyAdapter_ForBookmarks){
@@ -174,6 +183,7 @@ class BookMarks_list_Fragment_ : Fragment() {
         openLinearLayout?.setOnClickListener {
 
             var intent= Intent(context, PdfView_Activity::class.java)
+            intent.setAction(PDFProp.MY_OPEN_ACTION)
             intent.putExtra(PDFProp.PDF_APPENDED_URI,pdfUri)
                   .putExtra(PDFProp.PDF_TITLE,pdfName)
             startActivity(intent)
@@ -225,6 +235,66 @@ class BookMarks_list_Fragment_ : Fragment() {
             intent?.putExtra(Intent.EXTRA_SUBJECT, "Sharing File from My Pdf App.");
             // intent?.putExtra(Intent.EXTRA_TEXT, "Sharing File from Webkul to purchase items...");
             startActivity(Intent.createChooser(intent,pdfName))
+
+        }
+        //to rename the pdf file
+        renameeLinearLayout?.setOnClickListener {
+
+            var builder = AlertDialog.Builder(requireContext(),R.style.Theme_AppCompat_Dialog_Alert)
+            var viewgroup=activity?.findViewById<ViewGroup>(R.id.content)
+            var view =  LayoutInflater.from(requireContext()).inflate(R.layout.rename_dialog,viewgroup , false)
+            builder.setView(view)
+            builder.setCancelable(true)
+
+            var renameButton = view.findViewById<MaterialButton>(R.id.renameButton)
+            renameButton.setOnClickListener {
+
+                var renamedittext = view.findViewById<EditText>(R.id.renameEdittext)
+                var renamed = renamedittext.text.toString()
+
+                if(!renamed.isEmpty()) {
+                    var contentValues = ContentValues()
+                    contentValues.put(MediaStore.MediaColumns.TITLE, renamed)
+                    contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, renamed+".pdf")
+
+                    //to update item in mediastore shared storage
+                    var intt = activity?.contentResolver?.update(Uri.parse(pdfUri), contentValues, null, null)
+
+                    if (intt == 1) { //and this is for update item in Room Database
+                        CoroutineScope(Dispatchers.IO).launch {
+                            var livebookmarkedItem = MyRoomDatabase2?.getInstance(requireContext()).daoMethods().query(pdflist.get(position).pdfUri)
+                            var newitem = Items_Bookmarks(
+                                livebookmarkedItem.pdf_ID,
+                                renamed,
+                                livebookmarkedItem.pdfSize,
+                                livebookmarkedItem.date,
+                                livebookmarkedItem.pdfUri)
+
+                            Log.d("2f89efhef", newitem.pdfName + "k")
+                            //now update with new item replace with previous one
+                            MyRoomDatabase2.getInstance(requireContext()).daoMethods().update(newitem)
+
+                            withContext(Dispatchers.Main){
+                                Snackbar.make(binding?.bookmarksRecyclerView!!,"Name Changed",2000).show()
+                            }
+                        }//coroutinescope
+
+
+                    }
+                    Log.d("4gf4h3g", intt.toString())
+                    renameDialog.hide()
+                    bottomSheetDialog?.hide()
+                }
+                else{
+                    Toast.makeText(requireContext(),"Please enter name",Toast.LENGTH_SHORT).show()
+                  //  renameDialog.hide()
+                   // bottomSheetDialog?.hide()
+
+                }
+            } //positive button of dialog
+
+            renameDialog = builder.create()
+            renameDialog.show()
 
         }
 
