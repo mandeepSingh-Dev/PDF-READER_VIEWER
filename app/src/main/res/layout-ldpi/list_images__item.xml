@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.google.android.material.imageview.ShapeableImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/selectedImagesBitmap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_pdf_icon"
+        android:padding="10dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="5dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+    <TextView
+        android:id="@+id/positionnn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="dkhdw"
+        android:textColor="@color/textcolor"
+        app:layout_constraintTop_toBottomOf="@id/selectedImagesBitmap"
+        app:layout_constraintLeft_toLeftOf="@id/selectedImagesBitmap"
+/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+

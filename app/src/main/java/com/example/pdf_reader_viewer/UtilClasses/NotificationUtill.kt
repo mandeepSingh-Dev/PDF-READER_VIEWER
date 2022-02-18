@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.util.Log
@@ -31,7 +32,7 @@ class NotificationUtill(activity: Activity) {
         intent.setData(uri)
 
         var pendingIntent = PendingIntent.getActivity(activity.applicationContext,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
-         var pendingAction = NotificationCompat.Action.Builder(R.drawable.ic_item_pdf_icon,"sdhsdjks",pendingIntent).build()
+         var pendingAction = NotificationCompat.Action.Builder(R.drawable.ic_item_pdf_icon,"view",pendingIntent).build()
 
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O)
@@ -39,25 +40,26 @@ class NotificationUtill(activity: Activity) {
             var channle = NotificationChannel(channelId,"NotiFoti",NotificationManager.IMPORTANCE_HIGH)
             notificationManager.createNotificationChannel(channle)
 
-            var remoteView = RemoteViews(activity.applicationContext.packageName,R.layout.custom_notifiaction)
-             remoteView.setTextViewText(R.id.detials,pdftitlee)
+          //  var remoteView = RemoteViews(activity.applicationContext.packageName,R.layout.custom_notifiaction)
+           //  remoteView.setTextViewText(R.id.detials,pdftitlee)
 
 
             notificationbuilder = NotificationCompat.Builder(activity.applicationContext, channelId)
-                .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("title")
-            .setContentText("contentText")
+                .setSmallIcon(R.drawable.ic__422509_acorbat_logo_pdf_file_icon)
+                .setContentTitle("file downloaded")
+                .setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE)
+                .setContentText(pdftitlee)
             //builder.setOngoing(true);
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+               .setPriority(NotificationCompat.PRIORITY_HIGH)
 
                 /*.setContentTitle("File Downloaded")
                 .setContentText(pdftitlee)*/
               //  .setContentIntent(pendingIntent)
                 //.setStyle(NotificationCompat.DecoratedCustomViewStyle())
-               // .addAction(pendingAction)
+                .addAction(pendingAction)
               //  .(remoteView)
                // .setColor(Color.BLUE)
-                .setContent(remoteView)
+                //.setContent(remoteView)
 
                 //.set
               //  .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher_background))

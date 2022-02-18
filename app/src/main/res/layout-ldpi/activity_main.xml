@@ -152,8 +152,8 @@
            android:layout_height="wrap_content"
            android:layout_gravity="bottom|end|right"
            android:orientation="vertical"
-           android:layout_marginRight="15dp"
-           android:layout_marginBottom="40dp"
+           android:layout_marginRight="2dp"
+           android:layout_marginBottom="1dp"
            android:gravity="center_horizontal"
            app:layout_constraintBottom_toBottomOf="parent"
            app:layout_constraintRight_toRightOf="parent">
@@ -166,7 +166,7 @@
                android:layout_height="wrap_content"
                android:orientation="horizontal"
                android:layout_gravity="end"
-               android:layout_marginRight="15dp"
+               android:layout_marginRight="8dp"
                >
                <TextView
                    android:id="@+id/fab3TextView"
@@ -197,8 +197,8 @@
                android:layout_height="wrap_content"
                android:orientation="horizontal"
                android:layout_gravity="end"
-               android:layout_marginRight="15dp"
-               android:layout_marginBottom="10dp"
+               android:layout_marginRight="8dp"
+               android:layout_marginBottom="2dp"
                >
                <TextView
                    android:id="@+id/fab2TextView"
@@ -230,7 +230,7 @@
                android:layout_gravity="end|bottom"
                android:layout_marginLeft="18dp"
                android:layout_marginTop="10dp"
-               android:layout_marginRight="18dp"
+               android:layout_marginRight="8dp"
                android:layout_marginBottom="18dp"
                app:fabSize="normal"
                android:src="@drawable/ic_baseline_add_24"
