@@ -133,7 +133,8 @@ class MergePdfs_Fragment : Fragment() {
             // Toast.makeText(requireContext(),pdfUrifromFileManager?.toString(),Toast.LENGTH_LONG).show()
         }
         val manager = activity?.supportFragmentManager
-        manager?.popBackStack()
+        Log.d("wofwjhf",manager?.backStackEntryCount.toString())
+            manager?.popBackStack()
        // manager?.isStateSaved
        // val fragmentPopped: Boolean = manager?.popBackStackImmediate(ImageTo_Pdf_Fragment().javaClass.name, 0)!!
 
@@ -142,18 +143,17 @@ class MergePdfs_Fragment : Fragment() {
             var bundle = Bundle()
             bundle.putString(PDFProp.COMING_FROM_MERGEFRAG,PDFProp.COMING_FROM_MERGEFRAG)
             bundle.putParcelableArrayList(PDFProp.MERGE_SELECTED_LIST,selectedPdf_list)
+            Log.d("goewrjihgw",selectedPdf_list?.size.toString())
             var imagetoPdfFragment = ImageTo_Pdf_Fragment()
             imagetoPdfFragment.arguments = bundle
 
-           // if(!fragmentPopped) {
-                manager?.beginTransaction()
-                    ?.replace(R.id.fragmentContainerView, imagetoPdfFragment)
-                    ?.addToBackStack(imagetoPdfFragment.javaClass.name)?.commit()
-           // }
+                manager?.beginTransaction()?.add(R.id.fragmentContainerView, imagetoPdfFragment)?.addToBackStack(null)?.commit()
+
                 //here we clear this selectedPdf_list because after coming back
-            // from imagetopdf fragment duplicates recylerview items was created
-            //so whenever we go imagetopdf fragment then new list will be come
-           selectedPdf_list?.removeAll(selectedPdf_list!!)
+                // from imagetopdf fragment duplicates recylerview items was created
+                //so whenever we go imagetopdf fragment then new list will be come
+             // selectedPdf_list?.removeAll(selectedPdf_list!!)
+
           /*  val imagetoPdfFragment = ImageTo_Pdf_Fragment()
             imagetoPdfFragment.show(activity?.supportFragmentManager!!.beginTransaction(), "ImageTo_Pdf_Fragment")
    */     }
@@ -249,10 +249,8 @@ class MergePdfs_Fragment : Fragment() {
 
         CoroutineScope(Dispatchers.Main).launch {
             Log.d("4g93yhg3g", password)
-            importingDailogTextview =
-                alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
-            importingnumberDailogText =
-                alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
+            importingDailogTextview = alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
+            importingnumberDailogText = alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
             //these dailog textview had importing and importing number texts
             importingDailogTextview?.text = "please wait..."
             importingnumberDailogText?.visibility = View.GONE
