@@ -75,7 +75,7 @@
         android:id="@+id/sizePDF"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:gravity="end"
+        android:gravity="center"
         android:singleLine="true"
         android:ellipsize="end"
         android:layout_marginTop="1dp"

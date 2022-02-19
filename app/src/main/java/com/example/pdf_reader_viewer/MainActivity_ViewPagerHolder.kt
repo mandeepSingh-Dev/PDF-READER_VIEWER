@@ -1,6 +1,8 @@
  package com.example.pdf_reader_viewer
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -13,11 +15,13 @@ import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.pdf_reader_viewer.UtilClasses.FragmentNames
 import com.example.pdf_reader_viewer.UtilClasses.ViewAnimation
@@ -25,6 +29,7 @@ import com.example.pdf_reader_viewer.ViewPagerAdapter.MyFragmentStateAdapter
 import com.example.pdf_reader_viewer.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import java.util.jar.Manifest
 
  class MainActivity_ViewPagerHolder : AppCompatActivity()
  {
@@ -33,12 +38,15 @@ import com.google.android.material.tabs.TabLayoutMediator
 
      private var isReadPermissionGranted:Boolean?=false
      private var isWritePermissionGranted:Boolean?=false
-     private lateinit var permissionLauncher:ActivityResultLauncher<Array<String>>
 
      /**requesting permissions request*/
      var launcher=registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions(),
          ActivityResultCallback {
 
+
+             var intent = Intent("PERMISSION_GRANTED")
+             intent.putExtra("PERMISSIONGRANTED",true)
+             LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
          })
      override fun onCreate(savedInstanceState: Bundle?) {
          super.onCreate(savedInstanceState)
@@ -56,9 +64,13 @@ import com.google.android.material.tabs.TabLayoutMediator
          setupViewPager2()
 
          /**here we check and request Read_External_Storage and WRITE_EXTERNAL_STORAGE*/
-         requestPermssions()
+         //requestPermssions()
          /**Granting MANAGE_EXTERNAL_STORAGE all files access permission*/
-         requesting_MANAGE_ALL_DOCUMENT_Permission()
+       //  requesting_MANAGE_ALL_DOCUMENT_Permission()
+      /*   var intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+         intent.setData(Uri.parse("package:" + getPackageName()))
+         intent.putExtra("INTTN",1)
+         launcherSetting.launch(intent)*/
 
          binding?.threedotsImageButtonMain?.setOnClickListener {
              var popupMenu = PopupMenu(this,it)
@@ -119,9 +131,6 @@ import com.google.android.material.tabs.TabLayoutMediator
              Log.d("3igwn3bg","mskmsk")
          }
          binding?.fab3Createpdf?.setOnClickListener {
-             Toast.makeText(applicationContext,"Create Pdf",Toast.LENGTH_SHORT).show()
-         }
-         binding?.fab3Createpdf?.setOnClickListener {
              var intent= Intent(applicationContext,PdfsTools_Activity::class.java)
              intent.putExtra(FragmentNames.OPEN_TEXTTOPDF_FRAGMENT, FragmentNames.OPEN_TEXTTOPDF_FRAGMENT)
              startActivity(intent)
@@ -153,7 +162,7 @@ import com.google.android.material.tabs.TabLayoutMediator
          var writePersmission=ContextCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
          var manage_documentsPermission=ContextCompat.checkSelfPermission(this,android.Manifest.permission.MANAGE_DOCUMENTS) == PackageManager.PERMISSION_GRANTED
 
-         var sdkVersion=Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q
+         var sdkVersion = Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q
          /**here we created a mutablelist to add permissions in list if permissions are not granted*/
          var permissionList= mutableListOf<String>()
 
@@ -190,6 +199,10 @@ import com.google.android.material.tabs.TabLayoutMediator
          if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R) {
              if (Environment.isExternalStorageManager()) {
                  Toast.makeText(this, "Manage_Permission granted", Toast.LENGTH_SHORT).show()
+
+                 var sharedprefrence = getSharedPreferences("managed", Context.MODE_PRIVATE)
+                   sharedprefrence.edit().putBoolean("MANGEEEGED",true).commit()
+
              } else {
                  Toast.makeText(this, "Manage_Permission NOT granted", Toast.LENGTH_SHORT).show()
                 val uri = Uri.parse("package:" + getPackageName())
@@ -226,6 +239,21 @@ import com.google.android.material.tabs.TabLayoutMediator
          }
 
      }
+
+     var contracts =object:ActivityResultContract<Intent,Int>(){
+         override fun createIntent(context: Context, input: Intent?): Intent {
+             return input!!
+         }
+
+         override fun parseResult(resultCode: Int, intent: Intent?): Int {
+            // return intent?.data!!
+             return intent?.getIntExtra("INTTN",0)!!
+         }
+     }
+     var launcherSetting = registerForActivityResult(contracts, ActivityResultCallback {
+         Log.d("efhwef",it.toString())
+
+     })
 
    /*  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
        //  var popupMenu = PopupMenu(this,findViewById(R.menu.bottombar_icons))

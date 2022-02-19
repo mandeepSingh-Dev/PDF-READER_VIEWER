@@ -3,11 +3,14 @@ package com.example.pdf_reader_viewer.fragments
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.*
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
+import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -18,11 +21,13 @@ import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -38,6 +43,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.*
 import java.util.*
+import java.util.jar.Manifest
 
 
 class pdf_list_Fragment : Fragment() {
@@ -63,34 +69,26 @@ class pdf_list_Fragment : Fragment() {
 
     var myAdapter:MyAdapter?=null
     var intent:Intent?=null
+    var receiver:BroadcastReceiver?=null
 
+    private var isReadPermissionGranted:Boolean?=false
+    private var isWritePermissionGranted:Boolean?=false
+
+    val localBroadcastManager:LocalBroadcastManager by lazy {
+        LocalBroadcastManager.getInstance(requireContext())
+    }
     var uri :Uri?=null
-    var  launcher= registerForActivityResult(ActivityResultContracts.OpenDocument(),
-        ActivityResultCallback {
-            uri = it
-            launcher4.launch(System.currentTimeMillis().toString()+".pdf")
-        })
-    var launcher4 = registerForActivityResult(ActivityResultContracts.CreateDocument(),
-        ActivityResultCallback {
-            var outputStream = activity?.contentResolver?.openOutputStream(it)
-            PDFOperationNATIVE(requireActivity()).splitPdf(uri!!, outputStream!!)
-        })
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pdflist = ArrayList()
-        //PDFBoxResourceLoader.init(activity?.applicationContext);
-//        throw RuntimeException()
-
     }
 
     @SuppressLint("ResourceType")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         binding = PdfListFragmentBinding.inflate(inflater)
-
-
         return binding?.root
     }
 
@@ -103,12 +101,14 @@ class pdf_list_Fragment : Fragment() {
 
        /**____________________*/
               //getNewPdfs()
+/*
       binding?.textviewALLL?.setOnClickListener {
          // launcher.launch(arrayOf("application/pdf"))
           var op= PDFOperationNATIVE(requireActivity())
-          op.setStartPage(12)
+                  op.setStartPage(12)
         //  op.showpage()
       }
+*/
    /*   binding?.settingsIcONBottom?.setOnClickListener {
           startActivity(Intent(requireContext(),SettingsActviity::class.java))
       }*/
@@ -168,12 +168,28 @@ class pdf_list_Fragment : Fragment() {
           }
       })
 */
-      setUpviewmodelWithRECYLERView(view)
-      binding?.swipeRefreshLayout?.setOnRefreshListener {
-          binding?.swipeRefreshLayout?.setRefreshing(false);
-          setUpviewmodelWithRECYLERView(view)
+      //getting permission and pdfs(as result) on click allow permission for below android 11
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.R){
+           requestPermssions(requireContext())
+        }//-------------------------->
+      // **IMP** we get permission for above android R in onResume method because of MANAGE_EXTERNAL_STORAGE
+      // permission which takes to settings activity and pdflist fragmenst gets stopped
+     //------------------------------->
 
-      }
+      // getting pdfs if READ_EXTERNAL_STORAGE is GRANTED only
+     if( ContextCompat.checkSelfPermission(requireContext(),android.Manifest.permission.READ_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED)
+     {
+         setUpviewmodelWithRECYLERView()
+         binding?.swipeRefreshLayout?.setOnRefreshListener {
+             binding?.swipeRefreshLayout?.setRefreshing(false);
+             setUpviewmodelWithRECYLERView()
+         }
+     }
+
+         /* setUpviewmodelWithRECYLERView(view)
+       binding?.swipeRefreshLayout?.setOnRefreshListener {
+           binding?.swipeRefreshLayout?.setRefreshing(false);
+           setUpviewmodelWithRECYLERView(view) }*/
 
     }// END OF onViewCreated block
 
@@ -541,8 +557,8 @@ class pdf_list_Fragment : Fragment() {
                     binding?.emptyView?.visibility = View.GONE
                     binding?.emptyText?.visibility = View.GONE
 
-                    var textView: TextView = view.findViewById(R.id.textviewALLL)
-                    textView.text = "All (" + pdflist?.size.toString() + ")"
+                   // var textView: TextView = view.findViewById(R.id.textviewALLL)
+                    binding?.textviewALLL?.text = "All (" + pdflist?.size.toString() + ")"
 
                     activity?.runOnUiThread {
                         myAdapter?.notifyDataSetChanged()
@@ -560,6 +576,51 @@ class pdf_list_Fragment : Fragment() {
        // myViewModel.viewModelScope.cancel(null)
 
     }
+    fun setUpviewmodelWithRECYLERView(){
+        //here in ViewModelProvider(this...)
+        var myViewModel=ViewModelProvider(requireActivity(),ViewModelProvider.AndroidViewModelFactory.getInstance(activity?.application!!)).get(MyViewModel_For_pdflist::class.java)
+
+        myViewModel.getpdflistttt().observe(viewLifecycleOwner, object : Observer<ArrayList<Items_pdfs>> {
+            override fun onChanged(pdflist: ArrayList<Items_pdfs>?) {
+                if (pdflist?.isEmpty()!!) {
+                    Log.d("3tubuenfe", "3ufufbkscsdc")
+                    binding?.emptyView?.visibility = View.VISIBLE
+                    binding?.emptyText?.visibility = View.VISIBLE
+                    if(Build.VERSION.SDK_INT==Build.VERSION_CODES.Q) {
+                        binding?.emptyText?.text = "Only created or modified files will be shown here"
+                    }
+
+                    binding?.pdfListProgress?.visibility = View.GONE
+                } else {
+                    Log.d("3u8hfjsncsjcisj8", "cnsncjnj2")
+
+                    myAdapter = MyAdapter(requireContext(), pdflist!!)
+                    recyclerView?.layoutManager = LinearLayoutManager(requireContext())
+                    recyclerView?.adapter = myAdapter
+
+                    binding?.pdfListProgress?.visibility = View.GONE
+                    binding?.emptyView?.visibility = View.GONE
+                    binding?.emptyText?.visibility = View.GONE
+
+                    // var textView: TextView = view.findViewById(R.id.textviewALLL)
+                    binding?.textviewALLL?.text = "All (" + pdflist?.size.toString() + ")"
+
+                    activity?.runOnUiThread {
+                        myAdapter?.notifyDataSetChanged()
+
+                    }
+                    searchPdfs(pdflist)
+                    //this method for  setCustomClickListner method that is defined in MyAdapter class
+                    myAdapterClickListner(myAdapter!!, pdflist)
+                }
+
+            }
+        })
+
+
+        // myViewModel.viewModelScope.cancel(null)
+
+    }
 
    // @SuppressLint("Range")
   // @SuppressLint("Range")
@@ -572,75 +633,86 @@ class pdf_list_Fragment : Fragment() {
         val selection = MediaStore.Files.FileColumns.MIME_TYPE + " = ?"
         *//**//**getting MIME type for pdf*//**//*
         val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension("pdf")
-        *//**//**values-of-placeholder-variables  giving mimetype to selection_args *//**//*
-        val selectionArgs = arrayOf(mimeType)
-//       var cursor =  activity?.contentResolver?.query(MediaStore.Files.getContentUri("external"),null,selection,selectionArgs,null)
-        var cursor =  activity?.contentResolver?.query(MediaStore.Files.getContentUri("external"),null,null,null,null)
+        *//**/
+    override fun onResume() {
+        super.onResume()
+        requesting_MANAGE_ALL_DOCUMENT_Permission()
+    }
+      //permission for above android R for getting All PDFs
+    fun requesting_MANAGE_ALL_DOCUMENT_Permission()
+    {
+        /**REQUESTING MANAGE_EXTERNAL_FILES PERMISSION FOR ACCESS ALL FILES/PDFs*/
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.R) {
+            if (Environment.isExternalStorageManager()) {
+                Toast.makeText(requireContext(), "Manage_Permission granted", Toast.LENGTH_SHORT).show()
 
-        Toast.makeText(requireContext(),"kdnfkdnfkd"+cursor?.count.toString(),Toast.LENGTH_LONG).show()
+                Log.d("sdljsds","${myAdapter?.itemCount}")
+                  if(myAdapter?.itemCount==null) {
+                      setUpviewmodelWithRECYLERView()
+                      binding?.swipeRefreshLayout?.setOnRefreshListener {
+                          binding?.swipeRefreshLayout?.setRefreshing(false);
+                          setUpviewmodelWithRECYLERView()
+                      }
+                  }
+                var sharedprefrence = activity?.getSharedPreferences("managed", Context.MODE_PRIVATE)
+                sharedprefrence?.edit()?.putBoolean("MANGEEEGED",true)?.commit()
 
-        while(cursor?.moveToNext()!!){
-                Log.d("4389gh4bg",cursor?.count.toString())
-            Toast.makeText(requireContext(),"kdnfkdnfkd"+cursor.count.toString(),Toast.LENGTH_LONG).show()
-               *//**//* if(cursor == null || cursor.count<=0 )
-                    {
-                        Log.d("39jhfgfg3","error")
-                        return@use
-                    }*//**//*
-              //  do{
-                    val title: String = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.TITLE))
-                    val duration: String? = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DURATION))
-                    val data: String = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA))
-                  //  val file = File(data)
-                   // val lastModifiedDate = Date(file.lastModified())
-                   // val fileDate = android.text.format.DateFormat.format("hh:mm aa, dd/MM/yyyy", lastModifiedDate).toString()
-                  //  filelist.add(Items_pdfs(title, "size",Uri.parse(data)))
-
-                    Log.d("39jhfgfg3",title.toString())
-//                } while (cursor.moveToNext())
+            } else {
+                Toast.makeText(requireContext(), "Manage_Permission NOT granted", Toast.LENGTH_SHORT).show()
+                val uri = Uri.parse("package:" + activity?.getPackageName())
+                startActivity(Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,uri))
             }
-         cursor.close()*//*
+        }//END OF IF BLOCK WHERE WE USE CONDITION FOR ANDROID R.
+    }
+//permission for below android 11 for getting pdfs
+    fun requestPermssions(context:Context)
+    {
+        /** Below two lines are checking the permissions are granted or not*/
+        var readPermission=ContextCompat.checkSelfPermission(context,android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        var writePersmission=ContextCompat.checkSelfPermission(context,android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        var manage_documentsPermission=ContextCompat.checkSelfPermission(context,android.Manifest.permission.MANAGE_DOCUMENTS) == PackageManager.PERMISSION_GRANTED
 
-        val projection = arrayOf(
-            MediaStore.Files.FileColumns.DISPLAY_NAME,
-            MediaStore.Files.FileColumns.DATE_ADDED,
-            MediaStore.Files.FileColumns.DATA,
-            MediaStore.Files.FileColumns.MIME_TYPE
-        )
+        var sdkVersion = Build.VERSION.SDK_INT>=Build.VERSION_CODES.Q
+        /**here we created a mutablelist to add permissions in list if permissions are not granted*/
+        var permissionList= mutableListOf<String>()
 
-        val sortOrder = MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
+        isReadPermissionGranted = readPermission
+        isWritePermissionGranted = writePersmission || sdkVersion
 
-        val selection = MediaStore.Files.FileColumns.MIME_TYPE + " = ?"
+        if(!readPermission)
+        {
+            permissionList.add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+            Log.d("dkhnd","read")
+        }
+        if(!writePersmission)
+        {
+            permissionList.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            Log.d("dkhnd","writePersmission")
 
-        val mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension("pdf")
-        val selectionArgs = arrayOf(mimeType)
+        }
+        if(!manage_documentsPermission)
+        {
+            permissionList.add(android.Manifest.permission.MANAGE_DOCUMENTS)
+            Log.d("dkhnd","manage_documentsPermission")
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            collection = MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL)
-        } else {
-            collection = MediaStore.Files.getContentUri("external")
         }
 
+        /**now here we request permissions from resultLauncher... only if permissions are not granted*/
+        if(permissionList.isNotEmpty())
+        {
+            launcher.launch(permissionList.toTypedArray())
+        }
+    }
 
-        activity?.contentResolver?.query(collection, null, null, null, null)
-            .use { cursor ->
-                Toast.makeText(requireContext(),"skdskd"+cursor?.count.toString(),Toast.LENGTH_LONG).show()
-                assert(cursor != null)
-                if (cursor?.moveToFirst()!!) {
-                    val columnData: Int = cursor?.getColumnIndex(MediaStore.Files.FileColumns.DATA)
-                    val columnName: Int = cursor?.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)
-                    do {
-                       // pdfList.add(cursor.getString(columnData))
-                        Log.d("e8hg8heg", "getPdf: " + cursor.getString(columnData))
-                        //you can get your pdf files
-                    } while (cursor.moveToNext())
-                }
-  //          }
-       // return filelist
+    /**requesting permissions request*/
+    var launcher=registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions(),
+        ActivityResultCallback {
+            setUpviewmodelWithRECYLERView()
+            binding?.swipeRefreshLayout?.setOnRefreshListener {
+                binding?.swipeRefreshLayout?.setRefreshing(false);
+                setUpviewmodelWithRECYLERView()
             }
-*/
-
-
+        })
 
 
 
