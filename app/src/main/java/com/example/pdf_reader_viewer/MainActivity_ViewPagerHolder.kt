@@ -27,6 +27,8 @@ import com.example.pdf_reader_viewer.UtilClasses.FragmentNames
 import com.example.pdf_reader_viewer.UtilClasses.ViewAnimation
 import com.example.pdf_reader_viewer.ViewPagerAdapter.MyFragmentStateAdapter
 import com.example.pdf_reader_viewer.databinding.ActivityMainBinding
+import com.google.android.gms.oss.licenses.OssLicensesActivity
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.jar.Manifest
@@ -52,6 +54,10 @@ import java.util.jar.Manifest
          super.onCreate(savedInstanceState)
             binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
          setContentView(binding?.root)
+         /**---------------------------------------*/
+            startActivity(Intent(this,OssLicensesMenuActivity::class.java))
+         /**---------------------------------------*/
+
 
          supportActionBar?.hide()
         // getSupportActionBar()?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
