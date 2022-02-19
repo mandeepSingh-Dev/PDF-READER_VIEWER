@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.TextTo_pdf_Fragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/texttOPDFToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1BD1BC"
+        android:hapticFeedbackEnabled="true"
+        app:layout_constraintBottom_toTopOf="@id/textToPdfTextview"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+        android:id="@+id/TexttoPdfTextViewToolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="Text To PDF"
+        android:textColor="@color/textcolor"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"
+        /></com.google.android.material.appbar.MaterialToolbar>
+
+
+    <EditText
+        android:id="@+id/textToPdfTextview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:text="Your text here!"
+        android:paddingLeft="15dp"
+        android:gravity="top"
+        android:paddingTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/texttOPDFToolbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/createpdfffTextTOpdf"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/createpdfffTextTOpdf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#19C5DA"
+        android:paddingLeft="100dp"
+        android:paddingTop="10dp"
+        android:paddingRight="100dp"
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="15dp"
+        android:textSize="13sp"
+        android:text="Create PDF"
+        android:textColor="@color/textcolor"
+        app:strokeWidth="0.3dp"
+        app:strokeColor="@color/black"
+        android:shadowColor="@color/black"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textToPdfTextview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+    <ImageView
+        android:id="@+id/showbitmapImageview"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/textpdfProgressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <TextView
+        android:id="@+id/pleasewaitTextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please Wait!"
+        app:layout_constraintTop_toBottomOf="@id/textpdfProgressbar"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

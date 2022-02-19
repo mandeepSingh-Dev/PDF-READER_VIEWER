@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+   android:id="@+id/parentLayoutflolder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.Folder_PdfList_Fragment">
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarlayoutFOLDER"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#947EC1"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+              android:id="@+id/collapseToolbarFOLder_frag"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"
+                app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+                app:title="@string/app_name"
+                app:titleCollapseMode="scale"
+                app:expandedTitleMarginEnd="30dp"
+                app:expandedTitleGravity="left"
+                app:contentScrim="#C0CA33"
+                app:expandedTitleMarginTop="100dp"
+                app:expandedTitleMarginStart="10dp"
+                app:expandedTitleTextAppearance="@style/customTextAppearance"
+                >
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbarFolder"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    app:layout_collapseMode="pin"
+                    app:title="PDF reader"
+                    android:textColor="@color/textcolor"
+
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/folder_pdfRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#E2FDFB"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>

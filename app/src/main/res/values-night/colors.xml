@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="backgroundColor">#5A4D4D</color>
+
+    <color name="textcolor">@color/white</color>
+    <color name="tabcolor">#D5BABA</color>
+
+    <color name="tabselectedColor">#FFFFFF</color>
+    <color name="headingColor">#FF3030</color>
+
+    <color name="bottomsheetBackgroundcolor">#255EFB</color>
+
+    <color name="floatTextBackgroundcolor">#FF0000</color>
+    <color name="floatTextcolor">#000000</color>
+    <color name="floatTintBackgroundcolor">#FF0088</color>
+
+    <color name="renameBackgroundcolor">#006068</color>
+    <color name="renameButtoncolor">#4807A3</color>
+
+    <color name="CardBackgroundcolor">#343C37</color>
+
+
+
+</resources>

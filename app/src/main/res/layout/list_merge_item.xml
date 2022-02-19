@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:background="#E48027"
+    app:cardBackgroundColor="@color/CardBackgroundcolor"
+    android:elevation="5dp"
+    app:cardElevation="5dp"
+    app:cardCornerRadius="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <ImageView
+        android:id="@+id/pdfImageView"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_item_pdf_icon"/>
+    <TextView
+        android:id="@+id/pdfNameTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/pdfImageView"
+        app:layout_constraintTop_toTopOf="@id/pdfImageView"
+        app:layout_constraintRight_toLeftOf="@id/dragMenuimage"
+        app:layout_constraintBottom_toTopOf="@id/pdfSize"
+        android:text="Application.pdf"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textSize="15sp"
+        android:textColor="@color/textcolor"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="15dp"
+        />
+    <TextView
+        android:id="@+id/pdfSize"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/pdfNameTextView"
+        app:layout_constraintTop_toBottomOf="@id/pdfNameTextView"
+        android:text=""
+        android:textColor="@color/textcolor"
+        android:singleLine="true"
+        android:layout_marginTop="6dp"
+        app:layout_constraintRight_toLeftOf="@id/pdfDateTexView"
+        app:layout_constraintBottom_toBottomOf="@id/pdfImageView"/>
+
+    <TextView
+        android:id="@+id/pdfDateTexView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toLeftOf="@id/dragMenuimage"
+        app:layout_constraintTop_toBottomOf="@id/pdfNameTextView"
+        app:layout_constraintBottom_toBottomOf="@id/pdfImageView"
+        app:layout_constraintLeft_toRightOf="@id/pdfSize"
+        android:text=""
+        android:textColor="@color/textcolor"
+        android:singleLine="true"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="6dp"
+        android:gravity="end"/>
+
+    <ImageView
+        android:id="@+id/dragMenuimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_more_vert_24"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/pdfImageView"
+        android:padding="10dp"
+        android:background="@drawable/rippldeimage"
+        android:layout_marginRight="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/pdfImageView"/>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

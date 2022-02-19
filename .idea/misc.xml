@@ -3,43 +3,145 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable-night/err.xml" value="0.131" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable-night/ic_item_pdf_icon.xml" value="0.121" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable-night/rippldeimage.xml" value="0.158" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable-night/shape.xml" value="0.173" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable-night/splashbakground.xml" value="0.118" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable-night/stroke_fabtext.xml" value="0.128" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic__422509_acorbat_logo_pdf_file_icon.xml" value="0.175" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.122" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_add_circle_outline_24.xml" value="0.128" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_bookmark_24.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_bookmark_border_24.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_camera_alt_24.xml" value="0.1685185185185185" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_details_24.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_drive_file_rename_outline_24.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_enhanced_encryption_24.xml" value="0.128" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_image_24.xml" value="0.128" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_menu_24.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_merge_24.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_more_vert_24.xml" value="0.122" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_open_in_new_24.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_item_pdf_icon.xml" value="0.121" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_outline_dark_mode_24.xml" value="0.122" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_outline_search_24.xml" value="0.129" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_pdf_icon.xml" value="0.122" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_pdficonfree.xml" value="0.121" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_round_call_split_24.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_twotone_dark_mode_24.xml" value="0.11" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_twotone_folder_24.xml" value="0.128" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/ic_twotone_settings_24.xml" value="0.122" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/pdf.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/progress.xml" value="0.128" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/rippldeimage.xml" value="0.122" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/shape.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/shape1.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/shape2_encrypt.xml" value="0.129" />
-        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/stroke_fabtext.xml" value="0.264" />
-        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_main.xml" value="0.23802083333333332" />
-        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_pdf_view.xml" value="0.21851851851851853" />
-        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_pdfs_tools.xml" value="0.23802083333333332" />
-        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/book_marks_list__fragment.xml" value="0.23802083333333332" />
-        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/bottomsheet_dialogue.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/splashbakground.xml" value="0.128" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/stroke_fabtext.xml" value="0.136" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/stroke_list_item.xml" value="0.173" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/drawable/window_splash.xml" value="0.122" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/font/armata.xml" value="0.22407407407407406" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/activity_main.xml" value="0.6" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/book_marks_list__fragment.xml" value="0.19792342634652824" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/bottomsheet_dialogue.xml" value="1.0" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/bottomsheet_for_selectimages.xml" value="1.428125" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/custom_details_dialgue.xml" value="1.0" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/custom_imagequality_dialogue.xml" value="1.428125" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/custom_merge_dialgue.xml" value="1.428125" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/custom_progress_dialogue.xml" value="1.428125" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/cxc.xml" value="1.428125" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/d.xml" value="0.1952991452991453" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/encrypt_pdf_fragment.xml" value="0.8" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/image_to__pdf_fragment.xml" value="1.428125" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/list_item.xml" value="1.428125" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/list_merge_item.xml" value="1.428125" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/merge_pdfs_fragment.xml" value="1.2304347826086957" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/pdf_list_fragment.xml" value="0.6270627062706271" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/pdf_tools_fragment.xml" value="1.0" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/recent_listpdf_fragment.xml" value="0.8755760368663594" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/rename_dialog.xml" value="1.428125" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/splash_screen_activity.xml" value="0.176" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/splitpdf_fragment.xml" value="0.6391608391608392" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-ldpi/text_to_pdf_fragment.xml" value="0.8250728862973761" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-mdpi/bottomsheet_dialogue.xml" value="0.9520833333333333" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-mdpi/er.xml" value="0.9520833333333333" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-sw320dp/encrypt_pdf_fragment.xml" value="0.176" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-sw320dp/f.xml" value="0.35703125" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-sw320dp/pdf_tools_fragment.xml" value="0.152" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-sw600dp/activity_main.xml" value="0.136" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-sw600dp/bottomsheet_dialogue.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-sw600dp/encrypt_pdf_fragment.xml" value="0.264" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-sw600dp/pdf_tools_fragment.xml" value="0.2" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-sw700dp/bottomsheet_dialogue.xml" value="0.22314453125" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-sw700dp/encrypt_pdf_fragment.xml" value="0.12" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-sw700dp/pdf_tools_fragment.xml" value="0.1" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-sw700dp/x.xml" value="0.541015625" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-xxhdpi/d.xml" value="0.11901041666666666" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-xxhdpi/encrypt_pdf_fragment.xml" value="0.8" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-xxhdpi/f.xml" value="0.178515625" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout-xxhdpi/g.xml" value="0.178515625" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_pdf_view.xml" value="0.176" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_pdfs_tools.xml" value="0.4" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_settings_actviity.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/activity_splash_screen.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/book_marks_list__fragment.xml" value="0.1" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/bottomsheet_dialogue.xml" value="0.264" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/bottomsheet_dialogue_2.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/bottomsheet_for_selectimages.xml" value="0.128" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/content_splash_screen.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/custom_details_dialgue.xml" value="0.16799999999999998" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/custom_dialgue.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/custom_imagequality_dialogue.xml" value="0.264" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/custom_merge_dialgue.xml" value="0.2" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/custom_notifiaction.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/custom_progress_dialogue.xml" value="0.536" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/custom_quality_dialogue.xml" value="0.2" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/customdailogue_withprogressbar.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/customdialogue_getpdf_name.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/customprogressdialogue.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/emptyview.xml" value="0.23802083333333332" />
-        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/encrypt_pdf_fragment.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/encrypt_pdf_fragment.xml" value="0.2" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/folder__pdf_list_fragment.xml" value="0.2" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/fragment__book_marks_list.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/fragment__merge_pdfs.xml" value="0.2" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/fragment__recent_list.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/fragment_first.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/fragment_pdf_list.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/fragment_second.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/fragment_viewpager_.xml" value="0.23802083333333332" />
-        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/list_item.xml" value="0.264" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/image_to__pdf_fragment.xml" value="0.2" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/images_list.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/images_list_item.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/list_images__item.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/list_item.xml" value="0.2" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/list_merge_item.xml" value="0.2" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/list_recent_item.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/list_recent_item_2.xml" value="0.264" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/merge_list_item.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/merge_list_items.xml" value="0.23802083333333332" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/merge_pdfs_fragment.xml" value="0.2" />
-        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/pdf_list_fragment.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/notification_view.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/pdf_list_fragment.xml" value="0.176" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/pdf_tools_fragment.xml" value="0.2" />
-        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/splitpdf_fragment.xml" value="0.264" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/recent_list_item.xml" value="0.2" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/recent_listpdf_fragment.xml" value="0.152" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/rename_dialog.xml" value="0.195382642154767" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/setting_activity.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/splash_screen_activity.xml" value="0.176" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/splitpdf_fragment.xml" value="0.176" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/layout/text_to_pdf_fragment.xml" value="0.16" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/menu/bottombar_icons.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/menu/deletemenu.xml" value="0.195382642154767" />
         <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/menu/navigation_rail_menu.xml" value="0.23435897435897435" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/menu/pdfview_menu.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.122" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/xml/prefernce_screen.xml" value="0.23802083333333332" />
+        <entry key="..\:/Users/mandeep singh/OneDrive/Desktop/Downloads/PDFREADER_VIEWER/app/src/main/res/xml/root_preferences.xml" value="0.23802083333333332" />
       </map>
     </option>
   </component>

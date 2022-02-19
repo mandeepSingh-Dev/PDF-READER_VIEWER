@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.EncryptPdf_Fragment"
+    android:background="#1FC5B1"
+    >
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/imgpdfToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1BD1BC"
+        android:hapticFeedbackEnabled="true"
+        app:layout_constraintBottom_toTopOf="@id/scrollViewimgpdf"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/ImagtooPDFTextViewToolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="Images To PDF"
+            android:textColor="@color/textcolor"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <ScrollView
+        android:id="@+id/scrollViewimgpdf"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#1BD1BC"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgpdfToolbar"
+        app:layout_constraintBottom_toTopOf="@id/createPDFbutton" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/holderContstraintlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#230460"
+
+            >
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/selectImagesbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="#19C5DA"
+                android:textColor="@color/textcolor"
+                android:paddingLeft="100dp"
+                android:paddingTop="3dp"
+                android:paddingRight="100dp"
+                android:paddingBottom="3dp"
+                android:textSize="13sp"
+                android:text="Select Images"
+                android:textAllCaps="false"
+                app:cornerRadius="14dp"
+                app:layout_constraintBottom_toTopOf="@id/imagesRecylerView"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/white"
+                app:strokeWidth="1dp"
+
+                android:shadowColor="@color/black"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/imagesRecylerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:nestedScrollingEnabled="true"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/selectImagesbutton" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/createPDFbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#19C5DA"
+        android:paddingLeft="100dp"
+        android:paddingTop="10dp"
+        android:paddingRight="100dp"
+        android:paddingBottom="10dp"
+        android:layout_marginTop="7dp"
+        android:textSize="13sp"
+        android:text="Create PDF"
+        android:textColor="@color/textcolor"
+        app:strokeWidth="0.3dp"
+        app:strokeColor="@color/black"
+        android:shadowColor="@color/black"
+        android:textAllCaps="false"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollViewimgpdf"
+        app:layout_constraintBottom_toTopOf="@id/selectedImagesTextview"
+       />
+
+    <TextView
+        android:id="@+id/selectedImagesTextview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="6 image(s) selected."
+        android:textColor="@color/white"
+        android:background="#197783"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/createPDFbutton" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <include
+            android:id="@+id/sheet"
+            layout="@layout/bottomsheet_for_selectimages" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <ProgressBar
+        android:id="@+id/imgpdfPROGRESSBAR"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:indeterminate="true"
+        android:visibility="gone"
+       app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

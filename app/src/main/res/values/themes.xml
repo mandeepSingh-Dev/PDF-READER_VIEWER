@@ -12,5 +12,48 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+<!--
+        <item name="android:windowShowWallpaper">true</item>
+-->
+<!--
+        <item name="android:windowBackground">@drawable/splashbakground</item>
+-->
+        <item name="android:windowBackground">@drawable/splashbakground</item>
+
     </style>
+
+    <style name="myanimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
+    <style name="SelectableItemTheme" parent="">
+        <item name="android:radius">20sp</item>
+    </style>
+
+    <style name="customTextAppearance" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
+
+    </style>
+
+<!--    <style name="Theme.Transparent" parent="android:Theme">
+&lt;!&ndash;
+        <item name="android:windowIsTranslucent">true</item>
+&ndash;&gt;
+       &lt;!&ndash; <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>  &ndash;&gt;
+        <item name="android:windowBackground">@color/purple_700</item>
+       &lt;!&ndash; <item name="android:backgroundDimEnabled">false</item>&ndash;&gt;
+    </style-->>
+
+    <style name="Theme.PDFREADER_VIEWER.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.PDFREADER_VIEWER.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.PDFREADER_VIEWER.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

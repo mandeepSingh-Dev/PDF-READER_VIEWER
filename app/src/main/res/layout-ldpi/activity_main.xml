@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity_ViewPagerHolder"
+    >
+
+
+
+  <!-- <ProgressBar
+       android:id="@+id/progress_bar"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_centerInParent="true"
+       android:indeterminate="true"
+       android:indeterminateOnly="true"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent"
+
+    />-->
+   <androidx.constraintlayout.widget.ConstraintLayout
+      android:id="@+id/appLogoLAYOUT"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+      android:orientation="horizontal"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent"
+      >
+      <ImageView
+           android:id="@+id/appLOGO"
+           android:layout_width="35dp"
+           android:layout_height="35dp"
+           android:src="@drawable/ic_pdficonfree"
+           android:layout_marginLeft="14dp"
+         android:layout_marginTop="14dp"
+          android:layout_weight="1"
+         android:layout_marginBottom="14dp"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintLeft_toLeftOf="parent"/>
+
+      <ImageView
+          android:id="@+id/threedots_ImageButtonMain"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+         android:layout_gravity="end"
+         android:layout_weight="1"
+          android:paddingRight="10dp"
+          android:paddingTop="10dp"
+          android:paddingLeft="10dp"
+          android:background="@drawable/rippldeimage"
+         android:src="@drawable/ic_baseline_more_vert_24"
+          android:backgroundTintMode="src_atop"
+         app:layout_constraintTop_toTopOf="@id/appLOGO"
+         app:layout_constraintRight_toRightOf="parent"
+          android:layout_marginRight="10dp"/>
+
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+   <TextView
+       android:id="@+id/welcometextview"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginLeft="20dp"
+       android:layout_marginTop="18dp"
+       android:fontFamily="@font/ubuntu_light"
+       android:textStyle="bold"
+       android:text="Welcome"
+       android:textColor="@color/textcolor"
+       android:textSize="35sp"
+       app:layout_constraintBottom_toTopOf="@id/tablayout"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintTop_toBottomOf="@id/appLogoLAYOUT" />
+
+   <com.google.android.material.tabs.TabLayout
+       android:id="@+id/tablayout"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="10dp"
+       app:tabIconTint="@color/teal_200"
+       app:tabRippleColor="#D64278"
+       android:background="@android:color/transparent"
+       app:tabSelectedTextColor="@color/tabselectedColor"
+       android:animateLayoutChanges="true"
+       app:tabMode="fixed"
+       android:elevation="0dp"
+       app:tabMaxWidth="0dp"
+       app:tabGravity="fill"
+       app:tabIndicatorFullWidth="false"
+       android:scrollIndicators="start"
+       app:tabIndicatorAnimationDuration="1200"
+       app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+       app:tabTextColor="@color/tabcolor"
+       app:layout_constraintTop_toBottomOf="@+id/welcometextview"
+       app:layout_constraintBottom_toTopOf="@id/viewpager2"
+       app:layout_constraintLeft_toLeftOf="parent"
+       style="@style/Widget.MaterialComponents.TabLayout"
+/>
+<!--
+   app:tabIndicator="@drawable/shape"
+         app:tabContentStart="56dp"
+         android:layout_marginLeft="10dp"
+       android:layout_marginRight="10dp"
+       app:tabGravity="start"
+       app:tabIndicatorColor="#D64278"
+  app:tabIndicatorGravity="stretch"
+       app:tabIndicatorAnimationMode="elastic"
+-->
+
+   <androidx.viewpager2.widget.ViewPager2
+       android:id="@+id/viewpager2"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_below="@id/tablayout"
+       android:layout_weight="1"
+       app:layout_constraintTop_toBottomOf="@id/tablayout"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent">
+   </androidx.viewpager2.widget.ViewPager2>
+
+   <androidx.coordinatorlayout.widget.CoordinatorLayout
+      android:id="@+id/mainactivityCoordilayout"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintRight_toRightOf="parent">
+
+     <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
+          android:id="@+id/floatingButtonMainActivity"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:clickable="true"
+          android:enabled="true"
+          app:rippleColor="#6C4424"
+          app:borderWidth="20dp"
+          android:elevation="6dp"
+          android:background="@color/backgroundColor"
+          android:src="@drawable/ic_baseline_add_24"
+          android:layout_gravity="bottom|end"
+          android:layout_margin="30dp"/>-->
+
+       <!-- fab buttons layout-->
+       <LinearLayout
+           android:id="@+id/linearFABSlayout"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="bottom|end|right"
+           android:orientation="vertical"
+           android:layout_marginRight="2dp"
+           android:layout_marginBottom="1dp"
+           android:gravity="center_horizontal"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintRight_toRightOf="parent">
+
+
+           <!--fab3 ImageToPdf pdf linearlayout-->
+           <LinearLayout
+               android:id="@+id/fab3Linearlayout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_gravity="end"
+               android:layout_marginRight="8dp"
+               >
+               <TextView
+                   android:id="@+id/fab3TextView"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_margin="16dp"
+                   android:paddingLeft="10dp"
+                   android:paddingRight="10dp"
+                   android:paddingTop="3dp"
+                   android:paddingBottom="3dp"
+                   android:textColor="@color/floatTextcolor"
+                   android:background="@drawable/stroke_fabtext"
+                   android:text="Image to PDF"/>
+
+               <com.google.android.material.floatingactionbutton.FloatingActionButton
+                   android:id="@+id/fab2ImagetoPdf"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="end|bottom"
+                   android:src="@drawable/ic_baseline_camera_alt_24"
+                   app:fabSize="mini"
+                   app:rippleColor="#DF3804"/>
+           </LinearLayout>
+           <!--fab2 create pdf linearlayout-->
+           <LinearLayout
+               android:id="@+id/fab2Linearlayout"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_gravity="end"
+               android:layout_marginRight="8dp"
+               android:layout_marginBottom="2dp"
+               >
+               <TextView
+                   android:id="@+id/fab2TextView"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_margin="16dp"
+                   android:paddingLeft="10dp"
+                   android:paddingRight="10dp"
+                   android:paddingTop="3dp"
+                   android:paddingBottom="3dp"
+                   android:textColor="@color/floatTextcolor"
+                   android:background="@drawable/stroke_fabtext"
+                   android:text="Text to PDF"/>
+
+               <com.google.android.material.floatingactionbutton.FloatingActionButton
+                   android:id="@+id/fab3Createpdf"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="end|bottom"
+                   android:src="@drawable/ic_baseline_text_fields_24"
+                   app:fabSize="mini"
+                   app:rippleColor="#DF3804"/>
+           </LinearLayout>
+           <!-- main fab button-->
+           <com.google.android.material.floatingactionbutton.FloatingActionButton
+               android:id="@+id/topFab"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="end|bottom"
+               android:layout_marginLeft="18dp"
+               android:layout_marginTop="10dp"
+               android:layout_marginRight="8dp"
+               android:layout_marginBottom="18dp"
+               app:fabSize="normal"
+               android:src="@drawable/ic_baseline_add_24"
+               app:borderWidth="4dp"
+               app:elevation="40dp"
+               app:rippleColor="#DF3804"/>
+
+       </LinearLayout>
+
+
+   </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

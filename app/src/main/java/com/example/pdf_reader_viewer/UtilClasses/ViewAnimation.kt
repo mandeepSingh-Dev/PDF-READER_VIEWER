@@ -17,7 +17,8 @@ class ViewAnimation {
             v.setVisibility(View.VISIBLE)
             v.setAlpha(0f)
             v.setTranslationY(v.getHeight().toFloat())
-            v.animate().setDuration(200)
+
+            v.animate().setDuration(300)
                 .translationY(0f).setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
                         v.visibility=View.VISIBLE
