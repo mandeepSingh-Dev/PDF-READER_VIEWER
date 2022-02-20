@@ -120,17 +120,12 @@ class TextTo_pdf_Fragment : Fragment() {
                         withContext(Dispatchers.Main) {
                             var bitmap = getBitmapFromView(binding?.textToPdfTextview!!)
                             bitmap?.let { bitmapList?.add(it) }
-                            binding?.textpdfProgressbar?.visibility = View.GONE
-                            binding?.pleasewaitTextview?.visibility = View.GONE
+                            binding?.textpdfProgressbar?.visibility = View.VISIBLE
+                            binding?.pleasewaitTextview?.visibility = View.VISIBLE
                         }
                         //creating bitmap from text
 
-                        PdfOperations(requireActivity())?.createPdf(
-                            bitmapList!!,
-                            "pdfName",
-                            0,
-                            outputStream!!
-                        )
+                        PdfOperations(requireActivity())?.createPdf(bitmapList!!, "pdfName", 0, outputStream!!)
 
                         //hide please wait dialogue
                         withContext(Dispatchers.Main) {

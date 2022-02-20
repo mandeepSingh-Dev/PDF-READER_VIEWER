@@ -68,7 +68,7 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
 
         var longseconds=date_modified?.toLong()
         if(longseconds!=null) {
-            val datelist = ConversionandUtilsClass.convertToDate(longseconds!!)
+            val datelist = ConversionandUtilsClass.convertToDate(longseconds)
             holder.dateTextView.text = datelist.get(0) //here 0 position gives date without time
         }
 
@@ -80,7 +80,7 @@ class MyAdapter( context1:Context,pdfList1:ArrayList<Items_pdfs>):RecyclerView.A
                 .putExtra(PDFProp.PDF_SIZE,size))
 
             CoroutineScope(Dispatchers.Main).launch {
-                insertToRecentDATABASE(title!!,size!!,appendeduri?.toString()!!,System.currentTimeMillis())
+                insertToRecentDATABASE(title!!, size,appendeduri?.toString()!!,System.currentTimeMillis())
             }
         }
         holder.menubutton.setOnClickListener {

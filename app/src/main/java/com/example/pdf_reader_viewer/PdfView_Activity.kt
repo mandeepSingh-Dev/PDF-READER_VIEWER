@@ -118,7 +118,7 @@ class PdfView_Activity : AppCompatActivity() {
             R.id.senditem -> {
 
                 intenntShare = Intent(Intent.ACTION_SEND)
-                intenntShare?.type = "application/pdf"
+                intenntShare.type = "application/pdf"
                 intenntShare.putExtra(Intent.EXTRA_STREAM, uri)
                 startActivity(Intent.createChooser(intenntShare, title))
 
@@ -143,7 +143,7 @@ class PdfView_Activity : AppCompatActivity() {
        var isnotificationEnabled =  sharedPreferences.getString(SettingsProp.IS_NOTIFICATION_ENABLED,"true")
         Log.d("sdifhuebfvd",isnotificationEnabled!!)
 
-        if (urii?.scheme.equals("content")) {
+        if (urii.scheme.equals("content")) {
 
 
 
@@ -202,7 +202,7 @@ class PdfView_Activity : AppCompatActivity() {
         ActivityResultCallback {
             if(it!=null) {
                 Log.d("3oejgfe4", uri.toString())
-                var outputStream = contentResolver?.openOutputStream(it!!)
+                var outputStream = contentResolver?.openOutputStream(it)
                 var inputStream = contentResolver?.openInputStream(uri!!)
                 byteArray = BufferedInputStream(inputStream).readBytes()
                 //  if(byteArray!=null)

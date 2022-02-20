@@ -1,8 +1,6 @@
 package com.example.pdf_reader_viewer
 
-import android.R
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.pdf_reader_viewer.fragments.SettingsFragment

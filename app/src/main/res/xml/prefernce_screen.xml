@@ -59,6 +59,9 @@
             android:key="@string/Feedback"
             android:title="@string/FeedbackTitle"/>
         <Preference
+            android:key="@string/Open_Source_Licences"
+            android:title="@string/Open_Source_LicencesTitle"/>
+        <Preference
             android:key="@string/Privacy_Policy"
             android:title="@string/Privacy_PolicyTitle"/>
     </PreferenceCategory>

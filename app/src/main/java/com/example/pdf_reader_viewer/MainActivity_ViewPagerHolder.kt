@@ -54,9 +54,6 @@ import java.util.jar.Manifest
          super.onCreate(savedInstanceState)
             binding = ActivityMainBinding.inflate(LayoutInflater.from(this))
          setContentView(binding?.root)
-         /**---------------------------------------*/
-            startActivity(Intent(this,OssLicensesMenuActivity::class.java))
-         /**---------------------------------------*/
 
 
          supportActionBar?.hide()
@@ -207,7 +204,7 @@ import java.util.jar.Manifest
                  Toast.makeText(this, "Manage_Permission granted", Toast.LENGTH_SHORT).show()
 
                  var sharedprefrence = getSharedPreferences("managed", Context.MODE_PRIVATE)
-                   sharedprefrence.edit().putBoolean("MANGEEEGED",true).commit()
+                   sharedprefrence.edit().putBoolean("MANGEEEGED",true).apply()
 
              } else {
                  Toast.makeText(this, "Manage_Permission NOT granted", Toast.LENGTH_SHORT).show()

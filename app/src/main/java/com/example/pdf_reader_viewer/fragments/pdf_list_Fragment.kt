@@ -260,9 +260,9 @@ class pdf_list_Fragment : Fragment() {
 
         var appendedurii = pdflist.get(position).appendeduri!!
         Log.d("38gh8",appendedurii.toString())
-        var sizee = pdflist.get(position).size!!
+        var sizee = pdflist.get(position).size
         var date_modifiedd = pdflist.get(position).date_modified!!
-        var titlee = pdflist.get(position).title!!
+        var titlee = pdflist.get(position).title
 
         mergeLinearLayout?.setOnClickListener {
 
@@ -316,7 +316,7 @@ class pdf_list_Fragment : Fragment() {
                 bottomSheetDialog?.hide()
                 pdflist?.remove(pdflist?.get(position))
                 myAdapter.notifyItemRemoved(position)
-                myAdapter.notifyItemRangeChanged(position, pdflist?.size!!)
+                myAdapter.notifyItemRangeChanged(position, pdflist?.size)
             }catch (e:Exception){Toast.makeText(requireContext(),e.message,Toast.LENGTH_SHORT).show()}
         }
 
@@ -392,7 +392,7 @@ class pdf_list_Fragment : Fragment() {
                 arrayListt.removeAll(arrayListt)
 
                 pdfList.forEach {
-                    if (it.title.lowercase().contains(newText?.lowercase()!!)) {
+                    if (it.title.lowercase().contains(newText?.lowercase())) {
                         binding?.emptyText?.visibility = View.GONE
                         binding?.emptyView?.visibility = View.GONE
                         arrayListt.add(it)
@@ -549,7 +549,7 @@ class pdf_list_Fragment : Fragment() {
                 } else {
                     Log.d("3u8hfjsncsjcisj8", "cnsncjnj2")
 
-                    myAdapter = MyAdapter(requireContext(), pdflist!!)
+                    myAdapter = MyAdapter(requireContext(), pdflist)
                     recyclerView?.layoutManager = LinearLayoutManager(requireContext())
                     recyclerView?.adapter = myAdapter
 
@@ -594,7 +594,7 @@ class pdf_list_Fragment : Fragment() {
                 } else {
                     Log.d("3u8hfjsncsjcisj8", "cnsncjnj2")
 
-                    myAdapter = MyAdapter(requireContext(), pdflist!!)
+                    myAdapter = MyAdapter(requireContext(), pdflist)
                     recyclerView?.layoutManager = LinearLayoutManager(requireContext())
                     recyclerView?.adapter = myAdapter
 
@@ -655,7 +655,7 @@ class pdf_list_Fragment : Fragment() {
                       }
                   }
                 var sharedprefrence = activity?.getSharedPreferences("managed", Context.MODE_PRIVATE)
-                sharedprefrence?.edit()?.putBoolean("MANGEEEGED",true)?.commit()
+                sharedprefrence?.edit()?.putBoolean("MANGEEEGED",true)?.apply()
 
             } else {
                 Toast.makeText(requireContext(), "Manage_Permission NOT granted", Toast.LENGTH_SHORT).show()

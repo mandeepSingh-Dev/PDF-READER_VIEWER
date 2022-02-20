@@ -145,8 +145,7 @@
         android:background="@drawable/shape"
          app:elevation="20dp"
         app:fabAnimationMode="slide"
-        android:outlineAmbientShadowColor="#FF0600"
-        android:outlineSpotShadowColor="#000000"
+
         app:hideOnScroll="true"
         app:fabAlignmentMode="end"
         app:fabCradleMargin="10dp"
@@ -155,7 +154,6 @@
         android:layout_gravity="bottom"
         app:contentInsetLeft="0dp"
         app:contentInsetRight="0dp"
-        android:scrollIndicators="top"
         android:layout_margin="10dp"
         style="@style/Widget.MaterialComponents.BottomAppBar.Colored"
         app:layout_behavior="com.google.android.material.bottomappbar.BottomAppBar$Behavior"

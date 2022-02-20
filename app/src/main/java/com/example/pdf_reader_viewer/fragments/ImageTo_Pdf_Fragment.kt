@@ -184,7 +184,7 @@ class ImageTo_Pdf_Fragment : DialogFragment() {
                             alertDialogprogress?.show()
                         }
 
-                        PdfOperations(requireActivity())?.createPdf(bitmapLIST!!, "pdfName", 0,outputStream!!)
+                        PdfOperations(requireActivity()).createPdf(bitmapLIST!!, "pdfName", 0,outputStream!!)
 
                         //hide please wait dialogue
                         withContext(Dispatchers.Main) {
@@ -489,6 +489,7 @@ class ImageTo_Pdf_Fragment : DialogFragment() {
                  name = it.getString(it.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME))
              }
          }
+         cursor?.close()
      }
         return name
     }

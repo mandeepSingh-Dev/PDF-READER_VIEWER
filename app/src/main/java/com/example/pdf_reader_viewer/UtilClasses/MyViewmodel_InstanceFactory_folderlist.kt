@@ -10,8 +10,7 @@ class MyViewmodel_InstanceFactory_folderlist(val folderName:String, context:Cont
 
     val context=context
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return MyViewModel_for_foldderpdflist(folderName,context) as T
-
     }
 }

@@ -1,5 +1,6 @@
 package com.example.pdf_reader_viewer.RecylerViewClasses
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -27,27 +28,28 @@ class MyAdapter_ForMerge(context:Context,arrayList:ArrayList<Items_pdfs>):Recycl
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewholderMerge {
-        var view=LayoutInflater.from(contextt).inflate(R.layout.list_merge_item,parent,false)
+        val view=LayoutInflater.from(contextt).inflate(R.layout.list_merge_item,parent,false)
 
-         var myViewholderMerge=MyViewholderMerge(view)
+        val myViewholderMerge=MyViewholderMerge(view)
         return myViewholderMerge
     }
 
+    @SuppressLint("RecyclerView")
     override fun onBindViewHolder(holder: MyViewholderMerge, position: Int) {
 
-        Log.d("sizeeifhigv",pdflist?.size.toString())
+        Log.d("sizeeifhigv",pdflist.size.toString())
 
-        var itemPdf=pdflist.get(position)
-            holder.pdfName?.setText(itemPdf?.title)
+        val itemPdf=pdflist.get(position)
+            holder.pdfName?.setText(itemPdf.title)
       //  holder.pdfSize?.setText(itemPdf?.size)
        // holder.pdfDate?.setText(itemPdf?.date_modified)
 
-        holder.itemView?.setOnClickListener {
-            contextt?.startActivity(
+        holder.itemView.setOnClickListener {
+            contextt.startActivity(
                 Intent(contextt, PdfView_Activity::class.java)
                 .setAction(PDFProp.MY_OPEN_ACTION)
                 .putExtra(PDFProp.PDF_APPENDED_URI,itemPdf.appendeduri.toString())
-                .putExtra(PDFProp.PDF_TITLE,itemPdf?.title)
+                .putExtra(PDFProp.PDF_TITLE,itemPdf.title)
                 .putExtra(PDFProp.PDF_SIZE,"df"))
 
             Log.d("wifhwedf",itemPdf.appendeduri.toString())
@@ -60,14 +62,14 @@ class MyAdapter_ForMerge(context:Context,arrayList:ArrayList<Items_pdfs>):Recycl
       //deleting the merge selected pdfs
         holder.dragmenuimage?.setOnClickListener {
            // mCustomOnClickListener?.onClick(position)
-            var popupmenu = PopupMenu(contextt,holder.dragmenuimage)
-            popupmenu.getMenuInflater().inflate(R.menu.deletemenu, popupmenu.getMenu());
+            val popupmenu = PopupMenu(contextt,holder.dragmenuimage)
+            popupmenu.getMenuInflater().inflate(R.menu.deletemenu, popupmenu.getMenu())
             popupmenu.setOnMenuItemClickListener(object:PopupMenu.OnMenuItemClickListener{
                 override fun onMenuItemClick(item: MenuItem?): Boolean {
                     when(item?.itemId)
                     {
                         R.id.deleteMenu -> {
-                            pdflist?.removeAt(position)
+                            pdflist.removeAt(position)
                              notifyDataSetChanged()
                             notifyItemRemoved(position)
                             return  true
@@ -85,16 +87,15 @@ class MyAdapter_ForMerge(context:Context,arrayList:ArrayList<Items_pdfs>):Recycl
     }
 
     override fun getItemCount(): Int {
-        return  pdflist?.size
+        return  pdflist.size
     }
 
     class MyViewholderMerge(itemView: View):RecyclerView.ViewHolder(itemView) {
 
-       var pdfName = itemView?.findViewById<TextView>(R.id.pdfNameTextView)
-       var pdfImageView = itemView?.findViewById<ImageView>(R.id.pdfImageView)
-        var pdfSize = itemView?.findViewById<TextView>(R.id.pdfSize)
-        var pdfDate = itemView?.findViewById<TextView>(R.id.pdfDateTexView)
-        var dragmenuimage = itemView?.findViewById<ImageView>(R.id.dragMenuimage)
+       var pdfName = itemView.findViewById<TextView>(R.id.pdfNameTextView)
+        var pdfSize = itemView.findViewById<TextView>(R.id.pdfSize)
+        var pdfDate = itemView.findViewById<TextView>(R.id.pdfDateTexView)
+        var dragmenuimage = itemView.findViewById<ImageView>(R.id.dragMenuimage)
 
 
     }

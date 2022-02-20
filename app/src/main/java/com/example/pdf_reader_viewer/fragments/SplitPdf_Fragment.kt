@@ -329,6 +329,7 @@ class SplitPdf_Fragment : Fragment() {
                 name= it.getString(it.getColumnIndex(OpenableColumns.DISPLAY_NAME))
             }
         }
+        cursor?.close()
         return name!!
     }
 

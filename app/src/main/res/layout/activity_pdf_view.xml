@@ -49,10 +49,11 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/pdfView"
         android:text="2"
-    android:textSize="19sp"
+        android:textSize="19sp"
         android:textColor="@color/textcolor"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="30dp"
-        android:padding="10dp"/>
+        android:padding="10dp"
+    android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

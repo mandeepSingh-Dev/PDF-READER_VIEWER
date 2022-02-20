@@ -11,6 +11,8 @@
     <string name="Share_Application">Share_Application</string>
     <string name="Feedback">Feedback</string>
     <string name="Privacy_Policy">Privacy_Policy</string>
+    <string name="Open_Source_Licences">Open_Source_Licences</string>
+
     <!--keys finished_____________________________-->
 
     <!--titles for settings prefrence_____________________________-->
@@ -20,6 +22,8 @@
     <string name="Share_ApplicationTitle">Share Application</string>
     <string name="FeedbackTitle">Feedback</string>
     <string name="Privacy_PolicyTitle">Privacy Policy</string>
+    <string name="Open_Source_LicencesTitle">Open Source Licences</string>
+
     <!--titles finished_____________________________-->
 
 

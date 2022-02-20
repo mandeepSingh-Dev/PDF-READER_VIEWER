@@ -79,17 +79,25 @@
 
     <ProgressBar
         android:id="@+id/textpdfProgressbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="200dp"
+        android:layout_height="36dp"
+        android:background="@color/tabcolor"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/pleasewaitTextview"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
+        android:background="@color/tabcolor"
+        android:textColor="@color/textcolor"
         android:layout_height="wrap_content"
         android:text="Please Wait!"
+        android:paddingTop="5dp"
+        android:visibility="gone"
+        android:paddingBottom="10dp"
+        android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/textpdfProgressbar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>

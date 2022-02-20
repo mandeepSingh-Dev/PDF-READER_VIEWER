@@ -12,7 +12,5 @@
         android:layout_height="240dp"
         android:src="@drawable/ic__422509_acorbat_logo_pdf_file_icon"
         android:layout_gravity="center"
-        android:soundEffectsEnabled="true"
-        android:outlineSpotShadowColor="@color/black"
-        android:outlineAmbientShadowColor="@color/black"/>
+        android:soundEffectsEnabled="true" />
 </LinearLayout>

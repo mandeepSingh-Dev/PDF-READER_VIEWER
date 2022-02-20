@@ -20,7 +20,7 @@ class SplashScreen : AppCompatActivity() {
 
 
         CoroutineScope(Dispatchers.IO).launch {
-            delay(500)
+            delay(300)
 
             startActivity(Intent(applicationContext,MainActivity_ViewPagerHolder::class.java))
             finish()

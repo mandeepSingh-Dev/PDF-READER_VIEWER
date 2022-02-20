@@ -86,7 +86,7 @@ class BookMarks_list_Fragment_ : Fragment() {
 
                     binding?.bookmarkProgress?.visibility = View.GONE
                 }else {
-                    Log.d("378fh3", pdflist?.size.toString())
+                    Log.d("378fh3", pdflist.size.toString())
                   var pdfllist = pdflist as ArrayList<Items_Bookmarks>
                     pdfllist.sortedByDescending { it.pdf_ID }
 
@@ -102,7 +102,7 @@ class BookMarks_list_Fragment_ : Fragment() {
                     adapter?.setMCustomClickListenr(object : MCustomOnClickListener {
                         override fun onClick(position: Int) {
                             Log.d("3iegnv3me,wv", position.toString())
-                            pdfName1_bottomsheet?.setText(pdflist.get(position).pdfName)
+                            pdfName1_bottomsheet.setText(pdflist.get(position).pdfName)
                             bottomSheetDialog?.show()
                             Log.d("hfe", "NEW INTERFACE IS NOW READY")
                             clickOnbottomSheetViews(pdflist, position, adapter!!)
@@ -141,13 +141,13 @@ class BookMarks_list_Fragment_ : Fragment() {
     fun clickOnbottomSheetViews(pdflist:ArrayList<Items_Bookmarks>, position:Int, myAdapter: MyAdapter_ForBookmarks){
         //this will send user to PdfTools_Activity----> Merge Fragment with pdfuri and other data acc to position
 
-        var pdfUri = pdflist.get(position).pdfUri!!
+        var pdfUri = pdflist.get(position).pdfUri
         Log.d("38gh8",pdfUri.toString())
-        var pdfSize = pdflist.get(position).pdfSize!!
-        var date = pdflist.get(position).date!!
-        var pdfName = pdflist.get(position).pdfName!!
+        var pdfSize = pdflist.get(position).pdfSize
+        var date = pdflist.get(position).date
+        var pdfName = pdflist.get(position).pdfName
 
-        mergeLinearLayout?.setOnClickListener {
+        mergeLinearLayout.setOnClickListener {
 
             var intent= Intent(context, PdfsTools_Activity::class.java)
 
@@ -161,7 +161,7 @@ class BookMarks_list_Fragment_ : Fragment() {
             bottomSheetDialog?.hide()
         }
         //this will send user to PdfTools_Activity----> Split Fragment with pdfuri and other data acc to position
-        splitLinearLayout?.setOnClickListener {
+        splitLinearLayout.setOnClickListener {
 
             var intent= Intent(context, PdfsTools_Activity::class.java)
 
@@ -175,22 +175,22 @@ class BookMarks_list_Fragment_ : Fragment() {
             bottomSheetDialog?.hide()
         }
         //this will send user to PdfViewActivity with pdfuri AND pdftitle acc to position
-        openLinearLayout?.setOnClickListener {
+        openLinearLayout.setOnClickListener {
 
             var intent= Intent(context, PdfView_Activity::class.java)
             intent.setAction(PDFProp.MY_OPEN_ACTION)
             intent.putExtra(PDFProp.PDF_APPENDED_URI,pdfUri)
-                  .putExtra(PDFProp.PDF_TITLE,pdfName)
+                .putExtra(PDFProp.PDF_TITLE,pdfName)
             startActivity(intent)
             Log.d("3igwn3bg","mskmsk")
             bottomSheetDialog?.hide()
         }
         //this will show details on dialogue
-        detailsLinearLayout?.setOnClickListener {
+        detailsLinearLayout.setOnClickListener {
             showDialoguewithDetails(pdflist,position)
         }
         //this will delete pdf from list
-        deleteLinearLayout?.setOnClickListener {
+        deleteLinearLayout.setOnClickListener {
             try {
                 Log.d("in3g3", position.toString())
                 var intt = context?.contentResolver?.delete(Uri.parse(pdflist?.get(position)?.pdfUri!!), null, null)
@@ -203,7 +203,7 @@ class BookMarks_list_Fragment_ : Fragment() {
         }
 
         //to bookmark the pdf into database
-        bookmarkIcon_bottomsheet?.setOnClickListener {
+        bookmarkIcon_bottomsheet.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch { addBookmarks(Uri.parse(pdfUri),pdfName,pdfSize,date.toLong())
                 Log.d("38f3gh7fg3h","bookmark")
                 bookmarkIcon_bottomsheet.visibility=View.GONE
@@ -212,7 +212,7 @@ class BookMarks_list_Fragment_ : Fragment() {
             }
         }
         //to undo or remove the bookmarked pdf from database
-        removebookmark_bottomsheet?.setOnClickListener {
+        removebookmark_bottomsheet.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 removeBookmarks(Uri.parse(pdflist.get(position).pdfUri!!))
                 Log.d("38f3gh7fg3h","Removed bookmark")
@@ -224,7 +224,7 @@ class BookMarks_list_Fragment_ : Fragment() {
             }
         }
         //to share pdf to another apps
-        shareIcon_bottomsheet?.setOnClickListener {
+        shareIcon_bottomsheet.setOnClickListener {
             intent?.putExtra(Intent.EXTRA_STREAM,pdfUri)
 
             intent?.putExtra(Intent.EXTRA_SUBJECT, "Sharing File from My Pdf App.");
@@ -233,7 +233,7 @@ class BookMarks_list_Fragment_ : Fragment() {
 
         }
         //to rename the pdf file
-        renameeLinearLayout?.setOnClickListener {
+        renameeLinearLayout.setOnClickListener {
             //renameFrom_everywhere(pdfUri)
             ConversionandUtilsClass.renameFrom_everywhere(pdfUri,requireContext(),requireActivity(),bottomSheetDialog!!)
         }
@@ -264,9 +264,9 @@ class BookMarks_list_Fragment_ : Fragment() {
         val sizedialogue=view.findViewById<TextView>(R.id.sizeTextviewDialogue)
         // val pathdialogue=view.findViewById<TextView>(R.id.pathtextviewDailgoue)
 
-        namedialogue.text=pdflist?.get(position)?.pdfName
-        datedialogue.text= ConversionandUtilsClass.convertToDate(pdflist?.get(position)?.date?.toLong()!!).get(1)  //get date with time also
-        sizedialogue.text= ConversionandUtilsClass.bytesToMB(pdflist?.get(position)?.pdfSize)+" mb"
+        namedialogue.text= pdflist.get(position).pdfName
+        datedialogue.text= ConversionandUtilsClass.convertToDate(pdflist.get(position).date.toLong()).get(1)  //get date with time also
+        sizedialogue.text= ConversionandUtilsClass.bytesToMB(pdflist.get(position).pdfSize)+" mb"
         /*if(pdflist.get(position).relativePath!=null) {
             pathdialogue.text = pdflist?.get(position)?.relativePath
         }*/
@@ -341,8 +341,8 @@ class BookMarks_list_Fragment_ : Fragment() {
 
                 if (intt == 1) { //and this is for update item in Room Database
                     CoroutineScope(Dispatchers.IO).launch {
-                        var bookmarkedItem = MyRoomDatabase2?.getInstance(requireContext()).daoMethods().query(pdfUri)
-                        var recentItem = MyRoomDatabase?.getInstance(requireContext()).daoMethod().query(pdfUri)
+                        var bookmarkedItem = MyRoomDatabase2.getInstance(requireContext()).daoMethods().query(pdfUri)
+                        var recentItem = MyRoomDatabase.getInstance(requireContext()).daoMethod().query(pdfUri)
                         if (bookmarkedItem != null)
                         {
                             Log.d("hfsst565r",bookmarkedItem.pdfName)

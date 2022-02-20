@@ -285,6 +285,7 @@ class MergePdfs_Fragment : Fragment() {
             arraylist.add(displayName)
             arraylist.add(size)
         }
+
         //  var displayName=metadata.extractMetadata(MediaMetadata.METADATA_KEY_DISPLAY_TITLE.toInt())
 
         //  metadata.release()

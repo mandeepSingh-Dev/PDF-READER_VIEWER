@@ -64,8 +64,8 @@ class ConversionandUtilsClass
         //this method is for pdfOperation class
         fun convertContentUri_toInputStream(activity: Activity, appendedUri: Uri): InputStream {
             var parcelFileDescriptor =
-                activity?.contentResolver?.openFileDescriptor(appendedUri, "r")!!
-            val fileDescriptor: FileDescriptor = parcelFileDescriptor?.fileDescriptor!!
+                activity.contentResolver?.openFileDescriptor(appendedUri, "r")!!
+            val fileDescriptor: FileDescriptor = parcelFileDescriptor.fileDescriptor!!
             var inputStraem = FileInputStream(fileDescriptor)
 
             return inputStraem
@@ -78,7 +78,7 @@ class ConversionandUtilsClass
             Log.d("3g3g3", seconds.toString())
             var number = 1000L
 
-            var millisconds = seconds?.times(number)
+            var millisconds = seconds.times(number)
             Log.d("3g8h3v", millisconds.toString())
 
             simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")  //without hrs and minutes
@@ -100,14 +100,14 @@ class ConversionandUtilsClass
             val takeFlags: Int =
                 Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
             // Check for the freshest data.
-            activity?.contentResolver?.takePersistableUriPermission(uri, takeFlags)
+            activity.contentResolver?.takePersistableUriPermission(uri, takeFlags)
             var bool = DocumentsContract.deleteDocument(
-                activity?.applicationContext?.contentResolver!!,
+                activity.applicationContext?.contentResolver!!,
                 uri
             )
             Log.d("867r38fh", bool.toString())
 
-            Toast.makeText(activity?.applicationContext, "PDF deleted", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity.applicationContext, "PDF deleted", Toast.LENGTH_SHORT).show()
             return bool
         }
 
@@ -121,7 +121,7 @@ class ConversionandUtilsClass
                 // Log.d("eifnefe",pageee)
                 //val pagenumberstr = atPage.replace("\\s", "")
                 var pagenumberstr = atPage.replace(" ", "")
-                var regex = Regex("[a-zA-Z.+!@#$%^&*():*/><?:]*")
+                var regex = Regex("[a-zA-Z.+!@#$%^&*():*/><?]*")
                 pagenumberstr = atPage.replace(regex, "")
 
 
@@ -135,7 +135,7 @@ class ConversionandUtilsClass
                 } else {
                     numberList.add(pagenumberstr)
                     numberList.forEach {
-                        Log.d("ijff8e", it + "\n" + numberList?.size.toString())
+                        Log.d("ijff8e", it + "\n" + numberList.size.toString())
                     }
                     return numberList
                 }
@@ -165,7 +165,7 @@ class ConversionandUtilsClass
 
 
             var builder = AlertDialog.Builder(context, R.style.Theme_AppCompat_Dialog_Alert)
-            var viewgroup=activity?.findViewById<ViewGroup>(R.id.content)
+            var viewgroup= activity.findViewById<ViewGroup>(R.id.content)
             var view =  LayoutInflater.from(context).inflate(R.layout.rename_dialog,viewgroup , false)
             builder.setView(view)
             builder.setCancelable(true)
@@ -182,12 +182,12 @@ class ConversionandUtilsClass
                     contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, renamed+".pdf")
 
                     //to update item in mediastore shared storage
-                    var intt = activity?.contentResolver?.update(Uri.parse(pdfUri), contentValues, null, null)
+                    var intt = activity.contentResolver?.update(Uri.parse(pdfUri), contentValues, null, null)
 
                     if (intt == 1) { //and this is for update item in Room Database
                         CoroutineScope(Dispatchers.IO).launch {
-                            var bookmarkedItem = MyRoomDatabase2?.getInstance(context).daoMethods().query(pdfUri)
-                            var recentItem = MyRoomDatabase?.getInstance(context).daoMethod().query(pdfUri)
+                            var bookmarkedItem = MyRoomDatabase2.getInstance(context).daoMethods().query(pdfUri)
+                            var recentItem = MyRoomDatabase.getInstance(context).daoMethod().query(pdfUri)
                             if (bookmarkedItem != null)
                             {
                                 Log.d("hfsst565r",bookmarkedItem.pdfName)
@@ -214,7 +214,7 @@ class ConversionandUtilsClass
                     }
                     Log.d("4gf4h3g", intt.toString())
                     renameDialog.hide()
-                    bottomSheetDialog?.hide()
+                    bottomSheetDialog.hide()
                 }
                 else{
                     Toast.makeText(context,"Please enter name",Toast.LENGTH_SHORT).show()

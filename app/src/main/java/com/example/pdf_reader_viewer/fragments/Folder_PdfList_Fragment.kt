@@ -90,7 +90,7 @@ class Folder_PdfList_Fragment : Fragment() {
            Log.d("38fh3f",folderName!!)
            binding?.collapseToolbarFOLderFrag?.title = folderName
 
-               mfactory = MyViewmodel_InstanceFactory_folderlist(folderName!!, requireContext())
+               mfactory = MyViewmodel_InstanceFactory_folderlist(folderName, requireContext())
                myviewmodel = ViewModelProvider(requireActivity().viewModelStore, mfactory!!).get(MyViewModel_for_foldderpdflist::class.java)
 
                myviewmodel?.getPdflIst()
@@ -105,10 +105,10 @@ class Folder_PdfList_Fragment : Fragment() {
                            myAdpater?.setMCustomClickListenr(object : MCustomOnClickListener {
                                override fun onClick(position: Int) {
                                    Log.d("3iegnv3me,wv", position.toString())
-                                   pdfName1_bottomsheet?.setText(it?.get(position).title)
+                                   pdfName1_bottomsheet.setText(it.get(position).title)
                                    bottomSheetDialog?.show()
                                    Log.d("hfe", "NEW INTERFACE IS NOW READY")
-                                   clickOnbottomSheetViews(it!!, position, myAdpater!!)
+                                   clickOnbottomSheetViews(it, position, myAdpater!!)
 
                                }
                            })
@@ -154,12 +154,12 @@ class Folder_PdfList_Fragment : Fragment() {
     fun clickOnbottomSheetViews(pdflist:ArrayList<Items_pdfs>,position:Int,myAdapter: MyAdapter){
         //this will send user to PdfTools_Activity----> Merge Fragment with pdfuri and other data acc to position
         var appendeduri = pdflist.get(position).appendeduri!!
-        var size = pdflist.get(position).size!!
+        var size = pdflist.get(position).size
         var date_modified = pdflist.get(position).date_modified!!
-        var title = pdflist.get(position).title!!
+        var title = pdflist.get(position).title
 
 
-        mergeLinearLayout?.setOnClickListener {
+        mergeLinearLayout.setOnClickListener {
 
             var intent= Intent(context, PdfsTools_Activity::class.java)
 
@@ -173,7 +173,7 @@ class Folder_PdfList_Fragment : Fragment() {
             bottomSheetDialog?.hide()
         }
         //this will send user to PdfTools_Activity----> Split Fragment with pdfuri and other data acc to position
-        splitLinearLayout?.setOnClickListener {
+        splitLinearLayout.setOnClickListener {
 
             var intent= Intent(context, PdfsTools_Activity::class.java)
 
@@ -187,7 +187,7 @@ class Folder_PdfList_Fragment : Fragment() {
             bottomSheetDialog?.hide()
         }
         //this will send user to PdfViewActivity with pdfuri AND pdftitle acc to position
-        openLinearLayout?.setOnClickListener {
+        openLinearLayout.setOnClickListener {
 
             var intent= Intent(context, PdfView_Activity::class.java)
 
@@ -199,11 +199,11 @@ class Folder_PdfList_Fragment : Fragment() {
             bottomSheetDialog?.hide()
         }
         //this will show details on dialogue
-        detailsLinearLayout?.setOnClickListener {
+        detailsLinearLayout.setOnClickListener {
             showDialoguewithDetails(pdflist,position)
         }
         //this will delete pdf from list
-        deleteLinearLayout?.setOnClickListener {
+        deleteLinearLayout.setOnClickListener {
             try {
                 Log.d("in3g3", position.toString())
                 var intt = context?.contentResolver?.delete(appendeduri!!, null, null)
@@ -217,7 +217,7 @@ class Folder_PdfList_Fragment : Fragment() {
 
 
         //to bookmark the pdf into database
-        bookmarkIcon_bottomsheet?.setOnClickListener {
+        bookmarkIcon_bottomsheet.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 addBookmarks(appendeduri!!,title,size,date_modified.toLong())
                 Log.d("38f3gh7fg3h","bookmark")
@@ -227,7 +227,7 @@ class Folder_PdfList_Fragment : Fragment() {
             }
         }
         //to undo or remove the bookmarked pdf from database
-        removebookmark_bottomsheet?.setOnClickListener {
+        removebookmark_bottomsheet.setOnClickListener {
             CoroutineScope(Dispatchers.Main).launch {
                 removeBookmarks(appendeduri!!)
                 Log.d("38f3gh7fg3h","Removed bookmark")
@@ -239,7 +239,7 @@ class Folder_PdfList_Fragment : Fragment() {
             }
         }
         //to share pdf to another apps
-        shareIcon_bottomsheet?.setOnClickListener {
+        shareIcon_bottomsheet.setOnClickListener {
             intent?.putExtra(Intent.EXTRA_STREAM,appendeduri)
 
             intent?.putExtra(Intent.EXTRA_SUBJECT, "Sharing File from My Pdf App.");
@@ -286,9 +286,9 @@ class Folder_PdfList_Fragment : Fragment() {
         val sizedialogue=view.findViewById<TextView>(R.id.sizeTextviewDialogue)
         // val pathdialogue=view.findViewById<TextView>(R.id.pathtextviewDailgoue)
 
-        namedialogue.text=pdflist?.get(position)?.title
-        datedialogue.text= ConversionandUtilsClass.convertToDate(pdflist?.get(position)?.date_modified?.toLong()!!).get(1)  //get date with time also
-        sizedialogue.text= ConversionandUtilsClass.bytesToMB(pdflist?.get(position)?.size)+" mb"
+        namedialogue.text= pdflist.get(position).title
+        datedialogue.text= ConversionandUtilsClass.convertToDate(pdflist.get(position).date_modified?.toLong()!!).get(1)  //get date with time also
+        sizedialogue.text= ConversionandUtilsClass.bytesToMB(pdflist.get(position).size)+" mb"
         /*if(pdflist.get(position).relativePath!=null) {
             pathdialogue.text = pdflist?.get(position)?.relativePath
         }*/

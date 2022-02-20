@@ -26,7 +26,7 @@
         android:layout_marginTop="190dp"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintTop_toBottomOf="@id/pdfTools"
-   >
+        android:baselineAligned="false">
       <!-- Merge Linearlayout-->
       <LinearLayout
           android:id="@+id/MErgerlinearlay"
@@ -88,7 +88,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/container1"
-        >
+        android:baselineAligned="false">
         <!-- Merge Linearlayout-->
         <LinearLayout
             android:id="@+id/encryptlinearlay"

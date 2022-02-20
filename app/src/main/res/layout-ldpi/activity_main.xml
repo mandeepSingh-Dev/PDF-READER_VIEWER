@@ -92,7 +92,6 @@
        app:tabMaxWidth="0dp"
        app:tabGravity="fill"
        app:tabIndicatorFullWidth="false"
-       android:scrollIndicators="start"
        app:tabIndicatorAnimationDuration="1200"
        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
        app:tabTextColor="@color/tabcolor"

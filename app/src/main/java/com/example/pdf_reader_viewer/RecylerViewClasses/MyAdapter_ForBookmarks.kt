@@ -41,7 +41,7 @@ class MyAdapter_ForBookmarks(context: Context,arrayList:ArrayList<Items_Bookmark
         var viewHolder=MyViewholder(view)
 
         bottomsheetView=LayoutInflater.from(context).inflate(R.layout.bottomsheet_dialogue,parent,false)
-        bottomsheetDialogue= BottomSheetDialog(context!!,R.style.Theme_Design_BottomSheetDialog)
+        bottomsheetDialogue= BottomSheetDialog(context,R.style.Theme_Design_BottomSheetDialog)
         bottomsheetDialogue?.setContentView(bottomsheetView!!)
         pdfNamebottomsheet = bottomsheetDialogue?.findViewById(R.id.pdfName1_bottomsheet)
         return viewHolder
@@ -109,7 +109,7 @@ class MyAdapter_ForBookmarks(context: Context,arrayList:ArrayList<Items_Bookmark
     }
     suspend fun insertToRecentDATABASE(pdfname:String,pdfSize:String,uri: String,date:Long)= withContext(
         Dispatchers.IO){
-        MyRoomDatabase.getInstance(context!!)?.daoMethod()?.insert(Items_RecentPdfs(pdfname,pdfSize,uri,date))
+        MyRoomDatabase.getInstance(context)?.daoMethod()?.insert(Items_RecentPdfs(pdfname,pdfSize,uri,date))
     }
 
 }

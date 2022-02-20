@@ -268,7 +268,7 @@ class PdfOperations(activity:Activity) {
         pdflist.forEach {
 
             parcelFileDescriptor = activity?.contentResolver?.openFileDescriptor(it.appendeduri!!, "r")!!
-            var renderer= PdfRenderer(parcelFileDescriptor!!)
+            var renderer= PdfRenderer(parcelFileDescriptor)
             Log.d("48y5gh",renderer.pageCount.toString())
 
             var pdfLength=renderer.pageCount
@@ -339,7 +339,7 @@ class PdfOperations(activity:Activity) {
             pdfStripper.startPage = 0
             pdfStripper.endPage = 1
             parsedText = "Parsed text: " + pdfStripper.getText(document)
-            Log.d("48tyfhigvng", parsedText!!)
+            Log.d("48tyfhigvng", parsedText)
         } catch (e: IOException) {
             Log.e("PdfBox-Android-Sample", "Exception thrown while stripping text", e)
         } finally {

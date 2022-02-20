@@ -69,8 +69,9 @@ class Read_Pdf_Files(context:Context)
             //   var cursor = contentResolver?.query(externalUri!!, stringProjectioon,  MediaStore.Images.Media._ID + " like ? ", arrayOf("%Download%"), null, null)
              /**getting coloumns name*/
             var titleColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.TITLE)!!
-            val idColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)!!
-            val displayColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME)!!
+            val idColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)
+            val displayColoumn =
+                cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns.DISPLAY_NAME)
             val bucketColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME)!!
             val dateModColoumn = cursor?.getColumnIndex(MediaStore.MediaColumns.DATE_MODIFIED)!!
             val sizeColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.SIZE)!!
@@ -332,16 +333,18 @@ class Read_Pdf_Files(context:Context)
             /**getting coloumns name*/
             var titleColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.TITLE)!!
             val idColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns._ID)!!
-            val bucketColoumn = cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME)!!
-            val displayColoumn= cursor?.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)!!
-            val dateModColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.DATE_MODIFIED)!!
-            val sizeColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.SIZE)!!
-            val relativePathColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.RELATIVE_PATH)!!
+            val bucketColoumn =
+                cursor?.getColumnIndexOrThrow(MediaStore.Files.FileColumns.BUCKET_DISPLAY_NAME)
+            val displayColoumn= cursor?.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)
+            val dateModColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.DATE_MODIFIED)
+            val sizeColoumn = cursor?.getColumnIndex(MediaStore.Files.FileColumns.SIZE)
+            val relativePathColoumn =
+                cursor?.getColumnIndex(MediaStore.Files.FileColumns.RELATIVE_PATH)
 
 
             /**Getting all cursors in loop*/
           //  if(cursor!=null) {
-                while (cursor?.moveToNext()!!) {
+                while (cursor?.moveToNext()) {
 
                     // Log.d("dfdfd",cursor.toString())
                     var title = cursor?.getString(titleColoumn)
@@ -352,8 +355,8 @@ class Read_Pdf_Files(context:Context)
 
 
                     //Handling Nullability for varables
-                    if (bucket != null) { bucketsList.add(bucket!!) }
-                    if (bucket != null) { bucketsList.add(bucket!!) }
+                    if (bucket != null) { bucketsList.add(bucket) }
+                    if (bucket != null) { bucketsList.add(bucket) }
                     if (title == null) { title = "N.A" }
                     if (dateModified == null) { dateModified = "N.A" }
                     if (size == null) { size = "N.A" }
@@ -372,7 +375,7 @@ class Read_Pdf_Files(context:Context)
                     /**adding cursoritems to pdflist in loop */
                     /**adding cursoritems to pdflist in loop */
 
-                    pdflist?.add(Items_pdfs(title!!, size!!, data_uri, dateModified, bucket))
+                    pdflist?.add(Items_pdfs(title, size, data_uri, dateModified, bucket))
                 }
           //  }//if block for cursor nullablity
             cursor.close()
