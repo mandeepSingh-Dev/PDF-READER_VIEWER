@@ -1,14 +1,9 @@
 <resources>
     <string name="app_name">PDF-READER_VIEWER</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- TODO: Remove or change this placeholder text -->
 
-    <string name="CREATEDPDF_FOLDER">Created PDFs</string>
     <string name="SPLITPDF_FOLDER">Split PDFs</string>
-    <string name="ENCRYPTEDPDF_FOLDER">Encrypted PDFs</string>
-    <string name="MERGEPDF_FOLDER">Merge PDFs</string>
-    <string name="title_activity_splash_screen">SplashScreen</string>
     <!--keys for setting prefernce______________-->
     <string name="Notifications">Notifications</string>
     <string name="Show_Page_Numbers">Show_Page_Numbers</string>
@@ -16,7 +11,6 @@
     <string name="Share_Application">Share_Application</string>
     <string name="Feedback">Feedback</string>
     <string name="Privacy_Policy">Privacy_Policy</string>
-    <string name="App_Version">App_Version</string>
     <!--keys finished_____________________________-->
 
     <!--titles for settings prefrence_____________________________-->
@@ -26,30 +20,14 @@
     <string name="Share_ApplicationTitle">Share Application</string>
     <string name="FeedbackTitle">Feedback</string>
     <string name="Privacy_PolicyTitle">Privacy Policy</string>
-    <string name="App_VersionTitle">App Version</string>
     <!--titles finished_____________________________-->
 
 
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
 
     <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
 
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>

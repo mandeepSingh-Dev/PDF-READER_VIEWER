@@ -256,56 +256,66 @@ class SplitPdf_Fragment : Fragment() {
         var launcher4 = registerForActivityResult(contract, ActivityResultCallback {
 
         var outputStream: OutputStream? = null
-        if (it != null) {
-            outputStream = activity?.contentResolver?.openOutputStream(it)!!
+            try {
+                if (it != null) {
+                    outputStream = activity?.contentResolver?.openOutputStream(it)!!
 
-            if (outputStream != null) {
-                Log.d("8y7ehfgbne", "dfsdfsf")
-                var atPage = binding?.edittextlayout1?.editText?.text.toString()
-               // var pdfName = binding?.edittextlayout2?.editText?.text?.toString()
-                // var listnumber = PdfOperations(requireActivity()).formattingof_Pagenumber(atPage)
-                var numberList = ConversionandUtilsClass.formattingof_Pagenumber(atPage)
+                    if (outputStream != null) {
+                        Log.d("8y7ehfgbne", "dfsdfsf")
+                        var atPage = binding?.edittextlayout1?.editText?.text.toString()
+                        // var pdfName = binding?.edittextlayout2?.editText?.text?.toString()
+                        // var listnumber = PdfOperations(requireActivity()).formattingof_Pagenumber(atPage)
+                        var numberList = ConversionandUtilsClass.formattingof_Pagenumber(atPage)
 
-                Log.d("SIZEWHAT", numberList.size.toString())
+                        Log.d("SIZEWHAT", numberList.size.toString())
 
-                if (numberList.size == 0) {
-                    Log.d("hfdf", "dkfjdk")
-                    binding?.edittextlayout1?.error = "Invalid"
-                } else {
+                        if (numberList.size == 0) {
+                            Log.d("hfdf", "dkfjdk")
+                            binding?.edittextlayout1?.error = "Invalid"
+                        } else {
 //                    if (!(pdfName?.isEmpty()!!)) {
 //                        Log.d("hfdf", "not dkfjdk")
 //                        binding?.edittextlayout2?.error = ""
 //                        binding?.edittextlayout2?.isErrorEnabled = false
 //                        binding?.edittextlayout1?.isErrorEnabled = false
 
-    try {
-        CoroutineScope(Dispatchers.Main).launch {
-            importingDailogTextview =
-                alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
-            importingnumberDailogText =
-                alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
-            //these dailog textview had importing and imprting number texts
-            importingDailogTextview?.text = "please wait..."
-            importingnumberDailogText?.visibility = View.GONE
-            alertDialogprogress?.show()
+                            try {
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    importingDailogTextview =
+                                        alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
+                                    importingnumberDailogText =
+                                        alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
+                                    //these dailog textview had importing and imprting number texts
+                                    importingDailogTextview?.text = "please wait..."
+                                    importingnumberDailogText?.visibility = View.GONE
+                                    alertDialogprogress?.show()
 
-            // PdfOperations(requireActivity()).splittingPdf(uri!!, numberList,outputStream)
-            PdfOperations(requireActivity()).splitPdfNative(uri!!, numberList, outputStream)
-            alertDialogprogress?.hide()
-        }
-    }catch (e:Exception){
-        Toast.makeText(requireContext(),e.cause.toString(),Toast.LENGTH_SHORT).show()
-    }
+                                    // PdfOperations(requireActivity()).splittingPdf(uri!!, numberList,outputStream)
+                                    PdfOperations(requireActivity()).splitPdfNative(
+                                        uri!!,
+                                        numberList,
+                                        outputStream
+                                    )
+                                    alertDialogprogress?.hide()
+                                }
+                            } catch (e: Exception) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    e.cause.toString(),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
 //                   /* } else {
 //                        binding?.edittextlayout2?.error = "Invalid"
 //                    }*/
+                        }
+
+                        //EncryptPdf_Fragment().getMetadata(uri!!)
+
+                        //splitPDF(uri!!)
+                    }//if block for output stream null or not
                 }
-
-                //EncryptPdf_Fragment().getMetadata(uri!!)
-
-                //splitPDF(uri!!)
-            }//if block for output stream null or not
-        }
+            }catch (e:java.lang.Exception){}
     })
     @SuppressLint("Range")
     fun getMetadataf(uri:Uri):String

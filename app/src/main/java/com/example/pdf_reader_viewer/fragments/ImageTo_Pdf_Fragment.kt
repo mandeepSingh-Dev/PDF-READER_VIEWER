@@ -417,51 +417,65 @@ class ImageTo_Pdf_Fragment : DialogFragment() {
     @SuppressLint("Range")
     var launcher4 = registerForActivityResult(contract, ActivityResultCallback {
 
-        if(it!=null) {
-            outputStream = activity?.contentResolver?.openOutputStream(it)!!
+        try {
+            if (it != null) {
+                outputStream = activity?.contentResolver?.openOutputStream(it)!!
 
-            Log.d("of66jd", it.path.toString())
-            Log.d("34g93jg", outputStream.toString())
+                Log.d("of66jd", it.path.toString())
+                Log.d("34g93jg", outputStream.toString())
 
-            if (outputStream != null) {
-                //creating pdf acc to quality in this coroutine scope
-                CoroutineScope(Dispatchers.IO).launch {
-                    //showing pleasewait dialogue
-                    withContext(Dispatchers.Main) {
-                        importingDailogTextview = alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
-                        importingnumberDailogText = alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
-                        //these dailog textview had importing and imprting number texts
-                        importingDailogTextview?.text = "please wait..."
-                        importingnumberDailogText?.visibility = View.GONE
-                        alertDialogprogress?.show()
-                    }
+                if (outputStream != null) {
+                    //creating pdf acc to quality in this coroutine scope
+                    CoroutineScope(Dispatchers.IO).launch {
+                        //showing pleasewait dialogue
+                        withContext(Dispatchers.Main) {
+                            importingDailogTextview =
+                                alertDialogprogress?.findViewById<TextView>(R.id.importingtextview)
+                            importingnumberDailogText =
+                                alertDialogprogress?.findViewById<TextView>(R.id.importedNumberTextview)
+                            //these dailog textview had importing and imprting number texts
+                            importingDailogTextview?.text = "please wait..."
+                            importingnumberDailogText?.visibility = View.GONE
+                            alertDialogprogress?.show()
+                        }
 
-                    PdfOperations(requireActivity())?.createPdf(bitmapLIST!!, "pdfName", imgQuality!!, outputStream!!)
+                        PdfOperations(requireActivity())?.createPdf(
+                            bitmapLIST!!,
+                            "pdfName",
+                            imgQuality!!,
+                            outputStream!!
+                        )
 
-                    //hide please wait dialogue
-                    withContext(Dispatchers.Main) {
-                        alertDialogprogress?.hide()
+                        //hide please wait dialogue
+                        withContext(Dispatchers.Main) {
+                            alertDialogprogress?.hide()
 
-                        //if Comingfrom_MergeFrag is not null then return uri to merge frag with new created pdf
-                       if(Comingfrom_MergeFrag.equals(PDFProp.COMING_FROM_MERGEFRAG)) {
+                            //if Comingfrom_MergeFrag is not null then return uri to merge frag with new created pdf
+                            if (Comingfrom_MergeFrag.equals(PDFProp.COMING_FROM_MERGEFRAG)) {
 
-                           var title = getpdfNAME(it)
-                           mergeSelectedPdfList?.add(Items_pdfs(title,"0",it))
-                           var bundle = Bundle()
+                                var title = getpdfNAME(it)
+                                mergeSelectedPdfList?.add(Items_pdfs(title, "0", it))
+                                var bundle = Bundle()
 //                                 bundle.putParcelable(PDFProp.PDF_APPENDED_URI,it)
 //                                 bundle.putString(PDFProp.PDF_TITLE,"pdfTitle")
 //                                 bundle.putString(PDFProp.PDF_SIZE,"0")
-                                   bundle.putParcelableArrayList(PDFProp.MERGE_SELECTED_LIST,mergeSelectedPdfList)
-                                 var mergepdfsFragment = MergePdfs_Fragment()
-                                 mergepdfsFragment.arguments = bundle
-                                 activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragmentContainerView,mergepdfsFragment)?.commit()
+                                bundle.putParcelableArrayList(
+                                    PDFProp.MERGE_SELECTED_LIST,
+                                    mergeSelectedPdfList
+                                )
+                                var mergepdfsFragment = MergePdfs_Fragment()
+                                mergepdfsFragment.arguments = bundle
+                                activity?.supportFragmentManager?.beginTransaction()
+                                    ?.replace(R.id.fragmentContainerView, mergepdfsFragment)
+                                    ?.commit()
 
-                         }
+                            }
+                        }
+
                     }
-
-                }
-            }//if block for output stream null or not
-        }
+                }//if block for output stream null or not
+            }
+        }catch (e:Exception){}
     })
 
     @SuppressLint("Range")

@@ -22,15 +22,6 @@
 
     </style>
 
-    <style name="myanimation">
-        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
-        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
-    </style>
-
-    <style name="SelectableItemTheme" parent="">
-        <item name="android:radius">20sp</item>
-    </style>
-
     <style name="customTextAppearance" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">normal</item>
@@ -46,14 +37,10 @@
         <item name="android:windowIsFloating">true</item>  &ndash;&gt;
         <item name="android:windowBackground">@color/purple_700</item>
        &lt;!&ndash; <item name="android:backgroundDimEnabled">false</item>&ndash;&gt;
-    </style-->>
+    </style--><![CDATA[>
 
-    <style name="Theme.PDFREADER_VIEWER.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
 
-    <style name="Theme.PDFREADER_VIEWER.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.PDFREADER_VIEWER.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+]]>
 </resources>

@@ -49,6 +49,8 @@ class MergePdfs_Fragment : Fragment() {
     private var getNameinputlayoutMERGE: TextInputLayout? = null
     private var secureinputLayout1: TextInputLayout? = null
     private var mergeDialogueButton: MaterialButton? = null
+    private var dialogueMergeTitle: TextView? = null
+
     private var alertDialogprogress: AlertDialog? = null
     private var importingDailogTextview: TextView? = null
     private var importingnumberDailogText: TextView? = null
@@ -117,7 +119,7 @@ class MergePdfs_Fragment : Fragment() {
 
 
         Log.d("vdvdvegvd", "dfdsfdfvd")
-        ViewAnimation.init(binding?.fab2Linearlayout!!)
+       // ViewAnimation.init(binding?.fab2Linearlayout!!)
         ViewAnimation.init(binding?.fab3Linearlayout!!)
         ViewAnimation.init(binding?.fab4Linearlayout!!)
 
@@ -165,14 +167,14 @@ class MergePdfs_Fragment : Fragment() {
         binding?.topFab?.animate()?.rotationBy(180f); //to rotate main fab 180 degree
         // to show upper fab buttons
         if (isRotate) {
-            ViewAnimation.showIn(binding?.fab2Linearlayout!!)
+           // ViewAnimation.showIn(binding?.fab2Linearlayout!!)
             ViewAnimation.showIn(binding?.fab3Linearlayout!!)
             ViewAnimation.showIn(binding?.fab4Linearlayout!!)
             isRotate = false
         }//to hide upper fab button
         else {
             Log.d("38thg", isRotate.toString())
-            ViewAnimation.showOut(binding?.fab2Linearlayout!!)
+           // ViewAnimation.showOut(binding?.fab2Linearlayout!!)
             ViewAnimation.showOut(binding?.fab3Linearlayout!!)
             ViewAnimation.showOut(binding?.fab4Linearlayout!!)
             isRotate = true
@@ -290,16 +292,18 @@ class MergePdfs_Fragment : Fragment() {
     }
 
     fun createDaiolgue(): AlertDialog {
-        var dailogueBuilder =
-            AlertDialog.Builder(requireContext(), R.style.Theme_AppCompat_Dialog_Alert)
+        var dailogueBuilder = AlertDialog.Builder(requireContext(), R.style.Theme_AppCompat_Dialog_Alert)
         var viewGroup = activity?.findViewById<ViewGroup>(R.id.content)
-        var view = LayoutInflater.from(requireContext())
-            .inflate(R.layout.custom_merge_dialgue, viewGroup, false)
+        var view = LayoutInflater.from(requireContext()).inflate(R.layout.custom_merge_dialgue, viewGroup, false)
 
         chip = view.findViewById(R.id.secureChip)
         getNameinputlayoutMERGE = view.findViewById(R.id.getNameinputlayoutMERGE)
         secureinputLayout1 = view.findViewById(R.id.secureinputlayoutMERGE)
         mergeDialogueButton = view.findViewById(R.id.mergeDialgueButton)
+        dialogueMergeTitle = view.findViewById(R.id.dialogueMergeTITLE)
+
+        dialogueMergeTitle?.text = "Merging "+selectedPdf_list?.size.toString()+" PDFs"
+
         // getNameinputlayoutMERGE = view.findViewById(R.id.getNameinputlayoutMERGE)
         chip?.setOnClickListener {
 

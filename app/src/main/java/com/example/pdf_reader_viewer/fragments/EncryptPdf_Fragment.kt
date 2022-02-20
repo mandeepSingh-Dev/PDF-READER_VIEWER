@@ -138,39 +138,49 @@ class EncryptPdf_Fragment : Fragment() {
     }
     var launcher4 = registerForActivityResult(contract, ActivityResultCallback {
 
-        var outputStream: OutputStream? = null
-        if (it != null) {
-            outputStream = activity?.contentResolver?.openOutputStream(it)!!
+        try {
+            var outputStream: OutputStream? = null
+            if (it != null) {
+                outputStream = activity?.contentResolver?.openOutputStream(it)!!
 
-            Log.d("of66jd", it.path.toString())
-            Log.d("34g93jg", outputStream.toString())
+                Log.d("of66jd", it.path.toString())
+                Log.d("34g93jg", outputStream.toString())
 
-            if (outputStream != null) {
+                if (outputStream != null) {
 
-                var isEncrypted = false
-                var passwordText = binding?.edittextlayout11?.editText?.text.toString()
-                try {
-                    if (!passwordText.isEmpty()) {
-                        /**here we check whether pdf is encrypted if yes then delete selected pdf and create new one with password]*/
-                        var job= CoroutineScope(Dispatchers.IO).async {
-                            isEncrypted = PdfOperations(requireActivity()).createEncryptedPdf( uri!!,passwordText, outputStream)
-                            if (isEncrypted) {
-                                Snackbar.make(binding?.holderContstraintlayout!!, "PDF Encrypted", 3500).show()
-                                deleteContent(uri!!)
+                    var isEncrypted = false
+                    var passwordText = binding?.edittextlayout11?.editText?.text.toString()
+                    try {
+                        if (!passwordText.isEmpty()) {
+                            /**here we check whether pdf is encrypted if yes then delete selected pdf and create new one with password]*/
+                            var job = CoroutineScope(Dispatchers.IO).async {
+                                isEncrypted = PdfOperations(requireActivity()).createEncryptedPdf(
+                                    uri!!,
+                                    passwordText,
+                                    outputStream
+                                )
+                                if (isEncrypted) {
+                                    Snackbar.make(
+                                        binding?.holderContstraintlayout!!,
+                                        "PDF Encrypted",
+                                        3500
+                                    ).show()
+                                    deleteContent(uri!!)
+                                }
                             }
+
+                        } else {
+                            binding?.edittextlayout11?.error = "Invalid"
                         }
-
-                    } else {
-                        binding?.edittextlayout11?.error = "Invalid"
+                    } catch (e: Exception) {
+                        if (e.message != null) {
+                            Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+                        }
                     }
-                } catch (e: Exception) {
-                    if (e.message != null) {
-                        Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
-                    }
-                }
 
-            }//if block for output stream null or not
-        }
+                }//if block for output stream null or not
+            }
+        }catch (e:Exception){}
     })
 
 }

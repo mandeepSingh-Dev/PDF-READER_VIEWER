@@ -102,6 +102,7 @@ android:textColor="@color/white"
                 android:orientation="horizontal"
                 android:layout_gravity="end"
                 android:layout_marginRight="15dp"
+
                 >
             <TextView
                 android:id="@+id/fab3TextView"
@@ -127,7 +128,7 @@ android:textColor="@color/white"
                 app:rippleColor="#DF3804"/>
             </LinearLayout>
             <!--fab4 linearlayout-->
-            <LinearLayout
+           <!-- <LinearLayout
                 android:id="@+id/fab2Linearlayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -159,7 +160,7 @@ android:textColor="@color/white"
                 android:backgroundTint="@color/floatTintBackgroundcolor"
                 app:fabSize="mini"
                 app:rippleColor="#DF3804"/>
-              </LinearLayout>
+              </LinearLayout>-->
              <!-- main fab button-->
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/topFab"

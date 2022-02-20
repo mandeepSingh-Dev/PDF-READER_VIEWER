@@ -48,12 +48,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/pdfView"
-        android:text=""
-        android:visibility="gone"
-        android:textColor="@color/floatTextcolor"
+        android:text="2"
+    android:textSize="19sp"
+        android:textColor="@color/textcolor"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="30dp"
-        android:background="@drawable/shape"
         android:padding="10dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

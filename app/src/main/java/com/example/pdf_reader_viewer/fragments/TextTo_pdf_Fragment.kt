@@ -105,38 +105,45 @@ class TextTo_pdf_Fragment : Fragment() {
     }
     var launcher4 = registerForActivityResult(contract, ActivityResultCallback {
 
-        if(it!=null) {
-          var outputStream = activity?.contentResolver?.openOutputStream(it)!!
+        try {
+            if (it != null) {
+                var outputStream = activity?.contentResolver?.openOutputStream(it)!!
 
-            Log.d("of66jd", it.path.toString())
-            Log.d("34g93jg", outputStream.toString())
+                Log.d("of66jd", it.path.toString())
+                Log.d("34g93jg", outputStream.toString())
 
-            if (outputStream != null) {
-                //creating pdf acc to quality in this coroutine scope
-                CoroutineScope(Dispatchers.IO).launch {
-                    //showing pleasewait dialogue
-                    //creating bitmap from view
-                    withContext(Dispatchers.Main) {
-                        var bitmap = getBitmapFromView(binding?.textToPdfTextview!!)
-                        bitmap?.let { bitmapList?.add(it) }
-                        binding?.textpdfProgressbar?.visibility = View.GONE
-                        binding?.pleasewaitTextview?.visibility = View.GONE
+                if (outputStream != null) {
+                    //creating pdf acc to quality in this coroutine scope
+                    CoroutineScope(Dispatchers.IO).launch {
+                        //showing pleasewait dialogue
+                        //creating bitmap from view
+                        withContext(Dispatchers.Main) {
+                            var bitmap = getBitmapFromView(binding?.textToPdfTextview!!)
+                            bitmap?.let { bitmapList?.add(it) }
+                            binding?.textpdfProgressbar?.visibility = View.GONE
+                            binding?.pleasewaitTextview?.visibility = View.GONE
+                        }
+                        //creating bitmap from text
+
+                        PdfOperations(requireActivity())?.createPdf(
+                            bitmapList!!,
+                            "pdfName",
+                            0,
+                            outputStream!!
+                        )
+
+                        //hide please wait dialogue
+                        withContext(Dispatchers.Main) {
+                            //alertDialogprogress?.hide()
+                            binding?.textpdfProgressbar?.visibility = View.GONE
+                            binding?.pleasewaitTextview?.visibility = View.GONE
+
+                        }
+
                     }
-                    //creating bitmap from text
-
-                    PdfOperations(requireActivity())?.createPdf(bitmapList!!, "pdfName", 0, outputStream!!)
-
-                    //hide please wait dialogue
-                    withContext(Dispatchers.Main) {
-                        //alertDialogprogress?.hide()
-                        binding?.textpdfProgressbar?.visibility = View.GONE
-                        binding?.pleasewaitTextview?.visibility = View.GONE
-
-                    }
-
-                }
-            }//if block for output stream null or not
-        }
+                }//if block for output stream null or not
+            }
+        }catch (e:Exception){}
     })
 
     fun getBitmapfromtext(text:String):Bitmap{
